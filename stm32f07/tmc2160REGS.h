@@ -1,5 +1,5 @@
-#pragma once
-/*GCONF � Global configuration flags*/
+﻿#pragma once
+/*GCONF – Global configuration flags*/
 struct GCONF_t
 {
 	/*1: Zero crossing recalibration during driver disable(via ENN or via TOFF setting)*/
@@ -71,46 +71,301 @@ velocities.*/
 	/*0: Normal operation
 1: Enable analog test output on pin DCO.
 IHOLD[1..0] selects the function of DCO:
-0�2: T120, DAC, VDDH
+0…2: T120, DAC, VDDH
 Hint: Not for user, set to 0 for normal operation!*/
 	unsigned int test_mode : 1;
 };
 
-enum tmc2160
+/*GSTAT – Global status flags
+(Re-Write with ‘1’ bit to clear respective flags)*/
+struct GSTAT_t
 {
-	GCONF = 0x00
+	/*1: Indicates that the IC has been reset. All registers
+have been cleared to reset values.*/
+	unsigned int reset : 1;
+	/*1: Indicates, that the driver has been shut down
+due to overtemperature or short circuit detection.
+Read DRV_STATUS for details. The flag can only
+be cleared when the temperature is below the
+limit again.*/
+	unsigned int drv_err : 1;
+	/*1: Indicates an undervoltage on the charge pump.
+The driver is disabled during undervoltage. This
+flag is latched for information. */
+	unsigned int uv_cp : 1;
+};
+/*IO INPUT Reads the state of all input pins available*/
+struct IOIN
+{
+	/*STEP pin*/
+	unsigned int STEP : 1;
+	/*DIR pin*/
+	unsigned int DIR : 1;
+	/*DCEN_CFG4 pin*/
+	unsigned int DCEN_CFG4 : 1;
+	/*DCIN_CFG5 pin*/
+	unsigned int DCIN_CFG5 : 1;
+	/*DRV_ENN pin*/
+	unsigned int DRV_ENN : 1;
+	/*DCO_CFG6 pin*/
+	unsigned int DCO_CFG6 : 1;
+	/*1 pin, i dont know what does it mean(datasheet, page#26)*/
+	unsigned int first : 1;
+	/*VERSION: 0x30=first version of the IC
+Identical numbers mean full digital compatibility.*/
+	unsigned int VERSION : 8;
+};
+/*OTP_PROGRAM – OTP programming
+Write access programs OTP memory (one bit at a time),
+Read access refreshes read data from OTP after a write*/
+struct OTP_PROG_t
+{
+	/*OTPBIT Selection of OTP bit to be programmed to the selected
+byte location (n=0..7: programs bit n to a logic 1)*/
+	unsigned int OTPBIT : 3;
+	/*gap*/
+	unsigned int : 1;
+	/*OTPBYTE Set to 00*/
+	unsigned int OTPBYTE : 2;
+	/*gap*/
+	unsigned int : 2;
+	/*OTPMAGIC Set to 0xbd to enable programming. A programming
+time of minimum 10ms per bit is recommended (check
+by reading OTP_READ). */
+	unsigned int OTPMAGIC : 8;
 };
 
+/*OTP_READ (Access to OTP memory result and update)
+The OTP memory holds power up defaults for certain registers. All OTP memory bits are cleared to 0
+by default. Programming only can set bits, clearing bits is not possible. Factory tuning of the clock
+frequency affects OTP_FCLKTRIM. The state of these bits therefore may differ between individual ICs.*/
+struct OTP_READ_t
+{
+	/*OTP_FCLKTRIM Reset default for FCLKTRIM
+0: lowest frequency setting
+31: highest frequency setting
+Attention: This value is pre-programmed by factory clock
+trimming to the default clock frequency of 12MHz and
+differs between individual ICs! It should not be altered.*/
+	unsigned int OTP_FCLKTRIM : 5;
+	/*otp_S2_LEVEL Reset default for Short detection Levels:
+0: S2G_LEVEL = S2VS_LEVEL = 6
+1: S2G_LEVEL = S2VS_LEVEL = 12*/
+	unsigned int otp_S2_LEVEL : 1;
+	/*Reset default for DRVCONF.BBMCLKS
+0: BBMCLKS=4
+1: BBMCLKS=2*/
+	unsigned int otp_BBM : 1;
+	/*Reset default for TBL:
+0: TBL=%10 (~3µs)
+1: TBL=%01 (~2µs)*/
+	unsigned int otp_TBL : 1;
+};
+/*FACTORY_CONF*/
+struct FACTORY_CONF_t
+{
+	/*FCLKTRIM (Reset default: OTP)
+0…31: Lowest to highest clock frequency. Check at
+charge pump output. The frequency span is not
+guaranteed, but it is tested, that tuning to 12MHz
+internal clock is possible. The devices come preset to
+12MHz clock frequency by OTP programming.
+(Reset Default: OTP)*/
+	unsigned int FCLKTRIM : 5;
+};
 
-#define TMC2160_GCONF       0x00
-#define TMC2160_GSTAT       0x01
-#define TMC2160_IOIN        0x04
-#define TMC2160_DRV_CONF	0x0A
-#define TMC2160_IHOLD_IRUN  0x10
-#define TMC2160_TPOWERDOWN  0x11
-#define TMC2160_TSTEP       0x12
-#define TMC2160_TPWMTHRS    0x13
-#define TMC2160_TCOOLTHRS   0x14
-#define TMC2160_THIGH       0x15
-#define TMC2160_XDIRECT     0x2D
-#define TMC2160_VDCMIN      0x33
-#define TMC2160_MSLUT0      0x60
-#define TMC2160_MSLUT1      0x61
-#define TMC2160_MSLUT2      0x62
-#define TMC2160_MSLUT3      0x63
-#define TMC2160_MSLUT4      0x64
-#define TMC2160_MSLUT5      0x65
-#define TMC2160_MSLUT6      0x66
-#define TMC2160_MSLUT7      0x67
-#define TMC2160_MSLUTSEL    0x68
-#define TMC2160_MSLUTSTART  0x69
-#define TMC2160_MSCNT       0x6A
-#define TMC2160_MSCURACT    0x6B
-#define TMC2160_CHOPCONF    0x6C
-#define TMC2160_COOLCONF    0x6D
-#define TMC2160_DCCTRL      0x6E
-#define TMC2160_DRV_STATUS  0x6F
-#define TMC2160_PWMCONF     0x70
-#define TMC2160_PWM_SCALE   0x71
-#define TMC2160_ENCM_CTRL   0x72
-#define TMC2160_LOST_STEPS  0x73
+/*SHORT_CONF*/
+struct SHORT_CONF
+{
+	/*S2VS_LEVEL: Short to VS detector level for lowside FETs. Checks for
+voltage drop in LS MOSFET and sense resistor.
+4 (highest sensitivity) … 15 (lowest sensitivity)
+Hint: Settings from 1 to 3 will trigger during normal
+operation due to voltage drop on sense resistor.
+(Reset Default: OTP 6 or 12)*/
+	unsigned int S2VS_LEVEL : 4;
+	/*gap*/
+	unsigned int : 4;
+	/*S2G_LEVEL: Short to GND detector level for highside FETs. Checks
+for voltage drop on high side MOSFET
+2 (highest sensitivity) … 15 (lowest sensitivity)
+Attention: Settings below 6 not recommended at >52V
+operation – false detection might result
+(Reset Default: OTP 6 or 12)*/
+	unsigned int S2G_LEVEL : 4;
+	/*gap*/
+	unsigned int : 4;
+	/* SHORTFILTER: Spike filtering bandwidth for short detection
+0 (lowest, 100ns), 1 (1µs), 2 (2µs) 3 (3µs)
+Hint: A good PCB layout will allow using setting 0.
+Increase value, if erroneous short detection occurs.
+(Reset Default = %01)*/
+	unsigned int SHORTFILTER : 2;
+	/*shortdelay: Short detection delay
+0=750ns: normal, 1=1500ns: high
+The short detection delay shall cover the bridge
+switching time. 0 will work for most applications.
+(Reset Default = 0)*/
+	unsigned int shortdelay : 1;
+};
+/*DRV_CONF*/
+struct DRV_CONF_t
+{
+	/*BBMTIME: Break-Before make delay
+0=shortest (100ns) … 16 (200ns) … 24=longest (375ns)
+>24 not recommended, use BBMCLKS instead
+Hint: Choose the lowest setting safely covering the
+switching event in order to avoid bridge crossconduction. Add roughly 30% of reserve.
+(Reset Default = 0)*/
+	unsigned int BBMTIME : 5;
+	/*gap*/
+	unsigned int : 3;
+	/*BBMCLKS: 0..15: Digital BBM time in clock cycles (typ. 83ns).
+The longer setting rules (BBMTIME vs. BBMCLKS).
+(Reset Default: OTP 4 or 2)*/
+	unsigned int BBMCLKS : 4;
+	/*gap*/
+	unsigned int : 4;
+	/*OTSELECT: Selection of over temperature level for bridge disable,
+switch on after cool down to 120°C / OTPW level.
+00: 150°C
+01: 143°C
+10: 136°C (not recommended when VSA > 24V)
+11: 120°C (not recommended, no hysteresis)
+Hint: Adapt overtemperature threshold as required to
+protect the MOSFETs or other components on the PCB.
+(Reset Default = %00)*/
+	unsigned int OTSELECT : 2;
+	/*DRVSTRENGTH: Selection of gate driver current. Adapts the gate driver
+current to the gate charge of the external MOSFETs.
+00: weak
+01: weak+TC (medium above OTPW level)
+10: medium
+11: strong
+Hint: Choose the lowest setting giving slopes <100ns.
+(Reset Default = %10)*/
+	unsigned int DRVSTRENGTH : 2;
+	/*FILT_ISENSE: Filter time constant of sense amplifier to suppress
+ringing and coupling from second coil operation
+00: low – 100ns
+01: – 200ns
+10: – 300ns
+11: high– 400ns
+Hint: Increase setting if motor chopper noise occurs
+due to cross-coupling of both coils.
+(Reset Default = %00)*/
+	unsigned int FILT_ISENSE : 2;
+};
+/*GLOBAL SCALER*/
+struct GLOBAL_SCALER_t
+{
+	/*Global scaling of Motor current. This value is multiplied
+to the current scaling in order to adapt a drive to a
+certain motor type. This value should be chosen before
+tuning other settings, because it also influences
+chopper hysteresis.
+0: Full Scale (or write 256)
+1 … 31: Not allowed for operation
+32 … 255: 32/256 … 255/256 of maximum current.
+Hint: Values >128 recommended for best results
+(Reset Default = 0)*/
+	unsigned int scale : 8;
+};
+/*OFFSET_READ
+look in datasheet, probably it has to be reversed*/
+struct OFFSET_READ_t
+{
+	/*Offset calibration result phase B (signed)*/
+	unsigned int offsetPhB : 8;
+	/*Offset calibration result phase A (signed)*/
+	unsigned int offsetPhA : 8;
+};
+/*IHOLD_IRUN – Driver current control*/
+struct IHOLD_IRUN_t
+{
+	/*IHOLD Standstill current (0=1/32…31=32/32)
+In combination with StealthChop mode, setting
+IHOLD=0 allows to choose freewheeling or coil
+short circuit for motor stand still.*/
+	unsigned int IHOLD : 5;
+	/*gap*/
+	unsigned int : 3;
+	/*IRUN Motor run current (0=1/32…31=32/32)
+Hint: Choose sense resistors in a way, that normal
+IRUN is 16 to 31 for best microstep performance.*/
+	unsigned int IRUN : 5;
+	/*gap*/
+	unsigned int : 3;
+	/*IHOLDDELAY Controls the number of clock cycles for motor
+power down after a motion as soon as standstill is
+detected (stst=1) and TPOWERDOWN has expired.
+The smooth transition avoids a motor jerk upon
+power down.
+0: instant power down
+1..15: Delay per current reduction step in multiple
+of 2^18 clocks*/
+	unsigned int IHOLDDELAY : 4;
+};
+/*TPOWERDOWN sets the delay time after stand still (stst) of the
+motor to motor current power down. Time range is about 0 to
+4 seconds.
+Attention: A minimum setting of 2 is required to allow
+automatic tuning of StealthChop PWM_OFFS_AUTO.
+Reset Default = 10
+0…((2^8)-1) * 2^18 tCLK*/
+struct TPOWERDOWN_t
+{
+	unsigned int value : 8;
+};
+/*TSTEP Actual measured time between two 1/256 microsteps derived
+from the step input frequency in units of 1/fCLK. Measured
+value is (2^20)-1 in case of overflow or stand still.
+All TSTEP related thresholds use a hysteresis of 1/16 of the
+compare value to compensate for jitter in the clock or the step
+frequency. The flag small_hysteresis modifies the hysteresis to
+a smaller value of 1/32.
+(Txxx*15/16)-1 or
+(Txxx*31/32)-1 is used as a second compare value for each
+comparison value.
+This means, that the lower switching velocity equals the
+calculated setting, but the upper switching velocity is higher as
+defined by the hysteresis setting.
+In DcStep mode TSTEP will not show the mean velocity of the
+motor, but the velocities for each microstep, which may not be
+stable and thus does not represent the real motor velocity in
+case it runs slower than the target velocity. */
+struct TSTEP_t
+{
+	unsigned int value : 20;
+};
+/*TPWMTHRS This is the upper velocity for StealthChop voltage PWM mode.
+TSTEP ≥ TPWMTHRS
+- StealthChop PWM mode is enabled, if configured
+- DcStep is disabled*/
+struct TPWMTHRS_t
+{
+	unsigned int value : 20;
+};
+/*TCOOLTHRS This is the lower threshold velocity for switching on smart
+energy CoolStep and stallGuard feature. (unsigned)
+Set this parameter to disable CoolStep at low speeds, where it
+cannot work reliably. The stop on stall function (enable with
+sg_stop when using internal motion controller) and the stall
+output signal become enabled when exceeding this velocity. In
+non-DcStep mode, it becomes disabled again once the velocity
+falls below this threshold.
+TCOOLTHRS ≥ TSTEP ≥ THIGH:
+- CoolStep is enabled, if configured
+- StealthChop voltage PWM mode is disabled
+TCOOLTHRS ≥ TSTEP
+- Stop on stall is enabled, if configured
+- Stall output signal (DIAG0/1) is enabled, if configured*/
+struct TCOOLTHRS_t
+{
+	unsigned int value : 20;
+};
+enum tmc2160
+{
+	GCONF = 0x00, GSTAT = 0x01, IOIN = 0x04, OTP_PROG = 0x06, OTP_READ = 0x07, FACTORY_CONF = 0x08, SHORT_CONF = 0x09, DRV_CONF = 0x0A, GLOBAL_SCALER = 0x0B,
+	OFFSET_READ = 0x0C, IHOLD_IRUN = 0x10, TPOWERDOWN = 0x11, TSTEP = 0x12, TPWMTHRS = 0x13, TCOOLTHRS = 0x14,
+};
