@@ -3,6 +3,22 @@
 #include "tmc2160REGS.h"
 #include "spi.h"
 #pragma endregion
+
+
+GCONF_t GCONF_r;
+
+int * tmc2160regs[1] = { (int *)&GCONF_r };
+int tmc2160addr[1] = { tmc2160::GCONF };
+
+void loadRegs()
+{
+	for (size_t i = 0; i < 1; i++)
+	{
+		tmc2160addr[i];
+
+	}
+}
+
 //
 //// => SPI wrapper
 //extern void tmc2160_readWriteArray(uint8 channel, uint8 *data, size_t length);
@@ -169,3 +185,16 @@
 //	if (tmc2160->config->state != CONFIG_READY)
 //		writeConfiguration(tmc2160);
 //}
+
+void tmc2160_init(void)
+{
+	GCONF_r = {};
+	GCONF_r.recalibrate = 1;
+	GCONF_r.test_mode = 1;
+	//std::cout << (*((GCONF_t *)tmc2160regs[0])).recalibrate;
+	//std::cout << (*((GCONF_t *)tmc2160regs[0])).test_mode;
+	(*((GCONF_t *)tmc2160regs[0])).diag0_error = 1;
+	(*((GCONF_t *)tmc2160regs[0])).diag0_int_pushpull = 1;
+	//std::cout << GCONF_r.diag0_error;
+	//std::cout << GCONF_r.diag0_int_pushpull;
+}

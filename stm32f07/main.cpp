@@ -4,7 +4,7 @@
 #include "spi.h"
 #include "usart.h"
 #include "gpio.h"
-
+#include "tmc2160.h"
 #pragma endregion
 
 #pragma region Private function prototypes
@@ -25,10 +25,11 @@ int main(void)
 	MX_GPIO_Init();
 	MX_SPI1_Init();
 	MX_USART1_UART_Init();
+
 	/* Infinite loop */
 	while (1)
 	{
-
+		tmc2160_init();
 	}
 }
 

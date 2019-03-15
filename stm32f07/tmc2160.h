@@ -1,4 +1,6 @@
 #pragma once
+void tmc2160_init(void);
+
 //
 //// Helper macros
 //#define TMC2160_FIELD_READ(tdef, address, mask, shift) \
