@@ -80,7 +80,6 @@
   */
 
 #include "stm32f0xx.h"
-#include <stm32f0xx_hal.h>
 
 /**
   * @}
@@ -106,10 +105,6 @@
   #define HSI_VALUE    ((uint32_t)8000000) /*!< Default value of the Internal oscillator in Hz.
                                                 This value can be provided and adapted by the user application. */
 #endif /* HSI_VALUE */
-
-#if !defined (HSI48_VALUE)
-	#define HSI48_VALUE ((uint32_t)48000000)
-#endif
 
 #if !defined (HSI48_VALUE)
 #define HSI48_VALUE    ((uint32_t)48000000) /*!< Default value of the HSI48 Internal oscillator in Hz.
