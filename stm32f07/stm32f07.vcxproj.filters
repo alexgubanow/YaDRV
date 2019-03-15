@@ -495,6 +495,9 @@
     <ClCompile Include="stm32f0xx_it.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="tmc2160.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -510,6 +513,12 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="usart.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="tmc2160.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="tmc2160REGS.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

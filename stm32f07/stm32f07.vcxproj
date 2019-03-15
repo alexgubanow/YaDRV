@@ -53,8 +53,11 @@
     <ClCompile Include="stm32f0xx_hal_msp.c" />
     <ClCompile Include="stm32f0xx_it.cpp" />
     <ClCompile Include="system_stm32f0xx.c" />
+    <ClCompile Include="tmc2160.cpp" />
     <ClCompile Include="usart.c" />
     <ClInclude Include="stm32f0xx_it.h" />
+    <ClInclude Include="tmc2160.h" />
+    <ClInclude Include="tmc2160REGS.h" />
     <ClInclude Include="usart.h" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\StartupFiles\startup_stm32f070x6.c" />
