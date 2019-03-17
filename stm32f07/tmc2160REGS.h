@@ -276,9 +276,9 @@ look in datasheet, probably it has to be reversed*/
 struct OFFSET_READ_t
 {
 	/*Offset calibration result phase B (signed)*/
-	unsigned int offsetPhB : 8;
+	int offsetPhB : 8;
 	/*Offset calibration result phase A (signed)*/
-	unsigned int offsetPhA : 8;
+	int offsetPhA : 8;
 };
 /*IHOLD_IRUN – Driver current control*/
 struct IHOLD_IRUN_t
@@ -312,7 +312,8 @@ motor to motor current power down. Time range is about 0 to
 Attention: A minimum setting of 2 is required to allow
 automatic tuning of StealthChop PWM_OFFS_AUTO.
 Reset Default = 10
-0…((2^8)-1) * 2^18 tCLK*/
+0…((2^8)-1) * 2^18 tCLK
+Microstep velocity time reference t for velocities: TSTEP = fCLK / fSTEP*/
 struct TPOWERDOWN_t
 {
 	unsigned int value : 8;
@@ -333,7 +334,8 @@ defined by the hysteresis setting.
 In DcStep mode TSTEP will not show the mean velocity of the
 motor, but the velocities for each microstep, which may not be
 stable and thus does not represent the real motor velocity in
-case it runs slower than the target velocity. */
+case it runs slower than the target velocity.
+Microstep velocity time reference t for velocities: TSTEP = fCLK / fSTEP*/
 struct TSTEP_t
 {
 	unsigned int value : 20;
@@ -341,7 +343,8 @@ struct TSTEP_t
 /*TPWMTHRS This is the upper velocity for StealthChop voltage PWM mode.
 TSTEP ≥ TPWMTHRS
 - StealthChop PWM mode is enabled, if configured
-- DcStep is disabled*/
+- DcStep is disabled
+Microstep velocity time reference t for velocities: TSTEP = fCLK / fSTEP*/
 struct TPWMTHRS_t
 {
 	unsigned int value : 20;
@@ -359,13 +362,247 @@ TCOOLTHRS ≥ TSTEP ≥ THIGH:
 - StealthChop voltage PWM mode is disabled
 TCOOLTHRS ≥ TSTEP
 - Stop on stall is enabled, if configured
-- Stall output signal (DIAG0/1) is enabled, if configured*/
+- Stall output signal (DIAG0/1) is enabled, if configured
+Microstep velocity time reference t for velocities: TSTEP = fCLK / fSTEP*/
 struct TCOOLTHRS_t
 {
 	unsigned int value : 20;
 };
+/*This velocity setting allows velocity dependent switching into
+a different chopper mode and fullstepping to maximize torque.
+(unsigned)
+The stall detection feature becomes switched off for 2-3
+electrical periods whenever passing THIGH threshold to
+compensate for the effect of switching modes.
+TSTEP ≤ THIGH:
+- CoolStep is disabled (motor runs with normal current
+scale)
+- StealthChop voltage PWM mode is disabled
+- If vhighchm is set, the chopper switches to chm=1
+with TFD=0 (constant off time with slow decay, only).
+- If vhighfs is set, the motor operates in fullstep mode
+and the stall detection becomes switched over to
+DcStep stall detection.
+Microstep velocity time reference t for velocities: TSTEP = fCLK / fSTEP*/
+struct THIGH_t
+{
+	unsigned int value : 20;
+};
+/*This register is used in direct coil current
+mode, only (direct_mode = 1). It bypasses the
+internal sequencer. In this mode, the current is scaled by
+IHOLD setting. Velocity based current
+regulation of StealthChop is not available in
+this mode. The automatic StealthChop current
+regulation will work only for low stepper
+motor velocities. 2x -255…+255*/
+struct XDIRECT_t
+{
+	/*Specifies signed coil A
+current (bits 8..0)*/
+	int coilA : 9;
+	/*gap*/
+	unsigned int : 7;
+	/*Specifies signed coil B current (bits
+24..16)*/
+	int coilB : 9;
+};
+/*Automatic commutation DcStep minimum velocity. Enable
+DcStep by DCEN pin.
+In this mode, the actual position is determined by the sensorless motor commutation and becomes fed back to the external
+motion controller. In case the motor becomes heavily loaded,
+VDCMIN is used as the minimum step velocity.
+Hint: Also set DCCTRL parameters in order to operate DcStep.
+(Only bits 22… 8 are used for value and for comparison)Time reference t for VDCMIN: t = 2^24 / fCLK*/
+struct VDCMIN_t
+{
+	unsigned int value : 23;
+};
+/*MSLUT 8x 32bit 0 or 1
+reset default= sine wave tableEach bit gives the difference between entry x
+and entry x+1 when combined with the corresponding MSLUTSEL W bits:
+0: W= %00: -1
+%01: +0
+%10: +1
+%11: +2
+1: W= %00: +0
+%01: +1
+%10: +2
+%11: +3
+This is the differential coding for the first
+quarter of a wave. Start values for CUR_A and
+CUR_B are stored for MSCNT position 0 in
+START_SIN and START_SIN90.
+ofs31, ofs30, …, ofs01, ofs00
+…
+ofs255, ofs254, …, ofs225, ofs224*/
+struct MSLUT_t
+{
+	unsigned int value[8];
+};
+/*This register defines four segments within
+each quarter MSLUT wave. Four 2 bit entries
+determine the meaning of a 0 and a 1 bit in
+the corresponding segment of MSLUT.
+See separate table!
+0<X1<X2<X3 reset default= sine wave table*/
+struct MSLUTSEL_t
+{
+	unsigned int value;
+};
+/*START_SIN and START_SIN90 
+Start values are transferred to the microstep
+registers CUR_A and CUR_B, whenever the
+reference position MSCNT=0 is passed.*/
+struct MSLUTSTART_t
+{
+	/*bit 7… 0: START_SIN gives the absolute current at
+microstep table entry 0.
+	reset default =0*/
+	unsigned int START_SIN : 8;
+	/*gap*/
+	unsigned int : 8;
+	/*bit 23… 16: START_SIN90 gives the absolute current for
+microstep table entry at positions 256. 
+	reset default =247*/
+	unsigned int START_SIN90 : 8;
+};
+/*Microstep counter. Indicates actual position
+in the microstep table for CUR_A. CUR_B uses
+an offset of 256 (2 phase motor).
+Hint: Move to a position where MSCNT is
+zero before re-initializing MSLUTSTART or
+MSLUT and MSLUTSEL.
+0…1023*/
+struct MSCNT_t
+{
+	unsigned int value : 10;
+};
+/**/
+struct MSCURACT_t
+{
+	/*bit 8… 0: CUR_A (signed):
+Actual microstep current for
+motor phase A as read from
+MSLUT (not scaled by current)
++/-0...255*/
+	int CUR_A : 9;
+	/*gap*/
+	unsigned int : 7;
+/*bit 24… 16: CUR_B (signed):
+Actual microstep current for
+motor phase B as read from
+MSLUT (not scaled by current)
++/-0...255 */
+	int CUR_B : 9;
+};
+/*chopper and driver configuration
+See separate table!
+reset default=0x10410150*/
+struct CHOPCONF_t
+{
+	unsigned int value;
+};
+/*CoolStep smart current control register
+and StallGuard2 configuration
+See separate table!*/
+struct COOLCONF_t
+{
+	unsigned int value : 25;
+};
+/*DcStep (DC) automatic commutation
+configuration register (enable via pin DCEN
+or via VDCMIN)
+Using a higher microstep resolution or
+interpolated operation, DcStep delivers a
+better stallGuard signal.
+DC_SG is also available above VHIGH if
+vhighfs is activated. For best result also set
+vhighchm.*/
+struct DCCTRL_t
+{
+	/*bit 9… 0: DC_TIME: Upper PWM on time
+limit for commutation (DC_TIME *
+1/fCLK). Set slightly above effective
+blank time TBL.*/
+	unsigned int DC_TIME : 10;
+	/*gap*/
+	unsigned int : 6;
+/*bit 23… 16: DC_SG: Max. PWM on time for
+step loss detection using DcStep
+StallGuard2 in DcStep mode.
+(DC_SG * 16/fCLK) 
+Set slightly higher than DC_TIME/16 0=disable*/
+	unsigned int DC_SG : 8;
+};
+/*StallGuard2 value and driver error flags
+See separate table!*/
+struct DRV_STATUS_t
+{
+	unsigned int value;
+};
+/*Voltage PWM mode chopper configuration
+See separate table!
+reset default=0xC40C001E*/
+struct PWMCONF_t
+{
+	unsigned int value;
+};
+/*Results of StealthChop amplitude regulator.
+These values can be used to monitor
+automatic PWM amplitude scaling (255=max.
+voltage).*/
+struct PWM_SCALE_t
+{
+	/*bit 7… 0 PWM_SCALE_SUM:
+Actual PWM duty cycle. This
+value is used for scaling the
+values CUR_A and CUR_B read
+from the sine wave table.
+0…255*/
+	unsigned int PWM_SCALE_SUM : 8;
+	/*gap*/
+	unsigned int : 8;
+	/*bit 24… 16 PWM_SCALE_AUTO:
+9 Bit signed offset added to the
+calculated PWM duty cycle. This
+is the result of the automatic
+amplitude regulation based on
+current measurement.
+signed -255…+255*/
+	int PWM_SCALE_AUTO : 9;
+};
+/*These automatically generated values can be
+read out in order to determine a default /
+power up setting for PWM_GRAD and
+PWM_OFS.*/
+struct PWM_AUTO_t
+{
+	/*bit 7… 0 PWM_OFS_AUTO:
+Automatically determined offset
+value 0…255*/
+	unsigned int PWM_SCALE_SUM : 8;
+	/*gap*/
+	unsigned int : 8;
+	/*bit 23… 16 PWM_GRAD_AUTO:
+Automatically determined
+gradient value 0…255*/
+	unsigned int PWM_SCALE_SUM : 8;
+};
+/*Number of input steps skipped due to higher
+load in DcStep operation, if step input does
+not stop when DC_OUT is low. This counter
+wraps around after 2^20 steps. Counts up or
+down depending on direction. Only with
+SDMODE=1.*/
+struct LOST_STEPS_t
+{
+	unsigned int value;
+};
 enum tmc2160
 {
 	GCONF = 0x00, GSTAT = 0x01, IOIN = 0x04, OTP_PROG = 0x06, OTP_READ = 0x07, FACTORY_CONF = 0x08, SHORT_CONF = 0x09, DRV_CONF = 0x0A, GLOBAL_SCALER = 0x0B,
-	OFFSET_READ = 0x0C, IHOLD_IRUN = 0x10, TPOWERDOWN = 0x11, TSTEP = 0x12, TPWMTHRS = 0x13, TCOOLTHRS = 0x14,
+	OFFSET_READ = 0x60, IHOLD_IRUN = 0x10, TPOWERDOWN = 0x11, TSTEP = 0x12, TPWMTHRS = 0x13, TCOOLTHRS = 0x14, THIGH = 0x15, XDIRECT = 0x2D, VDCMIN = 0x33,
+	MSLUT = 0x60, MSLUTSEL = 0x68, MSLUTSTART = 0x69, MSCNT = 0x6A, MSCURACT = 0x6B, CHOPCONF = 0x6C, COOLCONF = 0x6D, DCCTRL = 0x6E, DRV_STATUS = 0x6F,
+	PWMCONF = 0x70, PWM_SCALE = 0x71, PWM_AUTO = 0x72, LOST_STEPS = 0x73
 };
