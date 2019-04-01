@@ -492,10 +492,10 @@
     <ClCompile Include="usart.c">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="stm32f0xx_it.cpp">
+    <ClCompile Include="tmc2160.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="tmc2160.cpp">
+    <ClCompile Include="stm32f0xx_it.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>

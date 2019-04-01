@@ -80,8 +80,10 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define DIAG1_Pin GPIO_PIN_0
 #define DIAG1_GPIO_Port GPIOA
+#define DIAG1_EXTI_IRQn EXTI0_1_IRQn
 #define DIAG0_Pin GPIO_PIN_1
 #define DIAG0_GPIO_Port GPIOA
+#define DIAG0_EXTI_IRQn EXTI0_1_IRQn
 #define LEDR_Pin GPIO_PIN_2
 #define LEDR_GPIO_Port GPIOA
 #define LEDY_Pin GPIO_PIN_3

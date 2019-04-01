@@ -51,7 +51,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="spi.c" />
     <ClCompile Include="stm32f0xx_hal_msp.c" />
-    <ClCompile Include="stm32f0xx_it.cpp" />
+    <ClCompile Include="stm32f0xx_it.c" />
     <ClCompile Include="system_stm32f0xx.c" />
     <ClCompile Include="tmc2160.cpp" />
     <ClCompile Include="usart.c" />
