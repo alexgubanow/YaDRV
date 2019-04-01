@@ -557,7 +557,8 @@ hysteresis start value added to HEND
 %000 … %111: Add 1, 2, …, 8 to hysteresis low value HEND
 (1/512 of this setting adds to current setting)
 Attention: Effective HEND+HSTRT ≤ 16.
-Hint: Hysteresis decrement is done each 16 clocksWhen ChpperMode(chm)=1 this register become to TFD Fast decay time setting (MSB: fd3):
+Hint: Hysteresis decrement is done each 16 clocks
+When ChpperMode(chm)=1 this register become to TFD Fast decay time setting (MSB: fd3):
 %0000 … %1111: Fast decay time setting TFD with
 NCLK= 32*TFD (%0000: slow decay only)*/
 	unsigned int HSTRT_TFD : 3;
@@ -896,7 +897,8 @@ tuning PWM_OFS_AUTO.*/
 ...
 15: 7.5 increments (fastest regulation)*/
 	unsigned int PWM_REG : 4;
-	/*PWM automatic scale amplitude limit when switching onLimit for PWM_SCALE_AUTO when switching back from
+	/*PWM automatic scale amplitude limit when switching on
+Limit for PWM_SCALE_AUTO when switching back from
 SpreadCycle to StealthChop. This value defines the upper
 limit for bits 7 to 4 of the automatic current control
 when switching back. It can be set to reduce the current
@@ -938,13 +940,13 @@ struct PWM_AUTO_t
 	/*bit 7… 0 PWM_OFS_AUTO:
 Automatically determined offset
 value 0…255*/
-	unsigned int PWM_SCALE_SUM : 8;
+	unsigned int PWM_OFS_AUTO : 8;
 	/*gap*/
 	unsigned int : 8;
 	/*bit 23… 16 PWM_GRAD_AUTO:
 Automatically determined
 gradient value 0…255*/
-	unsigned int PWM_SCALE_SUM : 8;
+	unsigned int PWM_GRAD_AUTO : 8;
 };
 /*Number of input steps skipped due to higher
 load in DcStep operation, if step input does
