@@ -23,13 +23,15 @@ int main(void)
 	SystemClock_Config();
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
+	HAL_GPIO_WritePin(LEDR_GPIO_Port, LEDR_Pin, GPIO_PIN_SET);
 	MX_SPI1_Init();
+	//HAL_Delay(3000);
+	tmc2160_init();
 	MX_USART1_UART_Init();
 	/* Infinite loop */
 	while (1)
 	{
-	tmc2160_init();
-	HAL_Delay(1000);
+		HAL_Delay(1000);
 		/*HAL_GPIO_TogglePin(LEDR_GPIO_Port, LEDR_Pin);
 		HAL_GPIO_TogglePin(LEDG_GPIO_Port, LEDG_Pin);
 		HAL_GPIO_TogglePin(LEDY_GPIO_Port, LEDY_Pin);

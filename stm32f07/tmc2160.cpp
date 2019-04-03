@@ -65,8 +65,15 @@ void tmc2160_WriteReg(tmc2160 reg);
 
 void tmc2160_init(void)
 {
-	//has to be 0x30000040
+	//has to be 0x30000040 or 0x30000050
 	int tmp = tmc2160_SPI_read(IOIN);
+	while (tmp != 0x30000040)
+	{
+		HAL_GPIO_WritePin(LEDR_GPIO_Port, LEDR_Pin, GPIO_PIN_SET);
+		tmp = tmc2160_SPI_read(IOIN);
+	}
+	HAL_GPIO_WritePin(LEDR_GPIO_Port, LEDR_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LEDG_GPIO_Port, LEDG_Pin, GPIO_PIN_SET);
 	tmc_2160_ReadRegMap();
 	CHOPCONF_r.toff = 3;
 	CHOPCONF_r.HSTRT_TFD = 4;
@@ -103,6 +110,7 @@ void tmc_2160_ReadRegMap()
 
 int tmc2160_SPI_read(unsigned int addr)
 {
+	HAL_GPIO_WritePin(LEDY_GPIO_Port, LEDY_Pin, GPIO_PIN_SET);
 	txPacket txBuff = { RD };
 	uint8_t rxBuff[5] = { 0 };
 	txBuff.access = RD;
@@ -114,11 +122,13 @@ int tmc2160_SPI_read(unsigned int addr)
 	HAL_SPI_Receive(&hspi1, (uint8_t*)& rxBuff, 5, 1);
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
 	tmc2160status = *(SPI_STATUS_t*)& rxBuff[0];
+	HAL_GPIO_WritePin(LEDY_GPIO_Port, LEDY_Pin, GPIO_PIN_RESET);
 	return __REV(rxBuff[1] | (rxBuff[2] << 8) | (rxBuff[3] << 16) | (rxBuff[4] << 24));
 }
 
 int tmc2160_SPI_write(unsigned int addr, int val)
 {
+	HAL_GPIO_WritePin(LEDY_GPIO_Port, LEDY_Pin, GPIO_PIN_SET);
 	txPacket txBuff = { RD };
 	uint8_t rxBuff[5] = { 0 };
 	txBuff.access = WR;
@@ -131,5 +141,6 @@ int tmc2160_SPI_write(unsigned int addr, int val)
 	HAL_SPI_Receive(&hspi1, (uint8_t*)& rxBuff, 5, 1);
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
 	tmc2160status = *(SPI_STATUS_t*)& rxBuff[0];
+	HAL_GPIO_WritePin(LEDY_GPIO_Port, LEDY_Pin, GPIO_PIN_RESET);
 	return __REV(rxBuff[1] | (rxBuff[2] << 8) | (rxBuff[3] << 16) | (rxBuff[4] << 24));
 }
