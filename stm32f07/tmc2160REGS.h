@@ -1,4 +1,11 @@
 ﻿#pragma once
+enum tmc2160
+{
+	GCONF = 0x00, GSTAT = 0x01, IOIN = 0x04, OTP_PROG = 0x06, OTP_READ = 0x07, FACTORY_CONF = 0x08, SHORT_CONF = 0x09, DRV_CONF = 0x0A, GLOBAL_SCALER = 0x0B,
+	OFFSET_READ = 0x60, IHOLD_IRUN = 0x10, TPOWERDOWN = 0x11, TSTEP = 0x12, TPWMTHRS = 0x13, TCOOLTHRS = 0x14, THIGH = 0x15, XDIRECT = 0x2D, VDCMIN = 0x33,
+	MSLUT = 0x60, MSLUTSEL = 0x68, MSLUTSTART = 0x69, MSCNT = 0x6A, MSCURACT = 0x6B, CHOPCONF = 0x6C, COOLCONF = 0x6D, DCCTRL = 0x6E, DRV_STATUS = 0x6F,
+	PWMCONF = 0x70, PWM_SCALE = 0x71, PWM_AUTO = 0x72, LOST_STEPS = 0x73
+};
 /*GCONF – Global configuration flags*/
 struct GCONF_t
 {
@@ -95,7 +102,7 @@ flag is latched for information. */
 	unsigned int uv_cp : 1;
 };
 /*IO INPUT Reads the state of all input pins available*/
-struct IOIN
+struct IOIN_t
 {
 	/*STEP pin*/
 	unsigned int STEP : 1;
@@ -110,7 +117,9 @@ struct IOIN
 	/*DCO_CFG6 pin*/
 	unsigned int DCO_CFG6 : 1;
 	/*1 pin, i dont know what does it mean(datasheet, page#26)*/
-	unsigned int first : 1;
+	unsigned int hasTObeONE : 1;
+	/*gap*/
+	unsigned int : 17;
 	/*VERSION: 0x30=first version of the IC
 Identical numbers mean full digital compatibility.*/
 	unsigned int VERSION : 8;
@@ -175,7 +184,7 @@ internal clock is possible. The devices come preset to
 };
 
 /*SHORT_CONF*/
-struct SHORT_CONF
+struct SHORT_CONF_t
 {
 	/*S2VS_LEVEL: Short to VS detector level for lowside FETs. Checks for
 voltage drop in LS MOSFET and sense resistor.
@@ -957,11 +966,4 @@ SDMODE=1.*/
 struct LOST_STEPS_t
 {
 	unsigned int value;
-};
-enum tmc2160
-{
-	GCONF = 0x00, GSTAT = 0x01, IOIN = 0x04, OTP_PROG = 0x06, OTP_READ = 0x07, FACTORY_CONF = 0x08, SHORT_CONF = 0x09, DRV_CONF = 0x0A, GLOBAL_SCALER = 0x0B,
-	OFFSET_READ = 0x60, IHOLD_IRUN = 0x10, TPOWERDOWN = 0x11, TSTEP = 0x12, TPWMTHRS = 0x13, TCOOLTHRS = 0x14, THIGH = 0x15, XDIRECT = 0x2D, VDCMIN = 0x33,
-	MSLUT = 0x60, MSLUTSEL = 0x68, MSLUTSTART = 0x69, MSCNT = 0x6A, MSCURACT = 0x6B, CHOPCONF = 0x6C, COOLCONF = 0x6D, DCCTRL = 0x6E, DRV_STATUS = 0x6F,
-	PWMCONF = 0x70, PWM_SCALE = 0x71, PWM_AUTO = 0x72, LOST_STEPS = 0x73
 };
