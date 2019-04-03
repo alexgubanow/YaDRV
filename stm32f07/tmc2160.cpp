@@ -99,28 +99,17 @@ void tmc2160_init(void)
 unsigned int tmc2160_SPI_read(unsigned int addr)
 {
 	txPacket txBuff = { RD };
-	//uint8_t txBuff[5] = { 0 };
 	uint8_t rxBuff[5] = { 0 };
 	txBuff.access = RD;
 	txBuff.addr = addr;
-	//txBuff[0] = 0x12;
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_RESET);
 	HAL_SPI_Transmit(&hspi1, (uint8_t*)& txBuff, 5, 1);
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_RESET);
 	HAL_SPI_Receive(&hspi1, (uint8_t*)& rxBuff, 5, 1);
-	///*if (HAL_SPI_Receive_DMA(&hspi1, (uint8_t*)& rxBuff, 5) != HAL_OK) {
-	//	Error_Handler();
-	//}*/
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
-	//rxPacket rxAnswer = { RD };
-	unsigned int dscdscd = *(unsigned int*)&rxBuff;
-	unsigned int dscd = rxBuff[1] | (rxBuff[2] << 8) | (rxBuff[3] << 16) | (rxBuff[4] << 24) | (rxBuff[5] << 32);
-	unsigned int ads = __REV(dscd);
-	//rxAnswer = *(rxPacket*)& dscd;
-	//return dscd;
 	tmc2160status = *(SPI_STATUS_t*)& rxBuff[0];
-	return __REV( rxBuff[1] | (rxBuff[2] << 8) | (rxBuff[3] << 16) | (rxBuff[4] << 24) | (rxBuff[5] << 32));
+	return __REV( rxBuff[1] | (rxBuff[2] << 8) | (rxBuff[3] << 16) | (rxBuff[4] << 24));
 }
 
 unsigned int tmc2160_SPI_write(unsigned int addr, unsigned int val)
@@ -139,6 +128,6 @@ unsigned int tmc2160_SPI_write(unsigned int addr, unsigned int val)
 	HAL_SPI_Receive(&hspi1, (uint8_t*)& rxBuff, 5, 1);
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
 	tmc2160status = *(SPI_STATUS_t*)& rxBuff[0];
-	return __REV(rxBuff[1] | (rxBuff[2] << 8) | (rxBuff[3] << 16) | (rxBuff[4] << 24) | (rxBuff[5] << 32));
+	return __REV(rxBuff[1] | (rxBuff[2] << 8) | (rxBuff[3] << 16) | (rxBuff[4] << 24));
 	//return rxBuff[0];
 }
