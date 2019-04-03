@@ -5,6 +5,7 @@
 #include "usart.h"
 #include "gpio.h"
 #include "tmc2160.h"
+#include "comPort.h"
 #pragma endregion
 
 #pragma region Private function prototypes
@@ -28,6 +29,7 @@ int main(void)
 	//HAL_Delay(3000);
 	tmc2160_init();
 	MX_USART1_UART_Init();
+	comPortStart();
 	/* Infinite loop */
 	while (1)
 	{

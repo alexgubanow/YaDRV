@@ -495,6 +495,9 @@
     <ClCompile Include="stm32f0xx_it.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="comPort.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -516,6 +519,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="tmc2160REGS.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="comPort.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -47,6 +47,7 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="comPort.cpp" />
     <ClCompile Include="gpio.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="spi.c" />
@@ -54,6 +55,7 @@
     <ClCompile Include="system_stm32f0xx.c" />
     <ClCompile Include="tmc2160.cpp" />
     <ClCompile Include="usart.c" />
+    <ClInclude Include="comPort.h" />
     <ClInclude Include="stm32f0xx_it.h" />
     <ClInclude Include="tmc2160.h" />
     <ClInclude Include="tmc2160REGS.h" />
