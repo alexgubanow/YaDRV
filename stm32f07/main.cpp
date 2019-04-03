@@ -25,11 +25,20 @@ int main(void)
 	MX_GPIO_Init();
 	MX_SPI1_Init();
 	MX_USART1_UART_Init();
-
 	/* Infinite loop */
 	while (1)
 	{
-		tmc2160_init();
+	tmc2160_init();
+	HAL_Delay(1000);
+		/*HAL_GPIO_TogglePin(LEDR_GPIO_Port, LEDR_Pin);
+		HAL_GPIO_TogglePin(LEDG_GPIO_Port, LEDG_Pin);
+		HAL_GPIO_TogglePin(LEDY_GPIO_Port, LEDY_Pin);
+		HAL_Delay(500);
+		HAL_GPIO_TogglePin(LEDR_GPIO_Port, LEDR_Pin);
+		HAL_GPIO_TogglePin(LEDG_GPIO_Port, LEDG_Pin);
+		HAL_GPIO_TogglePin(LEDY_GPIO_Port, LEDY_Pin);
+		HAL_Delay(500);*/
+		//tmc2160_init();
 	}
 }
 
@@ -48,7 +57,7 @@ void SystemClock_Config(void)
 	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 	RCC_PeriphCLKInitTypeDef PeriphClkInit = { 0 };
 
-	/**Initializes the CPU, AHB and APB busses clocks 
+	/**Initializes the CPU, AHB and APB busses clocks
 	*/
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
 	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
@@ -61,10 +70,10 @@ void SystemClock_Config(void)
 	{
 		Error_Handler();
 	}
-	/**Initializes the CPU, AHB and APB busses clocks 
+	/**Initializes the CPU, AHB and APB busses clocks
 	*/
 	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
-	                            | RCC_CLOCKTYPE_PCLK1;
+		| RCC_CLOCKTYPE_PCLK1;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
@@ -81,26 +90,6 @@ void SystemClock_Config(void)
 	}
 }
 
-/**
-  * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM17 interrupt took place, inside
-  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
-  * @param  htim : TIM handle
-  * @retval None
-  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-	/* USER CODE BEGIN Callback 0 */
-
-	/* USER CODE END Callback 0 */
-	if (htim->Instance == TIM17) {
-		HAL_IncTick();
-	}
-	/* USER CODE BEGIN Callback 1 */
-
-	/* USER CODE END Callback 1 */
-}
 /**
   * @brief  This function is executed in case of error occurrence.
   * @retval None

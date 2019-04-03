@@ -486,9 +486,6 @@
     <ClCompile Include="spi.c">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="stm32f0xx_hal_msp.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="usart.c">
       <Filter>Source files</Filter>
     </ClCompile>
