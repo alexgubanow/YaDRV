@@ -61,12 +61,38 @@ typedef struct txPacket_t
 SPI_STATUS tmc2160status;
 
 void tmc_2160_ReadRegMap();
+void tmc2160_WriteReg(tmc2160 reg);
 
 void tmc2160_init(void)
 {
+	//has to be 0x30000040
+	int tmp = tmc2160_SPI_read(IOIN);
 	tmc_2160_ReadRegMap();
+	CHOPCONF_r.toff = 3;
+	CHOPCONF_r.HSTRT_TFD = 4;
+	CHOPCONF_r.HEND_OFFSET = 1;
+	CHOPCONF_r.tbl = 2;
+	CHOPCONF_r.chm = 0;
+	tmc2160_WriteReg(CHOPCONF);
+	IHOLD_IRUN_r.IHOLD = 10;
+	IHOLD_IRUN_r.IRUN = 31;
+	IHOLD_IRUN_r.IHOLDDELAY = 6;
+	tmc2160_WriteReg(IHOLD_IRUN);
+	TPOWERDOWN_r.value = 10;
+	tmc2160_WriteReg(TPOWERDOWN);
+	GCONF_r.en_pwm_mode = 1;
+	tmc2160_WriteReg(GCONF);
+	TPWMTHRS_r.value = 500;
+	tmc2160_WriteReg(TPWMTHRS);
 }
 
+void tmc2160_WriteReg(tmc2160 reg)
+{
+	for (size_t i = 0; i < 31; i++)
+	{
+		if (reg == tmc2160addr[i]) { tmc2160_SPI_write(reg, *tmc2160regs[i]); break; }
+	}
+}
 void tmc_2160_ReadRegMap()
 {
 	for (size_t i = 0; i < 31; i++)
@@ -88,7 +114,7 @@ int tmc2160_SPI_read(unsigned int addr)
 	HAL_SPI_Receive(&hspi1, (uint8_t*)& rxBuff, 5, 1);
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
 	tmc2160status = *(SPI_STATUS_t*)& rxBuff[0];
-	return __REV( rxBuff[1] | (rxBuff[2] << 8) | (rxBuff[3] << 16) | (rxBuff[4] << 24));
+	return __REV(rxBuff[1] | (rxBuff[2] << 8) | (rxBuff[3] << 16) | (rxBuff[4] << 24));
 }
 
 int tmc2160_SPI_write(unsigned int addr, int val)
