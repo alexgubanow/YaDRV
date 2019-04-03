@@ -59,44 +59,23 @@ typedef struct txPacket_t
 }txPacket;
 
 SPI_STATUS tmc2160status;
-void loadRegs()
+
+void tmc_2160_ReadRegMap();
+
+void tmc2160_init(void)
 {
-	for (size_t i = 0; i < 1; i++)
+	tmc_2160_ReadRegMap();
+}
+
+void tmc_2160_ReadRegMap()
+{
+	for (size_t i = 0; i < 31; i++)
 	{
-		tmc2160addr[i];
+		*tmc2160regs[i] = tmc2160_SPI_read(tmc2160addr[i]);
 	}
 }
 
-extern DMA_HandleTypeDef hdma_spi1_rx;
-extern DMA_HandleTypeDef hdma_spi1_tx;
-int k = 0;
-void tmc2160_init(void)
-{
-	/*int tmp = tmc2160_SPI_write(GSTAT, k);
-	k++;
-	if (k>2)
-	{
-		k = 0;
-	}*/
-	unsigned int tmp = tmc2160_SPI_read(IOIN);
-	/*
-	tmp = tmc2160_SPI_write(IHOLD_IRUN, 0x00011F10);
-	tmp = tmc2160_SPI_write(IHOLD_IRUN, 0x00021807);*/
-	IOIN_r = *(IOIN_t*)& tmp;
-	tmp = 805306432;
-	IOIN_r = *(IOIN_t*)& tmp;
-	GCONF_r = {};
-	GCONF_r.recalibrate = 1;
-	GCONF_r.test_mode = 1;
-	////std::cout << (*((GCONF_t *)tmc2160regs[0])).recalibrate;
-	////std::cout << (*((GCONF_t *)tmc2160regs[0])).test_mode;
-	//(*((GCONF_t*)tmc2160regs[0])).diag0_error = 1;
-	//(*((GCONF_t*)tmc2160regs[0])).diag0_int_pushpull = 1;
-	////std::cout << GCONF_r.diag0_error;
-	////std::cout << GCONF_r.diag0_int_pushpull;
-}
-
-unsigned int tmc2160_SPI_read(unsigned int addr)
+int tmc2160_SPI_read(unsigned int addr)
 {
 	txPacket txBuff = { RD };
 	uint8_t rxBuff[5] = { 0 };
@@ -112,15 +91,13 @@ unsigned int tmc2160_SPI_read(unsigned int addr)
 	return __REV( rxBuff[1] | (rxBuff[2] << 8) | (rxBuff[3] << 16) | (rxBuff[4] << 24));
 }
 
-unsigned int tmc2160_SPI_write(unsigned int addr, unsigned int val)
+int tmc2160_SPI_write(unsigned int addr, int val)
 {
 	txPacket txBuff = { RD };
-	//uint8_t txBuff[5] = { 0 };
 	uint8_t rxBuff[5] = { 0 };
 	txBuff.access = WR;
 	txBuff.addr = addr;
 	txBuff.val = val;
-	//txBuff[0] = 0x12;
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_RESET);
 	HAL_SPI_Transmit(&hspi1, (uint8_t*)& txBuff, 5, 1);
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
@@ -129,5 +106,4 @@ unsigned int tmc2160_SPI_write(unsigned int addr, unsigned int val)
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
 	tmc2160status = *(SPI_STATUS_t*)& rxBuff[0];
 	return __REV(rxBuff[1] | (rxBuff[2] << 8) | (rxBuff[3] << 16) | (rxBuff[4] << 24));
-	//return rxBuff[0];
 }

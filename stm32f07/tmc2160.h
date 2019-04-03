@@ -10,5 +10,5 @@ typedef struct SPI_STATUS_t
 }SPI_STATUS;
 extern SPI_STATUS tmc2160status;
 void tmc2160_init(void);
-unsigned int tmc2160_SPI_read(unsigned int addr);
-unsigned int tmc2160_SPI_write(unsigned int addr, unsigned int val);
+int tmc2160_SPI_read(unsigned int addr);
+int tmc2160_SPI_write(unsigned int addr, int val);
