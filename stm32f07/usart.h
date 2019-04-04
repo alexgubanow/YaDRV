@@ -49,7 +49,7 @@
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
-
+#define UART_ADDR 0xD
 extern UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN Private defines */
