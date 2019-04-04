@@ -67,10 +67,12 @@ void tmc2160_init(void)
 {
 	//has to be 0x30000040 or 0x30000050
 	int tmp = tmc2160_SPI_read(IOIN);
-	while (tmp != 0x30000040)
+	IOIN_r = *(IOIN_t*)& tmp;
+	while (IOIN_r.hasTObeONE != 1 && IOIN_r.VERSION < 0x30 )
 	{
 		HAL_GPIO_WritePin(LEDR_GPIO_Port, LEDR_Pin, GPIO_PIN_SET);
 		tmp = tmc2160_SPI_read(IOIN);
+		IOIN_r = *(IOIN_t*)& tmp;
 	}
 	HAL_GPIO_WritePin(LEDR_GPIO_Port, LEDR_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(LEDG_GPIO_Port, LEDG_Pin, GPIO_PIN_SET);
