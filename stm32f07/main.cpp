@@ -33,7 +33,10 @@ int main(void)
 	/* Infinite loop */
 	while (1)
 	{
-		HAL_Delay(1000);
+		if (newRQ)
+		{
+			parseComPortRQ();
+		}
 		/*HAL_GPIO_TogglePin(LEDR_GPIO_Port, LEDR_Pin);
 		HAL_GPIO_TogglePin(LEDG_GPIO_Port, LEDG_Pin);
 		HAL_GPIO_TogglePin(LEDY_GPIO_Port, LEDY_Pin);

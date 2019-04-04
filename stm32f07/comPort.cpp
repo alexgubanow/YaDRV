@@ -1,87 +1,69 @@
 #include "comPort.h"
 #include "usart.h"
 #include <stm32f0xx_hal.h>
+#include <string.h>
+#include "tmc2160.h"
+
+extern SPI_STATUS tmc2160status;
 
 enum accessType { RD = 0, WR = 1 };
-enum commType { tmc = 0xA5, pc = 0x13 };
+
+typedef struct DRV_STATUS_t
+{
+	unsigned int reset_flag : 1;
+	unsigned int driver_error : 1;
+	unsigned int sg2 : 1;
+	unsigned int standstill : 1;
+	unsigned int errorDrvCode : 4;
+}DRV_STATUS;
 
 typedef struct rqPacket_t
 {
 	unsigned int addr : 7;
 	accessType access : 1;
-	unsigned int val;
+	int val;
 }rqPacket;
 
-constexpr int MAX_RX = 64;
+typedef struct answerPacket_t
+{
+	SPI_STATUS status;
+	int val;
+}answerPacket;
 
-//rqType rq;
-
-uint8_t rxBuff[MAX_RX] = { 0 };
-
+uint8_t rxBuff[5] = { 0 };
 rqPacket rq = { 0 };
-
-int topOfStack = 0;
-int rxIdx = 0;
-int knownRQ = 0;
+int newRQ = 0;
+DRV_STATUS drvStatus = { 0 };
+answerPacket txBuff = { 0 };
 
 void comPortStart()
 {
-	HAL_UART_Receive_IT(&huart1, (uint8_t *)&rxBuff[topOfStack], 1);
+	HAL_UART_Receive_IT(&huart1, rxBuff, 5);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
-	topOfStack++;
-	if (topOfStack > MAX_RX - 1)
+	memcpy((uint8_t*)& rq, rxBuff, 5);
+	HAL_UART_Receive_IT(&huart1, rxBuff, 5);
+	newRQ = 1;
+}
+
+void parseComPortRQ()
+{
+	int val = 0;
+	if (rq.addr < 0x73)
 	{
-		topOfStack = 0;
-	}
-	HAL_UART_Receive_IT(&huart1, &rxBuff[topOfStack], 1);
-	if (!knownRQ)
-	{
-		parseRX(topOfStack - 1);
-	}
-	else
-	{
-		if (topOfStack - rxIdx == 6)
+		if (rq.access == RD)
 		{
-			parseRQ(rxIdx);
+			val = tmc2160_SPI_read(rq.addr);
+		}
+		else
+		{
+			val = tmc2160_SPI_write(rq.addr, rq.val);
 		}
 	}
-}
-
-void parseRX(int idx)
-{
-	switch (rxBuff[idx])
-	{
-	case tmc:
-		knownRQ = 1;
-		rxIdx = idx;
-		break;
-	case pc:
-		knownRQ = 1;
-		rxIdx = idx;
-		break;
-	}
-}
-
-void parseRQ(int idx)
-{
-	knownRQ = 0;
-	switch (rxBuff[idx])
-	{
-	case tmc:
-		//
-		talkToTMC();
-		//HAL_UART_Transmit_DMA(&huart1, (uint8_t*)& rq, 1);
-		break;
-	case pc:
-		break;
-	}
-	HAL_UART_Receive_IT(&huart1, (uint8_t*)& rq, 1);
-}
-
-int talkToTMC()
-{
-
+	txBuff.status = tmc2160status;
+	txBuff.val = val;
+	HAL_UART_Transmit_DMA(&huart1, (uint8_t*)& txBuff, 5);
+	newRQ = 0;
 }
