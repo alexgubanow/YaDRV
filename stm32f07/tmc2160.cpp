@@ -55,7 +55,7 @@ typedef struct txPacket_t
 {
 	unsigned int addr : 7;
 	accessType access : 1;
-	unsigned int val;
+	int val;
 }txPacket;
 
 SPI_STATUS tmc2160status;
