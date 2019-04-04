@@ -1,4 +1,4 @@
 #pragma once
-int newRQ;
+extern int gotRQ;
 void comPortStart();
 void parseComPortRQ();

@@ -6,7 +6,7 @@
   ******************************************************************************
   ** This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
-  * USER CODE END. Other portions of this file, whether 
+  * USER CODE END. Other portions of this file, whether
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
@@ -37,7 +37,7 @@
   ******************************************************************************
   */
 
-/* Includes ------------------------------------------------------------------*/
+  /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
@@ -52,25 +52,24 @@ DMA_HandleTypeDef hdma_usart1_tx;
 
 void MX_USART1_UART_Init(void)
 {
-
-  huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
-  huart1.Init.WordLength = UART_WORDLENGTH_9B;
-  huart1.Init.StopBits = UART_STOPBITS_1;
-  huart1.Init.Parity = UART_PARITY_NONE;
-  huart1.Init.Mode = UART_MODE_TX_RX;
-  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
-  huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_MultiProcessor_Init(&huart1, UART_ADDR, UART_WAKEUPMETHOD_ADDRESSMARK) != HAL_OK)
-  {
-	  Error_Handler();
-  }
-  if (HAL_MultiProcessorEx_AddressLength_Set(&huart1, UART_ADDRESS_DETECT_4B) != HAL_OK)
-  {
-	  Error_Handler();
-  }
+	huart1.Instance = USART1;
+	huart1.Init.BaudRate = 115200;
+	huart1.Init.WordLength = UART_WORDLENGTH_9B;
+	huart1.Init.StopBits = UART_STOPBITS_1;
+	huart1.Init.Parity = UART_PARITY_NONE;
+	huart1.Init.Mode = UART_MODE_TX_RX;
+	huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+	huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+	huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+	if (HAL_MultiProcessor_Init(&huart1, UART_ADDR, UART_WAKEUPMETHOD_ADDRESSMARK) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	if (HAL_MultiProcessorEx_AddressLength_Set(&huart1, UART_ADDRESS_DETECT_4B) != HAL_OK)
+	{
+		Error_Handler();
+	}
 }
 
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
@@ -132,11 +131,11 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 		/* USART1 interrupt Init */
 		HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
 		HAL_NVIC_EnableIRQ(USART1_IRQn);
+	}
 }
 
 void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 {
-
 	if (uartHandle->Instance == USART1)
 	{
 		/* USER CODE BEGIN USART1_MspDeInit 0 */
@@ -161,10 +160,4 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 		/* USER CODE END USART1_MspDeInit 1 */
 	}
-} 
-
-/* USER CODE BEGIN 1 */
-
-/* USER CODE END 1 */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+}

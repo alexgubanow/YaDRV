@@ -33,7 +33,7 @@ int main(void)
 	/* Infinite loop */
 	while (1)
 	{
-		if (newRQ)
+		if (gotRQ)
 		{
 			parseComPortRQ();
 		}

@@ -8,14 +8,14 @@ extern SPI_STATUS tmc2160status;
 
 enum accessType { RD = 0, WR = 1 };
 
-typedef struct DRV_STATUS_t
+typedef struct DRV_STAT_t
 {
 	unsigned int reset_flag : 1;
 	unsigned int driver_error : 1;
 	unsigned int sg2 : 1;
 	unsigned int standstill : 1;
 	unsigned int errorDrvCode : 4;
-}DRV_STATUS;
+}DRV_STAT;
 
 typedef struct rqPacket_t
 {
@@ -32,8 +32,8 @@ typedef struct answerPacket_t
 
 uint8_t rxBuff[5] = { 0 };
 rqPacket rq = { 0 };
-int newRQ = 0;
-DRV_STATUS drvStatus = { 0 };
+int gotRQ = 0;
+DRV_STAT drvStatus = { 0 };
 answerPacket txBuff = { 0 };
 
 void comPortStart()
@@ -45,7 +45,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
 	memcpy((uint8_t*)& rq, rxBuff, 5);
 	HAL_UART_Receive_IT(&huart1, rxBuff, 5);
-	newRQ = 1;
+	gotRQ = 1;
 }
 
 void parseComPortRQ()
@@ -65,5 +65,5 @@ void parseComPortRQ()
 	txBuff.status = tmc2160status;
 	txBuff.val = val;
 	HAL_UART_Transmit_DMA(&huart1, (uint8_t*)& txBuff, 5);
-	newRQ = 0;
+	gotRQ = 0;
 }
