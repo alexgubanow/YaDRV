@@ -81,6 +81,7 @@ void tmc2160_init(void)
 	CHOPCONF_r.HEND_OFFSET = 1;
 	CHOPCONF_r.tbl = 2;
 	CHOPCONF_r.chm = 0;
+	//CHOPCONF_r.MRES = 4;
 	tmc2160_WriteReg(CHOPCONF);
 	IHOLD_IRUN_r.IHOLD = 10;
 	IHOLD_IRUN_r.IRUN = 31;
@@ -90,7 +91,7 @@ void tmc2160_init(void)
 	tmc2160_WriteReg(TPOWERDOWN);
 	GCONF_r.en_pwm_mode = 1;
 	tmc2160_WriteReg(GCONF);
-	TPWMTHRS_r.value = 500;
+	TPWMTHRS_r.value = 200;
 	tmc2160_WriteReg(TPWMTHRS);
 	HAL_GPIO_WritePin(LEDG_GPIO_Port, LEDG_Pin, GPIO_PIN_SET);
 }

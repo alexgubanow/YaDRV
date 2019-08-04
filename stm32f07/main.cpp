@@ -28,15 +28,15 @@ int main(void)
 	MX_SPI1_Init();
 	//HAL_Delay(3000);
 	tmc2160_init();
-	MX_USART1_UART_Init();
-	comPortStart();
+	/*MX_USART1_UART_Init();
+	comPortStart();*/
 	/* Infinite loop */
 	while (1)
 	{
-		if (gotRQ)
+		/*if (gotRQ)
 		{
 			parseComPortRQ();
-		}
+		}*/
 		/*HAL_GPIO_TogglePin(LEDR_GPIO_Port, LEDR_Pin);
 		HAL_GPIO_TogglePin(LEDG_GPIO_Port, LEDG_Pin);
 		HAL_GPIO_TogglePin(LEDY_GPIO_Port, LEDY_Pin);
@@ -46,6 +46,10 @@ int main(void)
 		HAL_GPIO_TogglePin(LEDY_GPIO_Port, LEDY_Pin);
 		HAL_Delay(500);*/
 		//tmc2160_init();
+		HAL_GPIO_TogglePin(LEDY_GPIO_Port, LEDY_Pin);
+		HAL_Delay(250);
+		HAL_GPIO_TogglePin(LEDY_GPIO_Port, LEDY_Pin);
+		HAL_Delay(250);
 	}
 }
 
