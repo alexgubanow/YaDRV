@@ -498,6 +498,9 @@
     <ClCompile Include="comPort.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="tmc2590.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -522,6 +525,12 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="comPort.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="tmc2590.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="tmc2590defs.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
