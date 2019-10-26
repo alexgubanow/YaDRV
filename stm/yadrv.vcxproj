@@ -16,6 +16,7 @@
     <BSP_ID>com.sysprogs.arm.stm32</BSP_ID>
     <BSP_VERSION>2019.06</BSP_VERSION>
     <InPlaceBSPSubdir />
+    <ProjectName>stm</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
@@ -87,6 +88,9 @@
     <ClCompile Include="Src\stm32f0xx_it.c" />
     <ClCompile Include="Src\stm32f0xx_hal_msp.c" />
     <ClCompile Include="Src\main.c" />
+    <ClCompile Include="tmc\tmc2590.cpp" />
+    <ClInclude Include="tmc\tmc2590.h" />
+    <ClInclude Include="tmc\tmc2590defs.h" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\StartupFiles\startup_stm32f070x6.c" />
     <ClInclude Include="Inc\gpio.h" />

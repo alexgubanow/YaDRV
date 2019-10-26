@@ -573,5 +573,16 @@
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h">
       <Filter>Header files\Device-specific files\USB Device</Filter>
     </ClInclude>
+    <ClCompile Include="tmc\tmc2590.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="tmc\tmc2590.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="tmc\tmc2590defs.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
