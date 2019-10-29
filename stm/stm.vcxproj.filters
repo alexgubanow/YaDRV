@@ -2,74 +2,47 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source files">
-      <UniqueIdentifier>{5c3c6539-b7b6-4635-9433-71169a901b87}</UniqueIdentifier>
+      <UniqueIdentifier>{e2f275c8-2bda-4bb5-86de-030a9a0a02db}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Header files">
-      <UniqueIdentifier>{2a69f777-8fb1-4086-ab3f-347ad714c278}</UniqueIdentifier>
+      <UniqueIdentifier>{0c37ac5d-dbef-4035-b4fa-a0f88a340038}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Resource files">
-      <UniqueIdentifier>{90d154ea-7034-487e-b478-81a7ff2179a3}</UniqueIdentifier>
+      <UniqueIdentifier>{396ba036-6b04-45db-b981-ee4d5e3b9e41}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="Source files\Device-specific files">
-      <UniqueIdentifier>{fd60468c-5cc9-44d3-84ce-d5d897dd2b56}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header files\Device-specific files">
-      <UniqueIdentifier>{6ec96bd3-56cc-41f4-8b11-023fb1839cc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="VisualGDB settings">
-      <UniqueIdentifier>{6a01bc32-85aa-4e0e-9fec-d3d24c3eb24c}</UniqueIdentifier>
+      <UniqueIdentifier>{313b22a8-79f0-49b2-926f-0f92005ba1cd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source files\Device-specific files\HAL">
-      <UniqueIdentifier>{85e0be26-e1b9-4acb-ba47-6afda3401f32}</UniqueIdentifier>
+      <UniqueIdentifier>{7bd185b6-016d-4716-9fd9-d91963f4fcf2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source files\Device-specific files\LL">
-      <UniqueIdentifier>{d9047b1f-0524-4bf8-8709-48bef217f5f5}</UniqueIdentifier>
+      <UniqueIdentifier>{2a6a10d6-84b7-4ce2-a38e-d05b21f255a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Device-specific files">
+      <UniqueIdentifier>{cd4c7d65-4e33-4e05-a23a-1cda4aa825b2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header files\Device-specific files\HAL">
-      <UniqueIdentifier>{28644e88-ce5b-4ebf-b015-d470792178e0}</UniqueIdentifier>
+      <UniqueIdentifier>{6a95a272-d000-41eb-b85c-918f08fdafb5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header files\Device-specific files\LL">
-      <UniqueIdentifier>{876ced38-d41f-41a9-974a-34dc02b81cf6}</UniqueIdentifier>
+      <UniqueIdentifier>{7e009849-9cf4-4bd9-b6d4-d66aaf87442e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{ed5c424c-29c1-47ce-a2f5-04c5f190dc8f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source files\Device-specific files\USB Device">
-      <UniqueIdentifier>{553c0304-a276-4cf6-97b5-97f3270248f5}</UniqueIdentifier>
+      <UniqueIdentifier>{9894e8c6-b8a7-4e42-9633-ce42c8fbf067}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header files\Device-specific files\USB Device">
-      <UniqueIdentifier>{e699ba37-e92e-4f9d-9daf-8b878eff5c1a}</UniqueIdentifier>
+      <UniqueIdentifier>{7a7c1f5e-bd46-43ad-bf8e-27d70a0fe088}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\gpio.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\spi.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\tim.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\usb_device.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\usbd_conf.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\usbd_desc.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\usbd_custom_hid_if.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\stm32f0xx_it.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\stm32f0xx_hal_msp.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\main.c">
+    <ClCompile Include="system_stm32f0xx.c">
       <Filter>Source files</Filter>
     </ClCompile>
     <None Include="stm32.props">
@@ -78,45 +51,6 @@
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\StartupFiles\startup_stm32f070x6.c">
       <Filter>Source files\Device-specific files</Filter>
     </ClCompile>
-    <ClInclude Include="Inc\gpio.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\spi.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\tim.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\usb_device.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\usbd_conf.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\usbd_desc.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\usbd_custom_hid_if.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\stm32f0xx_it.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\stm32f0xx_hal_conf.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\main.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <None Include="yadrv-Debug.vgdbsettings">
-      <Filter>VisualGDB settings</Filter>
-    </None>
-    <None Include="yadrv-Release.vgdbsettings">
-      <Filter>VisualGDB settings</Filter>
-    </None>
-    <None Include="stm32.xml">
-      <Filter>VisualGDB settings</Filter>
-    </None>
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal.c">
       <Filter>Source files\Device-specific files\HAL</Filter>
     </ClCompile>
@@ -285,6 +219,9 @@
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_ll_utils.c">
       <Filter>Source files\Device-specific files\LL</Filter>
     </ClCompile>
+    <ClInclude Include="stm32f0xx_hal_conf.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal.h">
       <Filter>Header files\Device-specific files\HAL</Filter>
     </ClInclude>
@@ -546,6 +483,18 @@
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_ll_wwdg.h">
       <Filter>Header files\Device-specific files\LL</Filter>
     </ClInclude>
+    <None Include="stm-Debug.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="stm-Release.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="stm32.xml">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <ClCompile Include="main.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Class\CustomHID\Src\usbd_customhid.c">
       <Filter>Source files\Device-specific files\USB Device</Filter>
     </ClCompile>
@@ -573,15 +522,57 @@
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h">
       <Filter>Header files\Device-specific files\USB Device</Filter>
     </ClInclude>
-    <ClCompile Include="tmc\tmc2590.cpp">
+    <ClCompile Include="gpio.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="spi.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="stm32f0xx_it.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="tim.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="usb_device.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="usbd_conf.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="usbd_custom_hid_if.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="usbd_desc.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tmc\tmc2590.h">
+    <ClInclude Include="gpio.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="tmc\tmc2590defs.h">
+    <ClInclude Include="main.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="spi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="stm32f0xx_it.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="tim.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="usb_device.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="usbd_conf.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="usbd_custom_hid_if.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="usbd_desc.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

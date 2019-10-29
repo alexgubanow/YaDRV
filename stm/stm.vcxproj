@@ -12,11 +12,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{CEE8CB3F-1986-446D-B460-F0FA7DE96D9F}</ProjectGuid>
+    <ProjectGuid>{FF0D3D9E-4162-430C-A275-E0743E776C9A}</ProjectGuid>
     <BSP_ID>com.sysprogs.arm.stm32</BSP_ID>
     <BSP_VERSION>2019.06</BSP_VERSION>
     <InPlaceBSPSubdir />
-    <ProjectName>stm</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
@@ -42,35 +41,13 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
     <ClCompile>
-      <CPPLanguageStandard>
-      </CPPLanguageStandard>
-      <AdditionalIncludeDirectories>Inc;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Drivers\CMSIS\Include;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Drivers\STM32F0xx_HAL_Driver\Inc;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Drivers\STM32F0xx_HAL_Driver\Inc\Legacy;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Middlewares\ST\STM32_USB_Device_Library\Core\Inc;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Middlewares\ST\STM32_USB_Device_Library\Class\CustomHID\Inc;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>flash_layout;STM32F070x6;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalOptions />
-      <CLanguageStandard />
+      <CPPLanguageStandard>CPP1Z</CPPLanguageStandard>
     </ClCompile>
-    <Link>
-      <LibrarySearchDirectories>%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
-      <AdditionalLibraryNames>%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
-      <AdditionalLinkerInputs>%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
-      <AdditionalOptions />
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <ClCompile>
-      <CPPLanguageStandard>
-      </CPPLanguageStandard>
-      <AdditionalIncludeDirectories>Inc;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Drivers\CMSIS\Include;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Drivers\STM32F0xx_HAL_Driver\Inc;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Drivers\STM32F0xx_HAL_Driver\Inc\Legacy;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Middlewares\ST\STM32_USB_Device_Library\Core\Inc;..\..\..\..\STM32Cube\Repository\STM32Cube_FW_F0_V1.10.1\Middlewares\ST\STM32_USB_Device_Library\Class\CustomHID\Inc;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>flash_layout;STM32F070x6;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalOptions />
-      <CLanguageStandard />
+      <CPPLanguageStandard>CPP1Z</CPPLanguageStandard>
     </ClCompile>
-    <Link>
-      <LibrarySearchDirectories>%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
-      <AdditionalLibraryNames>%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
-      <AdditionalLinkerInputs>%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
-      <AdditionalOptions />
-    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
   </ItemGroup>
@@ -78,34 +55,24 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="Src\gpio.c" />
-    <ClCompile Include="Src\spi.c" />
-    <ClCompile Include="Src\tim.c" />
-    <ClCompile Include="Src\usb_device.c" />
-    <ClCompile Include="Src\usbd_conf.c" />
-    <ClCompile Include="Src\usbd_desc.c" />
-    <ClCompile Include="Src\usbd_custom_hid_if.c" />
-    <ClCompile Include="Src\stm32f0xx_it.c" />
-    <ClCompile Include="Src\stm32f0xx_hal_msp.c" />
-    <ClCompile Include="Src\main.c" />
-    <ClCompile Include="tmc\tmc2590.cpp" />
-    <ClInclude Include="tmc\tmc2590.h" />
-    <ClInclude Include="tmc\tmc2590defs.h" />
+    <ClCompile Include="gpio.c" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="spi.c" />
+    <ClCompile Include="stm32f0xx_it.c" />
+    <ClCompile Include="system_stm32f0xx.c" />
+    <ClCompile Include="tim.c" />
+    <ClCompile Include="usbd_conf.c" />
+    <ClCompile Include="usbd_custom_hid_if.c" />
+    <ClCompile Include="usbd_desc.c" />
+    <ClCompile Include="usb_device.c" />
+    <ClInclude Include="stm32f0xx_it.h" />
+    <ClInclude Include="tim.h" />
+    <ClInclude Include="usbd_conf.h" />
+    <ClInclude Include="usbd_custom_hid_if.h" />
+    <ClInclude Include="usbd_desc.h" />
+    <ClInclude Include="usb_device.h" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\StartupFiles\startup_stm32f070x6.c" />
-    <ClInclude Include="Inc\gpio.h" />
-    <ClInclude Include="Inc\spi.h" />
-    <ClInclude Include="Inc\tim.h" />
-    <ClInclude Include="Inc\usb_device.h" />
-    <ClInclude Include="Inc\usbd_conf.h" />
-    <ClInclude Include="Inc\usbd_desc.h" />
-    <ClInclude Include="Inc\usbd_custom_hid_if.h" />
-    <ClInclude Include="Inc\stm32f0xx_it.h" />
-    <ClInclude Include="Inc\stm32f0xx_hal_conf.h" />
-    <ClInclude Include="Inc\main.h" />
-    <None Include="yadrv-Debug.vgdbsettings" />
-    <None Include="yadrv-Release.vgdbsettings" />
-    <None Include="stm32.xml" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_adc.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_adc_ex.c" />
@@ -162,6 +129,10 @@
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_ll_tim.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_ll_usart.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_ll_utils.c" />
+    <ClInclude Include="gpio.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="spi.h" />
+    <ClInclude Include="stm32f0xx_hal_conf.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_adc.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_adc_ex.h" />
@@ -249,6 +220,9 @@
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_ll_usart.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_ll_utils.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_ll_wwdg.h" />
+    <None Include="stm-Debug.vgdbsettings" />
+    <None Include="stm-Release.vgdbsettings" />
+    <None Include="stm32.xml" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Class\CustomHID\Src\usbd_customhid.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_core.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c" />
