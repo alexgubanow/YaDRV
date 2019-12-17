@@ -61,12 +61,15 @@
     <ClCompile Include="stm32f0xx_it.c" />
     <ClCompile Include="system_stm32f0xx.c" />
     <ClCompile Include="tim.c" />
+    <ClCompile Include="tmc\tmc2590.cpp" />
     <ClCompile Include="usbd_conf.c" />
     <ClCompile Include="usbd_custom_hid_if.c" />
     <ClCompile Include="usbd_desc.c" />
     <ClCompile Include="usb_device.c" />
     <ClInclude Include="stm32f0xx_it.h" />
     <ClInclude Include="tim.h" />
+    <ClInclude Include="tmc\tmc2590.h" />
+    <ClInclude Include="tmc\tmc2590defs.h" />
     <ClInclude Include="usbd_conf.h" />
     <ClInclude Include="usbd_custom_hid_if.h" />
     <ClInclude Include="usbd_desc.h" />

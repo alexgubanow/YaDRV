@@ -45,14 +45,38 @@ typedef struct tmc2590_rxBuff_t
 };
 enum tmc2590 {
 	DRVCTRL = 0b000,
-	CHOPCONF = 0b001,
+	CHOPCONF = 0b100,
 	SMARTEN = 0b101,
-	SGCSCONF = 0b011,
+	SGCSCONF = 0b110,
 	DRVCONF = 0b111,
 	regsLength = 5
 };
 
-typedef struct DRVCTRL_t {
+typedef struct DRVCTRL_SDOFF_1_t {
+	/*Polarity A
+	Sign of current flow through coil A:
+0: Current flows from OA1 pins to OA2 pins.
+1: Current flows from OA2 pins to OA1 pins.*/
+	unsigned char  PHA : 1;
+	/*Current A
+	Magnitude of current flow through coil A. The range is
+0 to 248, if hysteresis or offset are used up to their full
+extent. The resulting value after applying hysteresis or
+offset must not exceed 255.*/
+	unsigned char  CA;
+	/*Polarity B
+	Sign of current flow through coil B:
+0: Current flows from OB1 pins to OB2 pins.
+1: Current flows from OB2 pins to OB1 pins.*/
+	unsigned char  PHB : 1;
+	/*Current B
+	Magnitude of current flow through coil B. The range is
+0 to 248, if hysteresis or offset are used up to their full
+extent. The resulting value after applying hysteresis or
+offset must not exceed 255.*/
+	unsigned char  CB;
+};
+typedef struct DRVCTRL_SDOFF_0_t {
 	unsigned char : 7;
 	/*Enable STEP interpolation
 	0: Disable STEP pulse interpolation
@@ -138,7 +162,7 @@ typedef struct SGCSCONF_t {
 	/*Current scale (scales digital currents A and B)*/
 	unsigned char  CS : 5;
 };
-typedef struct DRVCONF_t {
+typedef struct DRVCONF_SDOFF_1_t {
 	/*Reserved TEST mode
 	Must be cleared for normal operation. When set, the
 	SG_TST output exposes digital test values, and the

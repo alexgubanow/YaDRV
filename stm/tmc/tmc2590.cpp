@@ -33,7 +33,7 @@ void TMC2590::writeReg(tmc2590 reg)
 
 void TMC2590::SPI_write(unsigned char addr, int val)
 {
-	HAL_GPIO_WritePin(LEDY_GPIO_Port, LEDY_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(LEDY_GPIO_Port, LEDGRN_Pin, GPIO_PIN_SET);
 	tmc2590_txBuff_t txBuff;
 	tmc2590_rxBuff_t rxBuff;
 	txBuff.addr = addr;

@@ -5,7 +5,6 @@
 #include "tim.h"
 #include "usb_device.h"
 #include "gpio.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -41,7 +40,30 @@
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
+typedef struct spiBuff
+{
+	unsigned short w1 : 10;
+	unsigned short w2 : 10;
+};
 
+unsigned long writeSpi(unsigned long tx)
+{
+	spiBuff txBuff;
+	txBuff.w1 = tx >> 12;
+	txBuff.w2 = tx & 0x3FF;
+	//txBuff.w3 = __RBIT(tx) >> 28;
+	//unsigned long tx = __RBIT(0xFAA) >> 20;
+	unsigned long rx = 0;
+	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_RESET);
+	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)&txBuff, (uint8_t*)&rx, 2, 1);
+	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_SET);
+	return rx;
+}
+
+void delayUS(uint32_t us) {
+	volatile uint32_t counter = us;
+	while (counter--);
+}
 /**
   * @brief  The application entry point.
   * @retval int
@@ -71,50 +93,41 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_TIM14_Init();
-	MX_SPI1_Init();
-	MX_USB_DEVICE_Init();
-	/* USER CODE BEGIN 2 */
-	HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_SET);
 	HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_SET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_RESET);
+	/*HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, GPIO_PIN_5, GPIO_PinState::GPIO_PIN_SET);
+	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, GPIO_PIN_7, GPIO_PinState::GPIO_PIN_SET);*/
+	//MX_TIM14_Init();
+	MX_SPI1_Init();
+	//MX_USB_DEVICE_Init();
+	/* USER CODE BEGIN 2 */
+	HAL_GPIO_WritePin(STEP_GPIO_Port, STEP_Pin, GPIO_PinState::GPIO_PIN_SET);
+	HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_SET);
 	/* USER CODE END 2 */
-	HAL_TIM_PWM_Start(&htim14, TIM_CHANNEL_1);
+	//HAL_TIM_PWM_Start(&htim14, TIM_CHANNEL_1);
+	//TIM14->CCR1 = 1024;
 	/* Infinite loop */
-	unsigned long tx = 0x901B4;
 	unsigned long rx = 0;
-	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_RESET);
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)&tx, (uint8_t*)&rx, 2, 1);
-	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_SET);
-	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_RESET);
-	tx = 0xD001F;
-	rx = 0;
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)&tx, (uint8_t*)&rx, 2, 1);
-	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_SET);
-	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_RESET);
-	tx = 0xEF013;
-	rx = 0;
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)&tx, (uint8_t*)&rx, 2, 1);
-	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_SET);
-	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_RESET);
-	tx = 0x00000;
-	rx = 0;
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)&tx, (uint8_t*)&rx, 2, 1);
-	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_SET);
-	/* USER CODE BEGIN WHILE */
+	rx = writeSpi(0x901B4);
+	rx = writeSpi(0xD001F);
+	rx = writeSpi(0xEF013);
+	rx = writeSpi(0x0);
+	rx = writeSpi(0xA0222);
 	while (1)
 	{
-		/* USER CODE END WHILE */
-		HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_SET);
-		HAL_Delay(1000);
-		HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_RESET);
-		HAL_Delay(1000);
+		HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_SET);
+		delayUS(1);
+		HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_RESET);
+		delayUS(1);
+
 		/*HAL_GPIO_WritePin(GRN_LED_GPIO_Port, GRN_LED_Pin, GPIO_PinState::GPIO_PIN_RESET);
 		HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PinState::GPIO_PIN_SET);
 		HAL_Delay(500);
 		HAL_GPIO_WritePin(GRN_LED_GPIO_Port, GRN_LED_Pin, GPIO_PinState::GPIO_PIN_SET);
 		HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PinState::GPIO_PIN_RESET);
 		HAL_Delay(500);*/
-		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */
 }

@@ -546,6 +546,9 @@
     <ClCompile Include="usbd_desc.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="tmc\tmc2590.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gpio.h">
@@ -573,6 +576,12 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="usbd_desc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="tmc\tmc2590.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="tmc\tmc2590defs.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
