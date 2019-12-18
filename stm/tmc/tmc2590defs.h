@@ -1,8 +1,17 @@
 #pragma once
-typedef struct tmc2590_txBuff_t
+typedef struct spiBuff
 {
-	unsigned char addr : 3;
-	unsigned int data : 17;
+	unsigned short w1 : 10;
+	unsigned short w2 : 10;
+};
+typedef union tmc2590_txBuff_t
+{
+	struct
+	{
+		unsigned char addr : 3;
+		unsigned int data : 17;
+	}b;
+	unsigned int w;
 };
 typedef struct tmc2590_rxBuff_RDSEL00_t
 {
@@ -33,7 +42,7 @@ typedef struct tmc2590_rxBuff_RDSEL11_t
 typedef struct tmc2590_rxBuff_t
 {
 	unsigned short RDSELdata : 10;
-	unsigned int ctl : 2;//has to be zero, unless RDSEL is 2, than 2
+	unsigned char : 2;
 	unsigned char STST : 1;
 	unsigned char OLB : 1;
 	unsigned char OLA : 1;
@@ -162,7 +171,7 @@ typedef struct SGCSCONF_t {
 	/*Current scale (scales digital currents A and B)*/
 	unsigned char  CS : 5;
 };
-typedef struct DRVCONF_SDOFF_1_t {
+typedef struct DRVCONF_t {
 	/*Reserved TEST mode
 	Must be cleared for normal operation. When set, the
 	SG_TST output exposes digital test values, and the

@@ -1,64 +1,9 @@
-
-/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "spi.h"
 #include "tim.h"
 #include "usb_device.h"
 #include "gpio.h"
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
-/* USER CODE BEGIN PFP */
-
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-typedef struct spiBuff
-{
-	unsigned short w1 : 10;
-	unsigned short w2 : 10;
-};
-
-unsigned long writeSpi(unsigned long tx)
-{
-	spiBuff txBuff;
-	txBuff.w1 = tx >> 12;
-	txBuff.w2 = tx & 0x3FF;
-	//txBuff.w3 = __RBIT(tx) >> 28;
-	//unsigned long tx = __RBIT(0xFAA) >> 20;
-	unsigned long rx = 0;
-	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_RESET);
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)&txBuff, (uint8_t*)&rx, 2, 1);
-	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_SET);
-	return rx;
-}
+#include <tmc\tmc2590.h>
 
 void delayUS(uint32_t us) {
 	volatile uint32_t counter = us;
@@ -70,37 +15,37 @@ void delayUS(uint32_t us) {
   */
 int main(void)
 {
-	/* USER CODE BEGIN 1 */
-
-	/* USER CODE END 1 */
-
-
 	/* MCU Configuration--------------------------------------------------------*/
-
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
 	HAL_Init();
-
-	/* USER CODE BEGIN Init */
-
-	/* USER CODE END Init */
-
 	/* Configure the system clock */
 	SystemClock_Config();
-
-	/* USER CODE BEGIN SysInit */
-
-	/* USER CODE END SysInit */
-
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
+	MX_SPI1_Init();
+	HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PinState::GPIO_PIN_SET);
 	HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_SET);
 	HAL_Delay(200);
+	//to limit current for 1.6A with 0.075R sense resistor SGCSCONF_r.CS=31 and DRVCONF_r.VSENSE=1
+	DRVCONF_r.SDOFF = 0;
+	DRVCONF_r.VSENSE = 1;
+	DRVCONF_r.RDSEL = 0b11;
+	DRVCONF_r.SLPH = 0b11;
+	DRVCONF_r.SLPL = 0b11;
+	DRVCONF_r.SLP = 0;
+	DRVCONF_r.OTSENS = 1;
+	DRVCONF_r.EN_S2VS = 1;
+	TMC2590_writeReg(tmc2590::DRVCONF);
+	SGCSCONF_r.CS = 31;
+	TMC2590_writeReg(tmc2590::SGCSCONF);
+	DRVCTRL_r.INTPOL = 1;
+	TMC2590_writeReg(tmc2590::DRVCTRL);
 	HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PinState::GPIO_PIN_RESET);
 	/*HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, GPIO_PIN_5, GPIO_PinState::GPIO_PIN_SET);
 	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, GPIO_PIN_7, GPIO_PinState::GPIO_PIN_SET);*/
 	//MX_TIM14_Init();
-	MX_SPI1_Init();
 	//MX_USB_DEVICE_Init();
 	/* USER CODE BEGIN 2 */
 	HAL_GPIO_WritePin(STEP_GPIO_Port, STEP_Pin, GPIO_PinState::GPIO_PIN_SET);
@@ -109,12 +54,6 @@ int main(void)
 	//HAL_TIM_PWM_Start(&htim14, TIM_CHANNEL_1);
 	//TIM14->CCR1 = 1024;
 	/* Infinite loop */
-	unsigned long rx = 0;
-	rx = writeSpi(0x901B4);
-	rx = writeSpi(0xD001F);
-	rx = writeSpi(0xEF013);
-	rx = writeSpi(0x0);
-	rx = writeSpi(0xA0222);
 	while (1)
 	{
 		HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_SET);
