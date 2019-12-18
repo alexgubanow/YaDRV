@@ -22,23 +22,23 @@ int main(void)
 	SystemClock_Config();
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_SPI1_Init();
+	//MX_SPI1_Init();
 	HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PinState::GPIO_PIN_SET);
 	HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_SET);
 	HAL_Delay(200);
 	//to limit current for 1.6A with 0.075R sense resistor SGCSCONF_r.CS=31 and DRVCONF_r.VSENSE=1
-	DRVCONF_r.SDOFF = 0;
-	DRVCONF_r.VSENSE = 1;
-	DRVCONF_r.RDSEL = 0b11;
-	DRVCONF_r.SLPH = 0b11;
-	DRVCONF_r.SLPL = 0b11;
-	DRVCONF_r.SLP = 0;
-	DRVCONF_r.OTSENS = 1;
-	DRVCONF_r.EN_S2VS = 1;
+	DRVCONF_r.b.SDOFF = 0;
+	DRVCONF_r.b.VSENSE = 1;
+	DRVCONF_r.b.RDSEL = 0b11;
+	DRVCONF_r.b.SLPH = 0b11;
+	DRVCONF_r.b.SLPL = 0b11;
+	DRVCONF_r.b.SLP = 0;
+	DRVCONF_r.b.OTSENS = 1;
+	DRVCONF_r.b.EN_S2VS = 1;
 	TMC2590_writeReg(tmc2590::DRVCONF);
-	SGCSCONF_r.CS = 31;
+	SGCSCONF_r.b.CS = 31;
 	TMC2590_writeReg(tmc2590::SGCSCONF);
-	DRVCTRL_r.INTPOL = 1;
+	DRVCTRL_r.b.INTPOL = 1;
 	TMC2590_writeReg(tmc2590::DRVCTRL);
 	HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PinState::GPIO_PIN_RESET);
@@ -56,10 +56,13 @@ int main(void)
 	/* Infinite loop */
 	while (1)
 	{
-		HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_SET);
+		/*HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_SET);
 		delayUS(1);
 		HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_RESET);
-		delayUS(1);
+		delayUS(1);*/
+		HAL_Delay(100);
+		//sendSPI(0xEF013);
+		TMC2590_writeReg(tmc2590::DRVCONF);
 
 		/*HAL_GPIO_WritePin(GRN_LED_GPIO_Port, GRN_LED_Pin, GPIO_PinState::GPIO_PIN_RESET);
 		HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PinState::GPIO_PIN_SET);

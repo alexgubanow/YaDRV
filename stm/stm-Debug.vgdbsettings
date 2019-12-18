@@ -90,7 +90,7 @@
     <DebugMethod>
       <ID>com.sysprogs.arm.openocd</ID>
       <Configuration xsi:type="com.visualgdb.edp.openocd.settings">
-        <CommandLine>-f interface/stlink-v2-1.cfg -c "transport select hla_swd" -f target/stm32f0x.cfg -c init -c "reset init"</CommandLine>
+        <CommandLine>-f interface/stlink.cfg -c "transport select hla_swd" -f target/stm32f0x.cfg -c init -c "reset init"</CommandLine>
         <ExtraParameters>
           <Frequency xsi:nil="true" />
           <BoostedFrequency xsi:nil="true" />
@@ -109,6 +109,7 @@
         <PreferredGDBPort>0</PreferredGDBPort>
         <PreferredTelnetPort>0</PreferredTelnetPort>
         <AlwaysPassSerialNumber>false</AlwaysPassSerialNumber>
+        <SelectedCoreIndex xsi:nil="true" />
       </Configuration>
     </DebugMethod>
     <AutoDetectRTOS>true</AutoDetectRTOS>

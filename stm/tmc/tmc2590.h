@@ -8,5 +8,7 @@ extern SMARTEN_t SMARTEN_r;
 extern SGCSCONF_t SGCSCONF_r;
 extern DRVCONF_t DRVCONF_r;
 
-void TMC2590_writeConfig();
+void TMC2590_writeConfig(void);
 void TMC2590_writeReg(tmc2590 reg);
+void TMC2590_SPI_write(tmc2590 addr, int val);
+void sendSPI(unsigned int val);
