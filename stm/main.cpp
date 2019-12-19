@@ -26,8 +26,13 @@ int main(void)
 	HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PinState::GPIO_PIN_SET);
 	HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_SET);
 	HAL_Delay(200);
+	sendSPI(0x94557);
+	sendSPI(0xD0010);
+	sendSPI(0xEF013);
+	sendSPI(0);
+	sendSPI(0xA0222);
 	//to limit current for 1.6A with 0.075R sense resistor SGCSCONF_r.CS=31 and DRVCONF_r.VSENSE=1
-	DRVCONF_r.b.SDOFF = 0;
+	/*DRVCONF_r.b.SDOFF = 0;
 	DRVCONF_r.b.VSENSE = 1;
 	DRVCONF_r.b.RDSEL = 0b11;
 	DRVCONF_r.b.SLPH = 0b11;
@@ -39,14 +44,15 @@ int main(void)
 	SGCSCONF_r.b.CS = 31;
 	TMC2590_writeReg(tmc2590::SGCSCONF);
 	DRVCTRL_r.b.INTPOL = 1;
-	TMC2590_writeReg(tmc2590::DRVCTRL);
+	TMC2590_writeReg(tmc2590::DRVCTRL);*/
 	HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PinState::GPIO_PIN_RESET);
+	
 	/*HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, SPI1_CSN_Pin, GPIO_PinState::GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, GPIO_PIN_5, GPIO_PinState::GPIO_PIN_SET);
 	HAL_GPIO_WritePin(SPI1_CSN_GPIO_Port, GPIO_PIN_7, GPIO_PinState::GPIO_PIN_SET);*/
 	//MX_TIM14_Init();
-	//MX_USB_DEVICE_Init();
+	//MX_USB_DEVICE_Init(); 
 	/* USER CODE BEGIN 2 */
 	HAL_GPIO_WritePin(STEP_GPIO_Port, STEP_Pin, GPIO_PinState::GPIO_PIN_SET);
 	HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_SET);
@@ -56,13 +62,15 @@ int main(void)
 	/* Infinite loop */
 	while (1)
 	{
+		DIR_GPIO_Port->BSRR = (uint32_t)DIR_Pin;
+		DIR_GPIO_Port->BRR = (uint32_t)DIR_Pin;
 		/*HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_SET);
-		delayUS(1);
+		delayUS(10);
 		HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_RESET);
-		delayUS(1);*/
-		HAL_Delay(100);
-		//sendSPI(0xEF013);
-		TMC2590_writeReg(tmc2590::DRVCONF);
+		delayUS(10);*/
+		//HAL_Delay(100);
+		////sendSPI(0xEF013);
+		//TMC2590_writeReg(tmc2590::DRVCONF);
 
 		/*HAL_GPIO_WritePin(GRN_LED_GPIO_Port, GRN_LED_Pin, GPIO_PinState::GPIO_PIN_RESET);
 		HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PinState::GPIO_PIN_SET);

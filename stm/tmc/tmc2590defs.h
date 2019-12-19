@@ -87,7 +87,7 @@ typedef union DRVCTRL_SDOFF_1_t {
 	1: Current flows from OA2 pins to OA1 pins.*/
 		unsigned char  PHA : 1;
 	}b;
-	unsigned int w : 20;
+	unsigned int w : 17;
 };
 typedef union DRVCTRL_SDOFF_0_t {
 	struct
@@ -115,7 +115,7 @@ typedef union DRVCTRL_SDOFF_0_t {
 		unsigned char INTPOL : 1;
 		unsigned char : 7;
 	}b;
-	unsigned int w : 20;
+	unsigned int w : 17;
 };
 typedef union CHOPCONF_t {
 	struct
@@ -155,7 +155,7 @@ typedef union CHOPCONF_t {
 		%11: 54*/
 		unsigned char TBL : 2;
 	}b;
-	unsigned int w : 20;
+	unsigned int w : 17;
 };
 typedef union SMARTEN_t {
 	struct
@@ -175,12 +175,11 @@ typedef union SMARTEN_t {
 		unsigned char  SEIMIN : 1;
 		unsigned char : 1;
 	}b;
-	unsigned int w : 20;
+	unsigned int w : 17;
 };
 typedef union SGCSCONF_t {
 	struct
 	{
-		unsigned int w : 20;
 		/*Current scale (scales digital currents A and B)*/
 		unsigned char  CS : 5;
 		unsigned char : 3;
@@ -190,7 +189,7 @@ typedef union SGCSCONF_t {
 		/*StallGuard2 filter enable*/
 		unsigned char  SFILT : 1;
 	}b;
-	unsigned int w : 20;
+	unsigned int w : 17;
 };
 typedef union DRVCONF_t {
 	struct
@@ -225,5 +224,5 @@ typedef union DRVCONF_t {
 		TEST_ANA output exposes analog test values. */
 		unsigned char  TST : 1;
 	}b;
-	unsigned int w : 20;
+	unsigned int w : 17;
 };
