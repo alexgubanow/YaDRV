@@ -61,9 +61,9 @@ int main(void)
 	//TIM14->CCR1 = 1024;
 	/* Infinite loop */
 	while (1)
-	{
+	{/*
 		DIR_GPIO_Port->BSRR = (uint32_t)DIR_Pin;
-		DIR_GPIO_Port->BRR = (uint32_t)DIR_Pin;
+		DIR_GPIO_Port->BRR = (uint32_t)DIR_Pin;*/
 		/*HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_SET);
 		delayUS(10);
 		HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PinState::GPIO_PIN_RESET);

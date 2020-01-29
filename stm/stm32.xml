@@ -7,7 +7,7 @@
     <Revision>1</Revision>
   </ToolchainVersion>
   <BspID>com.sysprogs.arm.stm32</BspID>
-  <BspVersion>2019.06</BspVersion>
+  <BspVersion>2019.12</BspVersion>
   <McuID>STM32F070F6</McuID>
   <MCUDefinitionFile>STM32F0xxxx/DeviceDefinitions/stm32f070x6.xml</MCUDefinitionFile>
   <MCUProperties>
@@ -31,6 +31,7 @@
     <string>com.sysprogs.arm.stm32.hal</string>
     <string>com.sysprogs.arm.stm32.ll</string>
     <string>com.sysprogs.arm.stm32.usbdev</string>
+    <string>com.sysprogs.arm.stm32.STM32F0_ll</string>
   </ReferencedFrameworks>
   <FrameworkProperties>
     <Entries>
