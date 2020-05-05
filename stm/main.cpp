@@ -28,9 +28,9 @@ int main(void)
 	HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_SET);
 	HAL_Delay(200);
 	sendSPI(0x94557);
-	sendSPI(0xD0010);
+	sendSPI(0xD0006);
 	sendSPI(0xEF013);
-	sendSPI(0);
+	sendSPI(0x183);
 	sendSPI(0xA0222);
 	//to limit current for 1.6A with 0.075R sense resistor SGCSCONF_r.CS=31 and DRVCONF_r.VSENSE=1
 	/*DRVCONF_r.b.SDOFF = 0;
