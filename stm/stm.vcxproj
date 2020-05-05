@@ -14,7 +14,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{FF0D3D9E-4162-430C-A275-E0743E776C9A}</ProjectGuid>
     <BSP_ID>com.sysprogs.arm.stm32</BSP_ID>
-    <BSP_VERSION>2019.12</BSP_VERSION>
+    <BSP_VERSION>2020.01</BSP_VERSION>
     <InPlaceBSPSubdir />
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -58,6 +58,7 @@
     <ClCompile Include="gpio.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="spi.c" />
+    <ClCompile Include="stm32f0xx_hal_msp.c" />
     <ClCompile Include="stm32f0xx_it.c" />
     <ClCompile Include="system_stm32f0xx.c" />
     <ClCompile Include="tim.c" />
@@ -181,24 +182,14 @@
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_usart.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_usart_ex.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_wwdg.h" />
-    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\Legacy\stm32f0xx_hal_can_legacy.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Device\ST\STM32F0xx\Include\stm32f0xx.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Device\ST\STM32F0xx\Include\system_stm32f0xx.h" />
-    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\arm_common_tables.h" />
-    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\arm_const_structs.h" />
-    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\arm_math.h" />
-    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\cmsis_armcc.h" />
-    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\cmsis_armcc_V6.h" />
-    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\cmsis_gcc.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_cm0.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_cm0plus.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_cm3.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_cm4.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_cm7.h" />
-    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_cmFunc.h" />
-    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_cmInstr.h" />
-    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_cmSimd.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_sc000.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_sc300.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\RTOS\Template\cmsis_os.h" />
@@ -226,10 +217,31 @@
     <None Include="stm-Debug.vgdbsettings" />
     <None Include="stm-Release.vgdbsettings" />
     <None Include="stm32.xml" />
+    <ClCompile Include="$(BSP_ROOT)\StackAndHeap\StackAndHeap.c" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\cmsis_armcc.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\cmsis_gcc.h" />
+    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_exti.c" />
+    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_usart_ex.c" />
+    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_ll_usb.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Class\CustomHID\Src\usbd_customhid.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_core.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_exti.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_ll_usb.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\Legacy\stm32f0xx_hal_can_legacy.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\cmsis_armclang.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\cmsis_compiler.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\cmsis_iccarm.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\cmsis_version.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_armv8mbl.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_armv8mml.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_cm1.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_cm23.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\core_cm33.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\mpu_armv7.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\mpu_armv8.h" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Include\tz_context.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Class\CustomHID\Inc\usbd_customhid.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Inc\usbd_core.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h" />

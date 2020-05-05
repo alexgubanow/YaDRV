@@ -7,7 +7,7 @@
     <Revision>1</Revision>
   </ToolchainVersion>
   <BspID>com.sysprogs.arm.stm32</BspID>
-  <BspVersion>2019.12</BspVersion>
+  <BspVersion>2020.01</BspVersion>
   <McuID>STM32F070F6</McuID>
   <MCUDefinitionFile>STM32F0xxxx/DeviceDefinitions/stm32f070x6.xml</MCUDefinitionFile>
   <MCUProperties>
@@ -18,6 +18,10 @@
       <KeyValue>
         <Key>com.sysprogs.toolchainoptions.arm.libctype</Key>
         <Value>--specs=nano.specs</Value>
+      </KeyValue>
+      <KeyValue>
+        <Key>com.sysprogs.toolchainoptions.arm.syscallspecs</Key>
+        <Value>--specs=nosys.specs</Value>
       </KeyValue>
       <KeyValue>
         <Key>com.sysprogs.toolchainoptions.arm.libnosys</Key>
@@ -31,7 +35,7 @@
     <string>com.sysprogs.arm.stm32.hal</string>
     <string>com.sysprogs.arm.stm32.ll</string>
     <string>com.sysprogs.arm.stm32.usbdev</string>
-    <string>com.sysprogs.arm.stm32.STM32F0_ll</string>
+    <string>com.sysprogs.arm.fixed_stack_and_heap</string>
   </ReferencedFrameworks>
   <FrameworkProperties>
     <Entries>
@@ -42,6 +46,14 @@
       <KeyValue>
         <Key>com.sysprogs.bspoptions.stm32.hal_legacy</Key>
         <Value>USE_HAL_LEGACY</Value>
+      </KeyValue>
+      <KeyValue>
+        <Key>com.sysprogs.bspoptions.stackheap.stacksize</Key>
+        <Value>512</Value>
+      </KeyValue>
+      <KeyValue>
+        <Key>com.sysprogs.bspoptions.stackheap.heapsize</Key>
+        <Value>1024</Value>
       </KeyValue>
       <KeyValue>
         <Key>com.sysprogs.bspoptions.stm32.ll_driver</Key>

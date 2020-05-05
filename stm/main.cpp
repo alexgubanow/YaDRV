@@ -23,6 +23,7 @@ int main(void)
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 	//MX_SPI1_Init();
+	MX_USB_DEVICE_Init();
 	HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PinState::GPIO_PIN_SET);
 	HAL_GPIO_WritePin(DRV_EN_GPIO_Port, DRV_EN_Pin, GPIO_PinState::GPIO_PIN_SET);
 	HAL_Delay(200);

@@ -88,13 +88,37 @@
   * @{
   */
 
+enum {
+    IN_REPORT_SIZE = 12,   // 1 byte report id + 11-byte report
+    OUT_REPORT_SIZE = 10,  // 1 byte report id + 9-byte report
+};
 /** Usb HID report descriptor. */
 __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DESC_SIZE] __ALIGN_END =
 {
-  /* USER CODE BEGIN 0 */
-  0x00,
-  /* USER CODE END 0 */
-  0xC0    /*     END_COLLECTION	             */
+  0x05, 0x01,                    // USAGE_PAGE (Generic Desktop)
+  0x09, 0x00,                    // USAGE (Undefined)
+  0xa1, 0x01,                    // COLLECTION (Application)
+
+  0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
+  0x26, 0xff, 0x00,              //   LOGICAL_MAXIMUM (255)
+
+  // OUT report
+
+  0x85, 0x01,                    //   REPORT_ID (2)
+  0x75, 0x08,                    //   REPORT_SIZE (8)
+  0x95, OUT_REPORT_SIZE - 1,       //   REPORT_COUNT (this is the byte length)
+  0x09, 0x00,                    //   USAGE (Undefined)
+  0x91, 0x82,                    //   OUTPUT (Data,Var,Abs,Vol)
+  // IN report
+
+  0x85, 0x02,                    //   REPORT_ID (1)
+  0x75, 0x08,                    //   REPORT_SIZE (8)
+  0x95, IN_REPORT_SIZE - 1,        //   REPORT_COUNT (this is the byte length)
+  0x09, 0x00,                    //   USAGE (Undefined)
+  0x81, 0x82,                    //   INPUT (Data,Var,Abs,Vol)
+
+
+  0xc0                           // END_COLLECTION
 };
 
 /* USER CODE BEGIN PRIVATE_VARIABLES */
