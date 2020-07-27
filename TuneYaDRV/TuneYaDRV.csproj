@@ -94,6 +94,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LibUsbDotNet">
+      <Version>2.2.29</Version>
+    </PackageReference>
     <PackageReference Include="MahApps.Metro">
       <Version>2.0.0-alpha0531</Version>
     </PackageReference>
