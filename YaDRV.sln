@@ -7,28 +7,58 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TuneYaDRV", "TuneYaDRV\Tune
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stm", "stm\stm.vcxproj", "{FF0D3D9E-4162-430C-A275-E0743E776C9A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tmcCLIWrapper", "tmcCLIWrapper\tmcCLIWrapper.vcxproj", "{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|VisualGDB = Debug|VisualGDB
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|VisualGDB = Release|VisualGDB
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Debug|VisualGDB.ActiveCfg = Debug|Any CPU
 		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Debug|VisualGDB.Build.0 = Debug|Any CPU
+		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Debug|x64.Build.0 = Debug|Any CPU
+		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Debug|x86.Build.0 = Debug|Any CPU
 		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Release|VisualGDB.ActiveCfg = Release|Any CPU
 		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Release|VisualGDB.Build.0 = Release|Any CPU
+		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Release|x64.ActiveCfg = Release|Any CPU
+		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Release|x64.Build.0 = Release|Any CPU
+		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Release|x86.ActiveCfg = Release|Any CPU
+		{46CDED88-D2B2-4205-985B-C175992D8EBE}.Release|x86.Build.0 = Release|Any CPU
 		{FF0D3D9E-4162-430C-A275-E0743E776C9A}.Debug|Any CPU.ActiveCfg = Debug|VisualGDB
 		{FF0D3D9E-4162-430C-A275-E0743E776C9A}.Debug|VisualGDB.ActiveCfg = Debug|VisualGDB
 		{FF0D3D9E-4162-430C-A275-E0743E776C9A}.Debug|VisualGDB.Build.0 = Debug|VisualGDB
+		{FF0D3D9E-4162-430C-A275-E0743E776C9A}.Debug|x64.ActiveCfg = Debug|VisualGDB
+		{FF0D3D9E-4162-430C-A275-E0743E776C9A}.Debug|x86.ActiveCfg = Debug|VisualGDB
 		{FF0D3D9E-4162-430C-A275-E0743E776C9A}.Release|Any CPU.ActiveCfg = Release|VisualGDB
 		{FF0D3D9E-4162-430C-A275-E0743E776C9A}.Release|VisualGDB.ActiveCfg = Release|VisualGDB
 		{FF0D3D9E-4162-430C-A275-E0743E776C9A}.Release|VisualGDB.Build.0 = Release|VisualGDB
+		{FF0D3D9E-4162-430C-A275-E0743E776C9A}.Release|x64.ActiveCfg = Release|VisualGDB
+		{FF0D3D9E-4162-430C-A275-E0743E776C9A}.Release|x86.ActiveCfg = Release|VisualGDB
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Debug|VisualGDB.ActiveCfg = Debug|Win32
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Debug|x64.ActiveCfg = Debug|x64
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Debug|x64.Build.0 = Debug|x64
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Debug|x86.ActiveCfg = Debug|Win32
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Debug|x86.Build.0 = Debug|Win32
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Release|Any CPU.ActiveCfg = Release|Win32
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Release|VisualGDB.ActiveCfg = Release|Win32
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Release|x64.ActiveCfg = Release|x64
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Release|x64.Build.0 = Release|x64
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Release|x86.ActiveCfg = Release|Win32
+		{072E2BA7-45BC-4557-9183-BEB9B3D71B1F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
