@@ -23,7 +23,7 @@
 #include "usbd_custom_hid_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-#include "tmc\tmc2590.h"
+#include <tmc\tmc2590.h>
 #include "main.h"
 /* USER CODE END INCLUDE */
 
@@ -177,7 +177,7 @@ extern USBD_HandleTypeDef hUsbDeviceFS;
 static int8_t CUSTOM_HID_Init_FS(void);
 static int8_t CUSTOM_HID_DeInit_FS(void);
 static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state);
-
+static int8_t USBD_CUSTOM_HID_SendReport_FS(uint8_t* report, uint16_t len);
 static void setIO_Handler(uint8_t setIOcomm);
 
 /**
@@ -235,8 +235,8 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	{
 	case setReg:
 	{
-        sendSPI(hhid->Report_buf[3] << 16 + hhid->Report_buf[2] << 8 + hhid->Report_buf[1]);
-		uint8_t report[4] = { setRegResponse, 'o','k', 13};
+		//sendSPI(hhid->Report_buf[3] << 16 + hhid->Report_buf[2] << 8 + hhid->Report_buf[1]);
+		uint8_t report[4] = { setRegResponse, 'o','k', 13 };
 		USBD_CUSTOM_HID_SendReport_FS(report, 4);
 	}
 	break;
@@ -251,7 +251,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 		break;
 	case getIO:
 	{
-        uint8_t IOstatus = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1);
+		uint8_t IOstatus = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1);
 		uint8_t report[4] = { getIOResponse, IOstatus, 13, 13 };
 		USBD_CUSTOM_HID_SendReport_FS(report, 2);
 	}

@@ -1,9 +1,9 @@
 #pragma once
-typedef struct spiBuff
+typedef struct spiBuff_t
 {
 	unsigned short w1 : 10;
 	unsigned short w2 : 10;
-};
+}spiBuff_t;
 typedef union tmc2590_txBuff_t
 {
 	struct
@@ -12,20 +12,20 @@ typedef union tmc2590_txBuff_t
 		unsigned char addr : 3;
 	}b;
 	unsigned int w;
-};
+}tmc2590_txBuff_t;
 typedef struct tmc2590_rxBuff_RDSEL00_t
 {
 	unsigned short MSTEP : 10;
-};
+}tmc2590_rxBuff_RDSEL00_t;
 typedef struct tmc2590_rxBuff_RDSEL01_t
 {
 	unsigned short SG : 10;
-};
+}tmc2590_rxBuff_RDSEL01_t;
 typedef struct tmc2590_rxBuff_RDSEL10_t
 {
 	unsigned short SG_MSB : 10;
 	unsigned short SE : 10;
-};
+}tmc2590_rxBuff_RDSEL10_t;
 typedef struct tmc2590_rxBuff_RDSEL11_t
 {
 	unsigned char UV_7V : 1;
@@ -38,7 +38,7 @@ typedef struct tmc2590_rxBuff_RDSEL11_t
 	unsigned char OT136 : 1;
 	unsigned char OT120 : 1;
 	unsigned char OT100 : 1;
-};
+}tmc2590_rxBuff_RDSEL11_t;
 typedef struct tmc2590_rxBuff_t
 {
 	unsigned short RDSELdata : 10;
@@ -51,15 +51,15 @@ typedef struct tmc2590_rxBuff_t
 	unsigned char OTPW : 1;
 	unsigned char OT : 1;
 	unsigned char SG : 1;
-};
-enum tmc2590 {
+}tmc2590_rxBuff_t;
+typedef enum tmc2590_t {
 	DRVCTRL = 0b000,
 	CHOPCONF = 0b100,
 	SMARTEN = 0b101,
 	SGCSCONF = 0b110,
 	DRVCONF = 0b111,
 	regsLength = 5
-};
+}tmc2590;
 
 typedef union DRVCTRL_SDOFF_1_t {
 	struct
@@ -88,7 +88,7 @@ typedef union DRVCTRL_SDOFF_1_t {
 		unsigned char  PHA : 1;
 	}b;
 	unsigned int w : 17;
-};
+}DRVCTRL_SDOFF_1_t;
 typedef union DRVCTRL_SDOFF_0_t {
 	struct
 	{
@@ -116,7 +116,7 @@ typedef union DRVCTRL_SDOFF_0_t {
 		unsigned char : 7;
 	}b;
 	unsigned int w : 17;
-};
+}DRVCTRL_SDOFF_0_t;
 typedef union CHOPCONF_t {
 	struct
 	{
@@ -156,7 +156,7 @@ typedef union CHOPCONF_t {
 		unsigned char TBL : 2;
 	}b;
 	unsigned int w : 17;
-};
+}CHOPCONF_t;
 typedef union SMARTEN_t {
 	struct
 	{
@@ -176,7 +176,7 @@ typedef union SMARTEN_t {
 		unsigned char : 1;
 	}b;
 	unsigned int w : 17;
-};
+}SMARTEN_t;
 typedef union SGCSCONF_t {
 	struct
 	{
@@ -190,7 +190,7 @@ typedef union SGCSCONF_t {
 		unsigned char  SFILT : 1;
 	}b;
 	unsigned int w : 17;
-};
+}SGCSCONF_t;
 typedef union DRVCONF_t {
 	struct
 	{
@@ -225,4 +225,4 @@ typedef union DRVCONF_t {
 		unsigned char  TST : 1;
 	}b;
 	unsigned int w : 17;
-};
+}DRVCONF_t;
