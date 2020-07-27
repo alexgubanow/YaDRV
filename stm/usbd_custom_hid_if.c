@@ -92,6 +92,17 @@ enum {
     IN_REPORT_SIZE = 12,   // 1 byte report id + 11-byte report
     OUT_REPORT_SIZE = 10,  // 1 byte report id + 9-byte report
 };
+
+enum usbReports
+{
+    setReg = 0x01,
+    getVer,
+    setIO,
+    getIO,
+    setRegResponse,
+    getVersionResponse,
+    getIOResponse
+};
 /** Usb HID report descriptor. */
 __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DESC_SIZE] __ALIGN_END =
 {
@@ -102,23 +113,53 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
   0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
   0x26, 0xff, 0x00,              //   LOGICAL_MAXIMUM (255)
 
-  // OUT report
-
-  0x85, 0x01,                    //   REPORT_ID (2)
-  0x75, 0x08,                    //   REPORT_SIZE (8)
-  0x95, OUT_REPORT_SIZE - 1,       //   REPORT_COUNT (this is the byte length)
+  // OUT reports
+  //set register
+  0x85, setReg,                    //   REPORT_ID (2)
+  0x75, 20,                    //   REPORT_SIZE (8)
+  0x95, 1,       //   REPORT_COUNT (this is the byte length)
   0x09, 0x00,                    //   USAGE (Undefined)
   0x91, 0x82,                    //   OUTPUT (Data,Var,Abs,Vol)
+  //get version
+  0x85, getVer,
+  0x75, 1,
+  0x95, 1,
+  0x09, 0x00,
+  0x91, 0x82,
+  //setIO
+  0x85,setIO,
+  0x75, 1,
+  0x95, 2,
+  0x09, 0x00,
+  0x91, 0x82,
+  //getIO
+  0x85,getIO,
+  0x75, 1,
+  0x95, 1,
+  0x09, 0x00,
+  0x91, 0x82,
+  
   // IN report
+  //register response
+  0x85, setRegResponse,
+  0x75, 20,
+  0x95, 1,
+  0x09, 0x00,
+  0x81, 0x82,
+  //get version response
+  0x85, getVersionResponse,
+  0x75, 8,
+  0x95, 1,
+  0x09, 0x00,
+  0x81, 0x82,
+  //getIO
+  0x85, getIOResponse,
+  0x75, 2,
+  0x95, 1,
+  0x09, 0x00,
+  0x81, 0x82,
 
-  0x85, 0x02,                    //   REPORT_ID (1)
-  0x75, 0x08,                    //   REPORT_SIZE (8)
-  0x95, IN_REPORT_SIZE - 1,        //   REPORT_COUNT (this is the byte length)
-  0x09, 0x00,                    //   USAGE (Undefined)
-  0x81, 0x82,                    //   INPUT (Data,Var,Abs,Vol)
-
-
-  0xc0                           // END_COLLECTION
+  0xc0// END_COLLECTION
 };
 
 /* USER CODE BEGIN PRIVATE_VARIABLES */
