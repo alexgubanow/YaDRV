@@ -72,7 +72,7 @@ void SystemClock_Config(void);
 #define SPI1_CSN_Pin GPIO_PIN_1
 #define SPI1_CSN_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
-
+#define firmwareVersion 1
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

@@ -64,6 +64,16 @@
 
 /* USER CODE BEGIN EXPORTED_TYPES */
 
+     typedef enum usbReports_t
+     {
+         setReg = 0x01,
+         getVer,
+         setIO,
+         getIO,
+         setRegResponse,
+         getVersionResponse,
+         getIOResponse
+     }usbReports;
 /* USER CODE END EXPORTED_TYPES */
 
 /**
