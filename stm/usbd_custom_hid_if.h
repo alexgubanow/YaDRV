@@ -66,13 +66,9 @@
 
      typedef enum usbReports_t
      {
-         setReg = 0x01,
-         getVer,
-         setIO,
-         getIO,
-         setRegResponse,
-         getVersionResponse,
-         getIOResponse
+         getVer = 1,
+         IOctl,
+         tmcRegisterCtl
      }usbReports;
 /* USER CODE END EXPORTED_TYPES */
 

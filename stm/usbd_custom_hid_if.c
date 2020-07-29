@@ -25,6 +25,7 @@
 /* USER CODE BEGIN INCLUDE */
 #include <tmc\tmc2590.h>
 #include "main.h"
+#include "hid_macros.h"
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -64,7 +65,7 @@
 		  */
 
 		  /* USER CODE BEGIN PRIVATE_DEFINES */
-
+#define HID_FEATURE_REPORT_BYTES     1				/* size of report in Bytes */
 		  /* USER CODE END PRIVATE_DEFINES */
 
 		  /**
@@ -77,7 +78,6 @@
 			  */
 
 			  /* USER CODE BEGIN PRIVATE_MACRO */
-
 			  /* USER CODE END PRIVATE_MACRO */
 
 			  /**
@@ -92,60 +92,29 @@
 				  /** Usb HID report descriptor. */
 __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DESC_SIZE] __ALIGN_END =
 {
-  0x05, 0x01,                    // USAGE_PAGE (Generic Desktop)
-  0x09, 0x00,                    // USAGE (Undefined)
-  0xa1, 0x01,                    // COLLECTION (Application)
+	HID_UsagePage(HID_USAGE_PAGE_GENERIC),
+	HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+	HID_Collection(HID_Application),
+		HID_LogicalMin(0),
+		HID_LogicalMax(0xFF),
 
-  0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
-  0x26, 0xff, 0x00,              //   LOGICAL_MAXIMUM (255)
+		HID_ReportSize(8),	// 8 bits
 
-  // OUT reports
-  //set register
-  0x85, setReg,                    //   REPORT_ID (2)
-  0x75, 8,                    //   REPORT_SIZE (8)
-  0x95, 4,       //   REPORT_COUNT (this is the byte length)
-  0x09, 0x00,                    //   USAGE (Undefined)
-  0x91, 0x82,                    //   OUTPUT (Data,Var,Abs,Vol)
-  //get version
-  0x85, getVer,
-  0x75, 8,
-  0x95, 4,
-  0x09, 0x00,
-  0x91, 0x82,
-  //setIO
-  0x85,setIO,
-  0x75, 8,
-  0x95, 4,
-  0x09, 0x00,
-  0x91, 0x82,
-  //getIO
-  0x85,getIO,
-  0x75, 8,
-  0x95, 4,
-  0x09, 0x00,
-  0x91, 0x82,
+		HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		HID_ReportID(getVer),
+		HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		HID_Input(HID_Data | HID_Variable | HID_Absolute),
 
-  // IN report
-  //register response
-  0x85, setRegResponse,
-  0x75, 8,
-  0x95, 4,
-  0x09, 0x00,
-  0x81, 0x82,
-  //get version response
-  0x85, getVersionResponse,
-  0x75, 8,
-  0x95, 4,
-  0x09, 0x00,
-  0x81, 0x82,
-  //getIO
-  0x85, getIOResponse,
-  0x75, 8,
-  0x95, 4,
-  0x09, 0x00,
-  0x81, 0x82,
+		HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		HID_ReportID(IOctl),
+		HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		HID_Feature(HID_Data | HID_Variable | HID_Absolute),
 
-  0xc0// END_COLLECTION
+		HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		HID_ReportID(tmcRegisterCtl),
+		HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		HID_Feature(HID_Data | HID_Variable | HID_Absolute),
+	HID_EndCollection
 };
 
 /* USER CODE BEGIN PRIVATE_VARIABLES */
@@ -177,6 +146,7 @@ extern USBD_HandleTypeDef hUsbDeviceFS;
 static int8_t CUSTOM_HID_Init_FS(void);
 static int8_t CUSTOM_HID_DeInit_FS(void);
 static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state);
+static int8_t CUSTOM_HID_InEvent_FS(uint8_t event_idx, uint8_t* buffer, uint16_t* length);  /* An extra interface func. */
 static int8_t USBD_CUSTOM_HID_SendReport_FS(uint8_t* report, uint16_t len);
 static void setIO_Handler(uint8_t setIOcomm);
 
@@ -189,7 +159,8 @@ USBD_CUSTOM_HID_ItfTypeDef USBD_CustomHID_fops_FS =
   CUSTOM_HID_ReportDesc_FS,
   CUSTOM_HID_Init_FS,
   CUSTOM_HID_DeInit_FS,
-  CUSTOM_HID_OutEvent_FS
+  CUSTOM_HID_OutEvent_FS,
+  CUSTOM_HID_InEvent_FS
 };
 
 /** @defgroup USBD_CUSTOM_HID_Private_Functions USBD_CUSTOM_HID_Private_Functions
@@ -231,36 +202,49 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 {
 	/* USER CODE BEGIN 6 */
 	USBD_CUSTOM_HID_HandleTypeDef* hhid = (USBD_CUSTOM_HID_HandleTypeDef*)hUsbDeviceFS.pClassData;
-	switch ((usbReports)(hhid->Report_buf[0]))
+	switch ((usbReports)event_idx)
 	{
-	case setReg:
-	{
-		//sendSPI(hhid->Report_buf[3] << 16 + hhid->Report_buf[2] << 8 + hhid->Report_buf[1]);
-		uint8_t report[4] = { setRegResponse, 'o','k', 13 };
-		USBD_CUSTOM_HID_SendReport_FS(report, 4);
-	}
-	break;
-	case  getVer:
-	{
-		uint8_t report[4] = { getVersionResponse, firmwareVersion , 13 , 13 };
-		USBD_CUSTOM_HID_SendReport_FS(report, 2);
-	}
-	break;
-	case  setIO:
+	case  tmcRegisterCtl:
 		setIO_Handler(hhid->Report_buf[1]);
 		break;
-	case getIO:
-	{
-		uint8_t IOstatus = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1);
-		uint8_t report[4] = { getIOResponse, IOstatus, 13, 13 };
-		USBD_CUSTOM_HID_SendReport_FS(report, 2);
-	}
-	break;
+	case  IOctl:
+		setIO_Handler(hhid->Report_buf[1]);
+		break;
 	}
 	return (USBD_OK);
 	/* USER CODE END 6 */
 }
-
+static int8_t CUSTOM_HID_InEvent_FS(uint8_t event_idx, uint8_t* buffer, uint16_t* length)
+{
+	memset(buffer, 0x00, *length);
+	switch ((usbReports)event_idx)
+	{
+	case tmcRegisterCtl:
+	{
+		buffer[0] = 1;
+		buffer[1] = 2;
+		buffer[2] = 3;
+	}
+	break;
+	case  getVer:
+	{
+		buffer[0] = firmwareVersion;
+		buffer[1] = 0;
+		buffer[2] = 0;
+	}
+	break;
+	case IOctl:
+	{
+		uint8_t IOstatus = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) << 1;
+		IOstatus |= HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
+		buffer[0] = IOstatus;
+		buffer[1] = 0;
+		buffer[2] = 0;
+	}
+	break;
+	}
+	return (USBD_OK);
+}
 void setIO_Handler(uint8_t setIOcomm)
 {
 	switch (setIOcomm)

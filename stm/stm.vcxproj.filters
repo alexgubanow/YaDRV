@@ -623,5 +623,8 @@
     <ClInclude Include="tmc\tmc2590defs.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="hid_macros.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

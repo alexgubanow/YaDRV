@@ -67,6 +67,7 @@
     <ClCompile Include="usbd_custom_hid_if.c" />
     <ClCompile Include="usbd_desc.c" />
     <ClCompile Include="usb_device.c" />
+    <ClInclude Include="hid_macros.h" />
     <ClInclude Include="stm32f0xx_it.h" />
     <ClInclude Include="tim.h" />
     <ClInclude Include="tmc\tmc2590.h" />
