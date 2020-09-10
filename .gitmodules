@@ -1,0 +1,4 @@
+[submodule "hidapiw"]
+	path = hidapiw
+	url = git@github.com:alexgubanow/hidapiw.git
+	branch = master
