@@ -4,7 +4,7 @@
   <ToolchainVersion>
     <GCC>9.3.1</GCC>
     <GDB>9.2.0</GDB>
-    <Revision>1</Revision>
+    <Revision>2</Revision>
   </ToolchainVersion>
   <BspID>com.sysprogs.arm.stm32</BspID>
   <BspVersion>2020.06</BspVersion>
@@ -36,7 +36,6 @@
     <string>com.sysprogs.arm.stm32.ll</string>
     <string>com.sysprogs.arm.stm32.usbdev</string>
     <string>com.sysprogs.arm.fixed_stack_and_heap</string>
-    <string>com.sysprogs.arm.stm32.STM32F0_ll</string>
   </ReferencedFrameworks>
   <FrameworkProperties>
     <Entries>
@@ -46,7 +45,7 @@
       </KeyValue>
       <KeyValue>
         <Key>com.sysprogs.bspoptions.stm32.hal_legacy</Key>
-        <Value>USE_HAL_LEGACY</Value>
+        <Value />
       </KeyValue>
       <KeyValue>
         <Key>com.sysprogs.bspoptions.stackheap.stacksize</Key>
@@ -58,7 +57,7 @@
       </KeyValue>
       <KeyValue>
         <Key>com.sysprogs.bspoptions.stm32.ll_driver</Key>
-        <Value />
+        <Value>USE_FULL_LL_DRIVER</Value>
       </KeyValue>
       <KeyValue>
         <Key>com.sysprogs.bspoptions.stm32.usb.devclass</Key>
