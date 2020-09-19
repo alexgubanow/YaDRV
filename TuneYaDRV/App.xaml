@@ -1,8 +1,8 @@
 ﻿<prism:PrismApplication x:Class="TuneYaDRV.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	     xmlns:prism="http://prismlibrary.com/"
-             xmlns:local="clr-namespace:TuneYaDRV">
+             xmlns:local="clr-namespace:TuneYaDRV"
+             xmlns:prism="http://prismlibrary.com/" >
     <Application.Resources>
          
     </Application.Resources>
