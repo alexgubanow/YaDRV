@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace TMCRegisterControl
+namespace TMCRegisterControl.Views
 {
     /// <summary>
     /// Interaction logic for RegisterTotal.xaml

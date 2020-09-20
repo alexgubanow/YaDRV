@@ -1,14 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace TMCRegisterControl
+namespace TMCRegisterControl.Views
 {
     /// <summary>
     /// Interaction logic for RegisterParam.xaml
     /// </summary>
     public partial class RegisterParam : UserControl
     {
-        public RegisterParam() : base()
+        public RegisterParam()
         {
             InitializeComponent();
         }
@@ -35,21 +35,5 @@ namespace TMCRegisterControl
 
         public static readonly DependencyProperty RegParMaxProperty = DependencyProperty.Register("RegParMax", typeof(int),
             typeof(RegisterTotal), new UIPropertyMetadata(0));
-    }
-    public class BindingProxy : Freezable
-    {
-        protected override Freezable CreateInstanceCore()
-        {
-            return new BindingProxy();
-        }
-
-        public object Data
-        {
-            get { return (object)GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
-        }
-
-        public static readonly DependencyProperty DataProperty =
-            DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new PropertyMetadata(null));
     }
 }
