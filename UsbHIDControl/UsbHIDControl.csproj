@@ -1,18 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <AssemblyName>TuneYaDRV</AssemblyName>
-    <Platforms>x86;x64</Platforms>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="MahApps.Metro" Version="2.2.0" />
+    <PackageReference Include="Prism.Core" Version="7.2.0.1422" />
     <PackageReference Include="Prism.DryIoc" Version="7.2.0.1422" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\hidapiw\hidapiw\hidapiw.vcxproj" />
-    <ProjectReference Include="..\TMCRegisterControl\TMCRegisterControl.csproj" />
-    <ProjectReference Include="..\UsbHIDControl\UsbHIDControl.csproj" />
   </ItemGroup>
+
 </Project>
