@@ -1,0 +1,13 @@
+﻿<UserControl x:Name="parent" x:Class="TMCRegisterControl.RegisterTotal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:TMCRegisterControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="160" DataContext="{Binding ElementName=parent}" >
+    <StackPanel Orientation="Horizontal">
+        <local:RegisterParam RegParName="Hex" RegParValue="{Binding Path=Hex}" Margin="5,0,0,0"/>
+        <local:RegisterParam RegParName="Dec" RegParValue="{Binding Path=Dec}" Margin="5,0,0,0"/>
+        <local:RegisterParam RegParName="Bin" RegParValue="{Binding Path=Bin}" Margin="5,0,0,0" MinWidth="60"/>
+    </StackPanel>
+</UserControl>
