@@ -7,9 +7,11 @@
     <Platforms>x86;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.2.0" />
     <PackageReference Include="Prism.DryIoc" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\hidapiw\hidapiw\hidapiw.vcxproj" />
+    <ProjectReference Include="..\TMC2590Control\TMCRegisterControl.csproj" />
   </ItemGroup>
 </Project>
