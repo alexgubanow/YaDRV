@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lcl="clr-namespace:TMCRegisterControl.Views"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="960" DataContext="{Binding ElementName=parent}">
+             d:DesignHeight="500" d:DesignWidth="960">
     <StackPanel>
         <GroupBox Header="DRVCTL" Visibility="Collapsed">
             <DockPanel>
@@ -30,7 +32,7 @@
         </GroupBox>
         <GroupBox Header="DRVCTL">
             <DockPanel>
-                <Button DockPanel.Dock="Right" Content="Write DRVCTL" Margin="5,0,0,0" />
+                <Button DockPanel.Dock="Right" Content="Write DRVCTL" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}" />
                 <lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" />
                 <StackPanel Orientation="Horizontal">
                     <lcl:RegisterParam RegParExplained="Microstep resolution for STEP/DIR mode&#10;
@@ -58,7 +60,7 @@
         </GroupBox>
         <GroupBox Header="CHOPCONF">
             <DockPanel>
-                <Button DockPanel.Dock="Right" Content="Write CHOPCONF" Margin="5,0,0,0" />
+                <Button DockPanel.Dock="Right" Content="Write CHOPCONF" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}"/>
                 <lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" />
                 <StackPanel Orientation="Horizontal">
                     <lcl:RegisterParam RegParExplained="Off time / MOSFET disable"
@@ -98,7 +100,7 @@
         </GroupBox>
         <GroupBox Header="SMARTEN">
             <DockPanel>
-                <Button DockPanel.Dock="Right" Content="Write SMARTEN" Margin="5,0,0,0" />
+                <Button DockPanel.Dock="Right" Content="Write SMARTEN" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}"/>
                 <lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" />
                 <StackPanel Orientation="Horizontal">
                     <lcl:RegisterParam RegParExplained="Lower CoolStep threshold/CoolStep disable"
@@ -116,7 +118,7 @@
         </GroupBox>
         <GroupBox Header="SGCSCONF">
             <DockPanel>
-                <Button DockPanel.Dock="Right" Content="Write SGCSCONF" Margin="5,0,0,0" />
+                <Button DockPanel.Dock="Right" Content="Write SGCSCONF" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}"/>
                 <lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" />
                 <StackPanel Orientation="Horizontal">
                     <lcl:RegisterParam RegParExplained="Current scale (scales digital currents A and B)"
@@ -130,7 +132,7 @@
         </GroupBox>
         <GroupBox Header="DRVCONF">
             <DockPanel>
-                <Button DockPanel.Dock="Right" Content="Write DRVCONF" Margin="5,0,0,0" />
+                <Button DockPanel.Dock="Right" Content="Write DRVCONF" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}"/>
                 <lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" />
                 <StackPanel Orientation="Horizontal">
                     <lcl:RegisterParam RegParExplained="Short to VS protection / CLK failsafe enable"
@@ -163,7 +165,7 @@
                 </StackPanel>
             </DockPanel>
         </GroupBox>
-        <Button DockPanel.Dock="Right" Content="Read All" Margin="0,5,0,0" />
-        <Button DockPanel.Dock="Right" Content="Write All" Margin="0,5,0,0" />
+        <Button DockPanel.Dock="Right" Content="Read All" Margin="0,5,0,0" IsEnabled="{Binding IsConnected}"/>
+        <Button DockPanel.Dock="Right" Content="Write All" Margin="0,5,0,0" IsEnabled="{Binding IsConnected}"/>
     </StackPanel>
 </UserControl>

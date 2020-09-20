@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Events\Events.csproj" />
     <ProjectReference Include="..\hidapiw\hidapiw\hidapiw.vcxproj" />
   </ItemGroup>
 

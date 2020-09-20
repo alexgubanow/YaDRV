@@ -1,4 +1,6 @@
-﻿using Prism.Commands;
+﻿using Events;
+using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ namespace UsbHIDControl.ViewModels
 {
     public class UsbHIDViewModel : BindableBase, IDisposable
     {
+        private IEventAggregator _eventAggregator;
         private hidapiw _hidapiw_native;
         public hidapiw Hidapiw
         {
@@ -34,7 +37,12 @@ namespace UsbHIDControl.ViewModels
         public bool IsConnected
         {
             get { return _isConnected; }
-            set { SetProperty(ref _isConnected, value); ConnectBtnText = value ? "Disconnect" : "Connect"; }
+            set
+            {
+                SetProperty(ref _isConnected, value);
+                ConnectBtnText = value ? "Disconnect" : "Connect";
+                _eventAggregator.GetEvent<ConnectEvent>().Publish(value);
+            }
         }
 
         private string _connectBtnText;
@@ -67,7 +75,7 @@ namespace UsbHIDControl.ViewModels
             {
                 if (Hidapiw != null)
                 {
-                    List<hidDeviceInfo> devs = new List<hidDeviceInfo>(); 
+                    List<hidDeviceInfo> devs = new List<hidDeviceInfo>();
                     Hidapiw.Enumerate(ref devs, 0, 0);
                     DevList = new ObservableCollection<hidDeviceInfo>(devs);
                 }
@@ -93,8 +101,9 @@ namespace UsbHIDControl.ViewModels
             }
         }
 
-        public UsbHIDViewModel()
+        public UsbHIDViewModel(IEventAggregator ea)
         {
+            _eventAggregator = ea;
             Status = "No active connection";
             IsConnected = false;
             Hidapiw = new hidapiw();
