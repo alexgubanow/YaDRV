@@ -1,9 +1,28 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Commands;
+using Prism.Mvvm;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 
 namespace UsbHIDControl.ViewModels
 {
-    public class UsbHIDViewModel : BindableBase
+    public class UsbHIDViewModel : BindableBase, IDisposable
     {
+        private hidapiw _hidapiw_native;
+        public hidapiw Hidapiw
+        {
+            get { return _hidapiw_native; }
+            set { SetProperty(ref _hidapiw_native, value); }
+        }
+
+        private ObservableCollection<hidDeviceInfo> _devList;
+        public ObservableCollection<hidDeviceInfo> DevList
+        {
+            get { return _devList; }
+            set { SetProperty(ref _devList, value); }
+        }
+
         private string _status;
         public string Status
         {
@@ -25,10 +44,66 @@ namespace UsbHIDControl.ViewModels
             set { SetProperty(ref _connectBtnText, value); }
         }
 
+        private DelegateCommand _connectCMD;
+        public DelegateCommand ConnectCMD => _connectCMD ??= new DelegateCommand(ExecuteConnectCMD, CanExecuteConnectCMD);
+
+        void ExecuteConnectCMD()
+        {
+            IsConnected = !IsConnected;
+        }
+
+        bool CanExecuteConnectCMD()
+        {
+            //need to implement here check for device been choosen from list
+            return true;
+        }
+
+        private DelegateCommand _refreshDevListCMD;
+        public DelegateCommand RefreshDevListCMD => _refreshDevListCMD ??= new DelegateCommand(ExecuteRefreshDevListCMD);
+
+        void ExecuteRefreshDevListCMD()
+        {
+            try
+            {
+                if (Hidapiw != null)
+                {
+                    List<hidDeviceInfo> devs = new List<hidDeviceInfo>(); 
+                    Hidapiw.Enumerate(ref devs, 0, 0);
+                    DevList = new ObservableCollection<hidDeviceInfo>(devs);
+                }
+                //foreach (var device in DevList)
+                //{
+                //    if (device.vendor_id == 1155 && device.product_id == 22352)
+                //    {
+                //        Console.WriteLine("VID 0x{0:X} PID 0x{1:X} Manufacturer \"{2}\" Product \"{3}\"",
+                //            device.vendor_id, device.product_id, device.manufacturer_string, device.product_string);
+                //    }
+                //}
+            }
+            catch (SEHException e)
+            {
+                if (e.StackTrace is string s)
+                {
+                    Status = s;
+                }
+            }
+            catch (Exception ex)
+            {
+                Status = ex.Message;
+            }
+        }
+
         public UsbHIDViewModel()
         {
             Status = "No active connection";
             IsConnected = false;
+            Hidapiw = new hidapiw();
+            DevList = new ObservableCollection<hidDeviceInfo>();
+        }
+
+        public void Dispose()
+        {
+            Hidapiw.Dispose();
         }
     }
 }

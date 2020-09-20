@@ -10,7 +10,7 @@ using Prism.Regions;
 namespace UsbHIDControl.Views
 {
     /// <summary>
-    /// Interaction logic for UsbHIDControl.xaml
+    /// Interaction logic for UsbHID.xaml
     /// </summary>
     public partial class UsbHID : UserControl
     {

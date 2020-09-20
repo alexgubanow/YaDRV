@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuneYaDRV", "TuneYaDRV\Tune
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TMCRegisterControl", "TMCRegisterControl\TMCRegisterControl.csproj", "{E8A8EDAF-5F6C-49DF-A5C6-EA217C2624E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsbHIDControl", "UsbHIDControl\UsbHIDControl.csproj", "{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsbHIDControl", "UsbHIDControl\UsbHIDControl.csproj", "{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,18 +85,14 @@ Global
 		{E8A8EDAF-5F6C-49DF-A5C6-EA217C2624E4}.Release|x64.Build.0 = Release|x64
 		{E8A8EDAF-5F6C-49DF-A5C6-EA217C2624E4}.Release|x86.ActiveCfg = Release|x86
 		{E8A8EDAF-5F6C-49DF-A5C6-EA217C2624E4}.Release|x86.Build.0 = Release|x86
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Debug|VisualGDB.ActiveCfg = Debug|Any CPU
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Debug|VisualGDB.Build.0 = Debug|Any CPU
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Debug|x64.Build.0 = Debug|Any CPU
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Debug|x86.Build.0 = Debug|Any CPU
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Release|VisualGDB.ActiveCfg = Release|Any CPU
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Release|VisualGDB.Build.0 = Release|Any CPU
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Release|x64.ActiveCfg = Release|Any CPU
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Release|x64.Build.0 = Release|Any CPU
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Release|x86.ActiveCfg = Release|Any CPU
-		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Release|x86.Build.0 = Release|Any CPU
+		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Debug|VisualGDB.ActiveCfg = Debug|x86
+		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Debug|x64.ActiveCfg = Debug|x64
+		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Debug|x64.Build.0 = Debug|x64
+		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Debug|x86.ActiveCfg = Debug|x86
+		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Debug|x86.Build.0 = Debug|x86
+		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Release|VisualGDB.ActiveCfg = Release|x86
+		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Release|x64.ActiveCfg = Release|x64
+		{D82B4A37-7D6F-47BF-A716-E7EC1093D73D}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

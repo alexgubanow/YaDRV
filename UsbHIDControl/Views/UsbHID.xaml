@@ -5,12 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:UsbHIDControl.Views"
              mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="800">
     <StackPanel Orientation="Horizontal">
-        <ComboBox Width="120" />
-        <Button Content="{Binding Path=ConnectBtnText}" Width="70" Margin="5,0,0,0" />
+        <ComboBox MinWidth="140" ItemsSource="{Binding DevList}" DisplayMemberPath="Product">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="DropDownOpened">
+                    <i:InvokeCommandAction Command="{Binding RefreshDevListCMD}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ComboBox>
+        <Button MinWidth="120" Content="{Binding ConnectBtnText}" Command="{Binding ConnectCMD}" Margin="5,0,0,0" />
         <Label Content="{Binding Status}" Margin="5,0,0,0" VerticalContentAlignment="Center" />
     </StackPanel>
 </UserControl>
