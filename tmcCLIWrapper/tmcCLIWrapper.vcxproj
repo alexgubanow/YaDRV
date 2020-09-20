@@ -120,7 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\stm\tmc\tmc2590defs.h" />
+    <ClInclude Include="..\stm\Inc\tmc2590defs.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="tmc2590Wrapper.h" />

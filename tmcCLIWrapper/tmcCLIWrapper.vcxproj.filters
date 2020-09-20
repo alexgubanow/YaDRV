@@ -24,7 +24,7 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\stm\tmc\tmc2590defs.h">
+    <ClInclude Include="..\stm\Inc\tmc2590defs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
