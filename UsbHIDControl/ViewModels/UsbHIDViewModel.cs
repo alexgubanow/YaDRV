@@ -26,6 +26,13 @@ namespace UsbHIDControl.ViewModels
             set { SetProperty(ref _devList, value); }
         }
 
+        private hidDeviceInfo _Sdev;
+        public hidDeviceInfo Sdev
+        {
+            get { return _Sdev; }
+            set { SetProperty(ref _Sdev, value); }
+        }
+        private int devIdx;
         private string _status;
         public string Status
         {
@@ -57,7 +64,40 @@ namespace UsbHIDControl.ViewModels
 
         void ExecuteConnectCMD()
         {
-            IsConnected = !IsConnected;
+            try
+            {
+                if (IsConnected && devIdx > -1)
+                {
+                    Hidapiw.Close(devIdx);
+                    devIdx = -1;
+                    IsConnected = false;
+                }
+                else if (IsConnected)
+                {
+                    IsConnected = false;
+                }
+                else if (!IsConnected)
+                {
+                    devIdx = -1;
+                    Hidapiw.Open(ref devIdx, Sdev.VendorId, Sdev.ProductId, Sdev.SerialNumber);
+                    if (devIdx != -1)
+                    {
+                        IsConnected = true;
+                        Hidapiw.SetBlockingMode(devIdx, false);
+                    }
+                }
+            }
+            catch (SEHException e)
+            {
+                if (e.StackTrace is string s)
+                {
+                    Status = s;
+                }
+            }
+            catch (Exception ex)
+            {
+                Status = ex.Message;
+            }
         }
 
         bool CanExecuteConnectCMD()
@@ -77,16 +117,15 @@ namespace UsbHIDControl.ViewModels
                 {
                     List<hidDeviceInfo> devs = new List<hidDeviceInfo>();
                     Hidapiw.Enumerate(ref devs, 0, 0);
+                    for (int i = devs.Count - 1; i > -1; i--)
+                    {
+                        if (devs[i].Product == "")
+                        {
+                            devs.RemoveAt(i);
+                        }
+                    }
                     DevList = new ObservableCollection<hidDeviceInfo>(devs);
                 }
-                //foreach (var device in DevList)
-                //{
-                //    if (device.vendor_id == 1155 && device.product_id == 22352)
-                //    {
-                //        Console.WriteLine("VID 0x{0:X} PID 0x{1:X} Manufacturer \"{2}\" Product \"{3}\"",
-                //            device.vendor_id, device.product_id, device.manufacturer_string, device.product_string);
-                //    }
-                //}
             }
             catch (SEHException e)
             {
@@ -112,6 +151,10 @@ namespace UsbHIDControl.ViewModels
 
         public void Dispose()
         {
+            if (devIdx > -1)
+            {
+                Hidapiw.Close(devIdx);
+            }
             Hidapiw.Dispose();
         }
     }

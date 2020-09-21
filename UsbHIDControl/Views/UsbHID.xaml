@@ -10,7 +10,18 @@
              mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="800">
     <StackPanel Orientation="Horizontal">
-        <ComboBox MinWidth="140" ItemsSource="{Binding DevList}" DisplayMemberPath="Product">
+        <ComboBox MinWidth="140" ItemsSource="{Binding DevList}" SelectedItem="{Binding Sdev}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Manufacturer}"/>
+                        <TextBlock Text=" / "/>
+                        <TextBlock Text="{Binding Product}"/>
+                        <TextBlock Text=" / "/>
+                        <TextBlock Text="{Binding SerialNumber}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="DropDownOpened">
                     <i:InvokeCommandAction Command="{Binding RefreshDevListCMD}"/>
