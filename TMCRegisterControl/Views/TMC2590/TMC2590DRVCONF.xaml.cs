@@ -3,11 +3,11 @@
 namespace TMCRegisterControl.Views
 {
     /// <summary>
-    /// Interaction logic for TMC2590.xaml
+    /// Interaction logic for TMC2590DRVCONF.xaml
     /// </summary>
-    public partial class TMC2590 : UserControl
+    public partial class TMC2590DRVCONF : UserControl
     {
-        public TMC2590()
+        public TMC2590DRVCONF()
         {
             InitializeComponent();
         }

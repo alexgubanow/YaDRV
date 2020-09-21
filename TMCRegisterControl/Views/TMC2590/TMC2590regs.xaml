@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="TMCRegisterControl.Views.TMC2590regs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lcl="clr-namespace:TMCRegisterControl.Views"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="960" Loaded="UserControl_Loaded">
+    <StackPanel>
+        <ContentControl prism:RegionManager.RegionName="TMC2590DRVCTLSDOFFRegion" Visibility="Collapsed"/>
+        <ContentControl prism:RegionManager.RegionName="TMC2590DRVCTLSDONRegion"/>
+        <ContentControl prism:RegionManager.RegionName="TMC2590CHOPCONFRegion"/>
+        <ContentControl prism:RegionManager.RegionName="TMC2590SMARTENRegion"/>
+        <ContentControl prism:RegionManager.RegionName="TMC2590SGCSCONFRegion"/>
+        <ContentControl prism:RegionManager.RegionName="TMC2590DRVCONFRegion"/>
+        <Button DockPanel.Dock="Right" Content="Read All" Margin="0,5,0,0" IsEnabled="{Binding IsConnected}"/>
+        <Button DockPanel.Dock="Right" Content="Write All" Margin="0,5,0,0" IsEnabled="{Binding IsConnected}"/>
+    </StackPanel>
+</UserControl>

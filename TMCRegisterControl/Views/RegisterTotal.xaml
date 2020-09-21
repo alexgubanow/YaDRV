@@ -3,12 +3,76 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:lcl="clr-namespace:TMCRegisterControl.Views"
+             xmlns:lcl="clr-namespace:TMCRegisterControl"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="160" DataContext="{Binding ElementName=parent}" >
+             d:DesignHeight="50" d:DesignWidth="220" >
+    <UserControl.Resources>
+        <lcl:BindingProxy x:Key="proxy" Data="{Binding  RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <lcl:HexToDecConverter x:Key="HexToDecConverter"/>
+        <lcl:Int32RangeChecker x:Key="Int32RangeChecker" Minimum="{Binding Data.RegTotMin, Source={StaticResource proxy}}"
+                                                       Maximum="{Binding Data.RegTotMax, Source={StaticResource proxy}}"/>
+        <lcl:ParameterRangeRule x:Key="ParameterRangeRule" ValidRange="{StaticResource Int32RangeChecker}"/>
+        <!--<lcl:BinToDecConverter x:Key="BinToDecConverter"/>-->
+    </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
-        <lcl:RegisterParam RegParName="Hex" RegParValue="{Binding Path=Hex}" Margin="5,0,0,0"/>
-        <lcl:RegisterParam RegParName="Dec" RegParValue="{Binding Path=Dec}" Margin="5,0,0,0"/>
-        <lcl:RegisterParam RegParName="Bin" RegParValue="{Binding Path=Bin}" Margin="5,0,0,0" MinWidth="60"/>
+        <StackPanel ToolTip="Hex view of value">
+            <Label Content="Hex" MinHeight="20"/>
+            <TextBox MinWidth="60">
+                <TextBox.Text>
+                    <Binding Path="RegTotValue" RelativeSource="{RelativeSource AncestorType=UserControl}"
+             UpdateSourceTrigger="PropertyChanged"
+                 Converter="{StaticResource HexToDecConverter}"
+                 ValidatesOnNotifyDataErrors="True"
+                 ValidatesOnDataErrors="True"
+                 NotifyOnValidationError="True">
+                        <!--<Binding.ValidationRules>
+                            <lcl:ParameterRangeRule ValidRange="{StaticResource Int32RangeChecker}"/>
+                        </Binding.ValidationRules>-->
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+        <StackPanel ToolTip="Decimal view of value" Margin="5,0,0,0">
+            <Label Content="Dec" MinHeight="20"/>
+            <TextBox MinWidth="60">
+                <TextBox.Resources>
+                    <lcl:BindingProxy x:Key="proxy" Data="{Binding}"/>
+                </TextBox.Resources>
+                <TextBox.Text>
+                    <Binding Path="RegTotValue" RelativeSource="{RelativeSource AncestorType=UserControl}"
+             UpdateSourceTrigger="PropertyChanged"
+                 ConverterParameter="Int32"
+                 ValidatesOnNotifyDataErrors="True"
+                 ValidatesOnDataErrors="True"
+                 NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <lcl:ParameterRangeRule ValidRange="{StaticResource Int32RangeChecker}"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+        <!--<StackPanel ToolTip="Binary view of value" Margin="5,0,0,0">
+            <Label Content="Bin" MinHeight="20"/>
+            <TextBox MinWidth="80" >
+                <TextBox.Resources>
+                    <lcl:BindingProxy x:Key="proxy" Data="{Binding}"/>
+                </TextBox.Resources>
+                <TextBox.Text>
+                    <Binding Path="RegTotValue"  RelativeSource="{RelativeSource AncestorType=UserControl}"
+             UpdateSourceTrigger="PropertyChanged"
+                 ConverterParameter="Int32"
+                 ValidatesOnNotifyDataErrors="True"
+                 ValidatesOnDataErrors="True"
+                 NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <lcl:ParameterRangeRule ValidRange="{StaticResource Int32RangeChecker}"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>-->
     </StackPanel>
 </UserControl>

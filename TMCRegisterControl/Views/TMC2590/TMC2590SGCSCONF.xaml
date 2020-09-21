@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="TMCRegisterControl.Views.TMC2590SGCSCONF"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lcl="clr-namespace:TMCRegisterControl.Views"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d"
+             d:DesignHeight="90" d:DesignWidth="960" x:Name="uc">
+    <StackPanel>
+        <GroupBox Header="SGCSCONF">
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Write SGCSCONF" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}"/>
+                <lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" RegTotValue="{Binding RegValue, Mode=TwoWay}"/>
+                <StackPanel Orientation="Horizontal">
+                    <lcl:RegisterParam RegParExplained="Current scale (scales digital currents A and B)"
+                                     RegParName="CS" RegParValue="{Binding CS, Mode=TwoWay}" RegParMin="0" RegParMax="31" />
+                    <lcl:RegisterParam RegParExplained="StallGuard2 threshold value"
+                                     RegParName="SGT" RegParValue="{Binding SGT, Mode=TwoWay}" RegParMin="0" RegParMax="127" Margin="5,0,0,0" />
+                    <lcl:RegisterParam RegParExplained="StallGuard2 filter enable"
+                                     RegParName="SFILT" RegParValue="{Binding SFILT, Mode=TwoWay}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
+                </StackPanel>
+            </DockPanel>
+        </GroupBox>
+    </StackPanel>
+</UserControl>

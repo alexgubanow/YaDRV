@@ -5,28 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lcl="clr-namespace:TMCRegisterControl"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="120" DataContext="{Binding ElementName=parent}">
-    <StackPanel ToolTip="{Binding Path=RegParExplained}">
-        <Label Content="{Binding Path=RegParName}" MinHeight="20"/>
+             xmlns:prism="http://prismlibrary.com/"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="60" d:DesignWidth="120">
+    <UserControl.Resources>
+        <lcl:BindingProxy x:Key="proxy" Data="{Binding  RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <lcl:Int32RangeChecker x:Key="Int32RangeChecker" Minimum="{Binding Data.RegParMin, Source={StaticResource proxy}}"
+                                                       Maximum="{Binding Data.RegParMax, Source={StaticResource proxy}}"/>
+        <lcl:ParameterRangeRule x:Key="ParameterRangeRule" ValidRange="{StaticResource Int32RangeChecker}"/>
+    </UserControl.Resources>
+    <StackPanel ToolTip="{Binding Path=RegParExplained, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <Label Content="{Binding Path=RegParName, RelativeSource={RelativeSource AncestorType=UserControl}}" MinHeight="20"/>
         <TextBox MinWidth="30">
-            <TextBox.Resources>
-                <lcl:BindingProxy x:Key="proxy" Data="{Binding}"/>
-            </TextBox.Resources>
             <TextBox.Text>
-                <Binding Path="RegParValue"
+                <Binding Path="RegParValue" RelativeSource="{RelativeSource AncestorType=UserControl}"
              UpdateSourceTrigger="PropertyChanged"
                  ConverterParameter="Int32"
                  ValidatesOnNotifyDataErrors="True"
                  ValidatesOnDataErrors="True"
                  NotifyOnValidationError="True">
-                    <!--<Binding.ValidationRules>
-                        <lcl:ParameterRangeRule>
-                            <lcl:ParameterRangeRule.ValidRange>
-                                <lcl:Int32RangeChecker Minimum="{Binding Data.RegParMin, Source={StaticResource proxy}}"
-                                                       Maximum="{Binding Data.RegParMax, Source={StaticResource proxy}}"/>
-                            </lcl:ParameterRangeRule.ValidRange>
-                        </lcl:ParameterRangeRule>
-                    </Binding.ValidationRules>-->
+                    <Binding.ValidationRules>
+                        <lcl:ParameterRangeRule ValidRange="{StaticResource Int32RangeChecker}"/>
+                    </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>

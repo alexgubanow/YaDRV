@@ -4,7 +4,7 @@ using Prism.Mvvm;
 
 namespace TMCRegisterControl.ViewModels
 {
-    public class TMC2590ViewModel : BindableBase
+    public class TMC2590regsViewModel : BindableBase
     {
         private IEventAggregator _eventAggregator;
 
@@ -14,8 +14,7 @@ namespace TMCRegisterControl.ViewModels
             get { return _isConnected; }
             set { SetProperty(ref _isConnected, value); }
         }
-
-        public TMC2590ViewModel(IEventAggregator ea)
+        public TMC2590regsViewModel(IEventAggregator ea)
         {
             _eventAggregator = ea;
             ea.GetEvent<ConnectEvent>().Subscribe((value) => IsConnected = value);

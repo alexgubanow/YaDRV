@@ -28,7 +28,7 @@ namespace TuneYaDRV.Views
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _regionManager.Regions["UsbHIDControlRegion"].Add(_container.Resolve<UsbHID>());
-            _regionManager.Regions["TMC2590ControlRegion"].Add(_container.Resolve<TMC2590>());
+            _regionManager.Regions["TMC2590ControlRegion"].Add(_container.Resolve<TMC2590regs>());
         }
     }
 }
