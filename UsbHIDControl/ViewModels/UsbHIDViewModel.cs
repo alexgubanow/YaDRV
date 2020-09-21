@@ -11,7 +11,7 @@ namespace UsbHIDControl.ViewModels
 {
     public class UsbHIDViewModel : BindableBase, IDisposable
     {
-        private IEventAggregator _eventAggregator;
+        private readonly IEventAggregator _eventAggregator;
         private hidapiw _hidapiw_native;
         public hidapiw Hidapiw
         {
@@ -60,10 +60,19 @@ namespace UsbHIDControl.ViewModels
         }
 
         private DelegateCommand _connectCMD;
-        public DelegateCommand ConnectCMD => _connectCMD ??= new DelegateCommand(ExecuteConnectCMD, CanExecuteConnectCMD);
+        public DelegateCommand ConnectCMD => _connectCMD ??= new DelegateCommand(ExecuteConnectCMD);
 
         void ExecuteConnectCMD()
         {
+            if (Sdev != null)
+            {
+                Status = "";
+            }
+            else
+            {
+                Status = "Select device from list for first";
+                return;
+            }
             try
             {
                 if (IsConnected && devIdx > -1)
@@ -98,12 +107,6 @@ namespace UsbHIDControl.ViewModels
             {
                 Status = ex.Message;
             }
-        }
-
-        bool CanExecuteConnectCMD()
-        {
-            //need to implement here check for device been choosen from list
-            return true;
         }
 
         private DelegateCommand _refreshDevListCMD;
