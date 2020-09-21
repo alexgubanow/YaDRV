@@ -16,7 +16,25 @@ namespace UsbHIDControl.Views
     {
         public UsbHID()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (System.BadImageFormatException ex)
+            {
+                MessageBox.Show(ex.Message);
+                Application.Current.Shutdown();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Exception message:\n" + ex.Message + "\n" + "Inner Exception message:\n" + ex.InnerException.Message, "Error while loading");
+                Application.Current.Shutdown();
+            }
+            catch
+            {
+                MessageBox.Show("Error while loading");
+                Application.Current.Shutdown();
+            }
         }
     }
 }
