@@ -128,7 +128,7 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 		HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
 		HID_ReportID(ReportMCUtemp),
 		HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
-		HID_Feature(HID_Data | HID_Variable | HID_Absolute),
+		HID_Input(HID_Data | HID_Variable | HID_Absolute),
 
 		HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
 		HID_ReportID(tmcRegisterCtl),
@@ -202,7 +202,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	switch ((usbReports)event_idx)
 	{
 	case  tmcRegisterCtl:
-		TMC2590_writeReg(tmc2590_SGCSCONF, hhid->Report_buf[1]);
+		TMC2590_writeReg(hhid->Report_buf[1], hhid->Report_buf[2] | hhid->Report_buf[3] << 8 | hhid->Report_buf[4] << 16);
 		break;
 	case  IOctl:
 		setIO_Handler(hhid->Report_buf[1]);
@@ -347,9 +347,9 @@ static int8_t CUSTOM_HID_InEvent_FS(uint8_t event_idx, uint8_t* buffer, uint16_t
 	switch ((usbReports)event_idx)
 	{
 	case tmcRegisterCtl:
-		buffer[0] = 1;
-		buffer[1] = 2;
-		buffer[2] = 3;
+		buffer[0] = TMC2590readResponse & 0xFF;
+		buffer[1] = (TMC2590readResponse >> 8) & 0xFF;
+		buffer[2] = (TMC2590readResponse >> 16) & 0xF;
 		break;
 	case  getVer:
 		buffer[0] = 13;

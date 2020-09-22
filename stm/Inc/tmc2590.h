@@ -8,6 +8,7 @@ extern SMARTEN_t SMARTEN_r;
 extern SGCSCONF_t SGCSCONF_r;
 extern DRVCONF_t DRVCONF_r;
 
+extern unsigned int TMC2590readResponse;
 extern unsigned int motorVel;
 
 //void TMC2590_writeConfig(void);

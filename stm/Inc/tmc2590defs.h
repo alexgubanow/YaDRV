@@ -1,24 +1,5 @@
 #pragma once
 
-typedef union
-{
-	struct
-	{
-		unsigned short w1 : 10;
-		unsigned short w2 : 10;
-	}b;
-	unsigned int w;
-}spiBuff_t;
-typedef union
-{
-	struct
-	{
-		unsigned int data : 17;
-		unsigned char addr : 3;
-	}b;
-	unsigned int w;
-}tmc2590_txBuff_t;
-
 typedef struct
 {
 	unsigned short MSTEP : 10;
@@ -37,16 +18,16 @@ typedef struct
 
 typedef struct
 {
-	unsigned char UV_7V : 1;
-	unsigned char ENN_input : 1;
-	unsigned char S2VSB : 1;
-	unsigned char S2GB : 1;
-	unsigned char S2VSA : 1;
-	unsigned char S2GA : 1;
-	unsigned char OT150 : 1;
-	unsigned char OT136 : 1;
-	unsigned char OT120 : 1;
 	unsigned char OT100 : 1;
+	unsigned char OT120 : 1;
+	unsigned char OT136 : 1;
+	unsigned char OT150 : 1;
+	unsigned char S2GA : 1;
+	unsigned char S2VSA : 1;
+	unsigned char S2GB : 1;
+	unsigned char S2VSB : 1;
+	unsigned char ENN_input : 1;
+	unsigned char UV_7V : 1;
 }tmc2590_rxBuff_RDSEL11_t;
 
 typedef union
@@ -67,7 +48,11 @@ typedef union
 	unsigned int w;
 }tmc2590_rxBuff_t;
 
+#ifdef __cplusplus_cli
+typedef enum class tmc2590 {
+#else
 typedef enum {
+#endif // __cplusplus_cli
 	tmc2590_DRVCTRL = 0b000,
 	tmc2590_CHOPCONF = 0b100,
 	tmc2590_SMARTEN = 0b101,

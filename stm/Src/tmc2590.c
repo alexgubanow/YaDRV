@@ -7,15 +7,16 @@ SMARTEN_t SMARTEN_r;
 SGCSCONF_t SGCSCONF_r;
 DRVCONF_t DRVCONF_r;
 unsigned int motorVel;
+unsigned int TMC2590readResponse;
 
 void TMC2590_dispatcRXbuff(unsigned int val);
 
 void TMC2590_writeReg(tmc2590 addr, unsigned int val)
 {
-	tmc2590_txBuff_t txData;
+	/*tmc2590_txBuff_t txData;
 	txData.b.addr = addr;
-	txData.b.data = val;
-	TMC2590_SPI_write(txData.w);
+	txData.b.data = val;*/
+	TMC2590_SPI_write(addr << 17 | val);
 }
 void TMC2590_SPI_write(unsigned int val)
 {
@@ -36,11 +37,12 @@ void TMC2590_SPI_write(unsigned int val)
 int counter = 0;
 void TMC2590_dispatcRXbuff(unsigned int val)
 {
-	tmc2590_rxBuff_t rxBuff;
-	rxBuff.w = val;
-	if (rxBuff.b.SG)
-	{
-		/*LL_TIM_SetAutoReload(TIM14, 0);
-		LL_TIM_OC_SetCompareCH1(TIM14, 0);*/
-	}
+	TMC2590readResponse = val;
+	//tmc2590_rxBuff_t rxBuff;
+	//rxBuff.w = val;
+	//if (rxBuff.b.SG)
+	//{
+	//	/*LL_TIM_SetAutoReload(TIM14, 0);
+	//	LL_TIM_OC_SetCompareCH1(TIM14, 0);*/
+	//}
 }

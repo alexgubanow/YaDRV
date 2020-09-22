@@ -22,6 +22,7 @@
     <ProjectFile>stm.vcxproj</ProjectFile>
     <RemoteBuildEnvironment>
       <Records />
+      <EnvironmentSetupFiles />
     </RemoteBuildEnvironment>
     <ParallelJobCount>1</ParallelJobCount>
     <SuppressDirectoryChangeMessages>true</SuppressDirectoryChangeMessages>
@@ -102,7 +103,7 @@
     <DebugMethod>
       <ID>com.sysprogs.arm.openocd</ID>
       <Configuration xsi:type="com.visualgdb.edp.openocd.settings">
-        <CommandLine>-f interface/stlink-v2-1.cfg -c "transport select hla_swd" -f target/stm32f0x.cfg -c init -c "reset init"</CommandLine>
+        <CommandLine>-f interface/stlink-v2-1.cfg -c "adapter speed 4000" -c "transport select hla_swd" -f target/stm32f0x.cfg -c init -c "reset init"</CommandLine>
         <ExtraParameters>
           <Frequency xsi:nil="true" />
           <BoostedFrequency xsi:nil="true" />
@@ -116,6 +117,7 @@
           <string>mon halt</string>
           <string>mon reset init</string>
           <string>load</string>
+          <string>mon reset init</string>
         </StartupCommands>
         <ProgramFLASHUsingExternalTool>false</ProgramFLASHUsingExternalTool>
         <PreferredGDBPort>0</PreferredGDBPort>
