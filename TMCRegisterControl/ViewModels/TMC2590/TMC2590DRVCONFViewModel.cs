@@ -47,7 +47,7 @@ namespace TMCRegisterControl.ViewModels
         public int RDSEL
         {
             get { return _RDSEL; }
-            set { SetProperty(ref _RDSEL, value); updRegValue(); }
+            set { SetProperty(ref _RDSEL, value); updRegValue(); _eventAggregator.GetEvent<RDChangedEvent>().Publish(value); }
         }
         private int _VSENSE;
         public int VSENSE

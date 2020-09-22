@@ -7,8 +7,11 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
+             xmlns:viewmodels="clr-namespace:TMCRegisterControl.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:TMC2590regsViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="500" d:DesignWidth="960" Loaded="UserControl_Loaded">
     <StackPanel>
+        <ContentControl prism:RegionManager.RegionName="TMC2590readResponseRegion"/>
         <ContentControl prism:RegionManager.RegionName="TMC2590DRVCTLSDOFFRegion" Visibility="Collapsed"/>
         <ContentControl prism:RegionManager.RegionName="TMC2590DRVCTLSDONRegion"/>
         <ContentControl prism:RegionManager.RegionName="TMC2590CHOPCONFRegion"/>

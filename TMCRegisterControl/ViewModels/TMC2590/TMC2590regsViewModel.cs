@@ -19,5 +19,8 @@ namespace TMCRegisterControl.ViewModels
             _eventAggregator = ea;
             ea.GetEvent<ConnectEvent>().Subscribe((value) => IsConnected = value);
         }
+        public TMC2590regsViewModel()
+        {
+        }
     }
 }

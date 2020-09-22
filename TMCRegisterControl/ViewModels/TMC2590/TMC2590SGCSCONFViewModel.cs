@@ -9,7 +9,7 @@ namespace TMCRegisterControl.ViewModels
 {
     public class TMC2590SGCSCONFViewModel : BindableBase
     {
-        private IEventAggregator _eventAggregator;
+        private readonly IEventAggregator _eventAggregator;
 
         private bool _isConnected;
         public bool IsConnected
@@ -70,6 +70,10 @@ namespace TMCRegisterControl.ViewModels
             RegValue = 0xD0006;
             _eventAggregator = ea;
             ea.GetEvent<ConnectEvent>().Subscribe((value) => IsConnected = value);
+        }
+        public TMC2590SGCSCONFViewModel()
+        {
+            RegValue = 0xD0006;
         }
     }
 }

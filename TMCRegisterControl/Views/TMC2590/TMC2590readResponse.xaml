@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="TMCRegisterControl.Views.TMC2590readResponse"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lcl="clr-namespace:TMCRegisterControl.Views"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d"
+             xmlns:viewmodels="clr-namespace:TMCRegisterControl.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:TMC2590readResponseViewModel, IsDesignTimeCreatable=True}"
+             d:DesignHeight="90" d:DesignWidth="960">
+    <StackPanel>
+        <GroupBox Header="TMC2590 Response">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                    <lcl:RegisterParam RegParExplained="Microstep position in sine table for coil A in
+STEP/DIR mode. MSTEP9 is the Polarity bit:&#10;
+0: Current flows from OA1 pins to OA2 pins.&#10;
+1: Current flows from OA2 pins to OA1 pins.&#10;"
+                                     RegParName="MSTEP" RegParValue="{Binding MSTEP09}" RegParMin="0" RegParMax="1023" Visibility="{Binding RD0}"/>
+                    <lcl:RegisterParam RegParExplained="StallGuard2 value SG9:0" Margin="5,0,0,0"
+                                     RegParName="SG" RegParValue="{Binding SG09}" RegParMin="0" RegParMax="1023" Visibility="{Binding RD1}"/>
+                    <lcl:RegisterParam RegParExplained="StallGuard2 value SG9:5" Margin="5,0,0,0"
+                                     RegParName="SG" RegParValue="{Binding SG59}" RegParMin="0" RegParMax="31" Visibility="{Binding RD2}"/>
+                    <lcl:RegisterParam RegParExplained="The actual CoolStep scaling value SE4:0" Margin="5,0,0,0"
+                                     RegParName="SE" RegParValue="{Binding SE04}" RegParMin="0" RegParMax="31" Visibility="{Binding RD2}"/>
+                    <lcl:RegisterParam RegParExplained="less 7V VS flag" Margin="5,0,0,0"
+                                     RegParName="UV_7V" RegParValue="{Binding UV_7V}" RegParMin="0" RegParMax="1" Visibility="{Binding RD3}"/>
+                    <lcl:RegisterParam RegParExplained="State of ENN input" Margin="5,0,0,0"
+                                     RegParName="ENN in" RegParValue="{Binding ENN_in}" RegParMin="0" RegParMax="1" Visibility="{Binding RD3}"/>
+                    <lcl:RegisterParam RegParExplained="short to VS in B channel flag" Margin="5,0,0,0"
+                                     RegParName="S2VSB" RegParValue="{Binding S2VSB}" RegParMin="0" RegParMax="1" Visibility="{Binding RD3}"/>
+                    <lcl:RegisterParam RegParExplained="short to GND in B channel flag" Margin="5,0,0,0"
+                                     RegParName="S2GB" RegParValue="{Binding S2GB}" RegParMin="0" RegParMax="1" Visibility="{Binding RD3}"/>
+                    <lcl:RegisterParam RegParExplained="short to VS in A channel flag" Margin="5,0,0,0"
+                                     RegParName="S2VSA" RegParValue="{Binding S2VSA}" RegParMin="0" RegParMax="1" Visibility="{Binding RD3}"/>
+                    <lcl:RegisterParam RegParExplained="short to GND in A channel flag" Margin="5,0,0,0"
+                                     RegParName="S2GA" RegParValue="{Binding S2GA}" RegParMin="0" RegParMax="1" Visibility="{Binding RD3}"/>
+                    <lcl:RegisterParam RegParExplained="Temperature detector readout" Margin="5,0,0,0"
+                                     RegParName="Temperature" RegParValue="{Binding Temperature}" RegParMin="0" RegParMax="15" Visibility="{Binding RD3}"/>
+                    <lcl:RegisterParam RegParExplained="Standstill indicator.&#10;
+0: No standstill condition detected.&#10;
+1: No active edge occurred on the STEP&#10;
+input during the last 220 system clock cycles." Margin="5,0,0,0"
+                                     RegParName="STST" RegParValue="{Binding STST}" RegParMin="0" RegParMax="1"/>
+                    <lcl:RegisterParam RegParExplained="Open load indicator.&#10;
+0: No open load condition detected.&#10;
+1: No chopper event has happened during&#10;
+the last period with constant coil polarity.&#10;
+Only a current above 1/16 of the maximum&#10;
+setting can clear this bit!&#10;
+Hint: This bit is only a status indicator. The&#10;
+chip takes no other action when this bit is&#10;
+set. False indications may occur during fast&#10;
+motion and at standstill. Check this bit only&#10;during slow motion." Margin="5,0,0,0"
+                                     RegParName="OLB" RegParValue="{Binding OLB}" RegParMin="0" RegParMax="1"/>
+                    <lcl:RegisterParam RegParExplained="Open load indicator.&#10;
+0: No open load condition detected.&#10;
+1: No chopper event has happened during&#10;
+the last period with constant coil polarity.&#10;
+Only a current above 1/16 of the maximum&#10;
+setting can clear this bit!&#10;
+Hint: This bit is only a status indicator. The&#10;
+chip takes no other action when this bit is&#10;
+set. False indications may occur during fast&#10;
+motion and at standstill. Check this bit only&#10;during slow motion." Margin="5,0,0,0"
+                                     RegParName="OLA" RegParValue="{Binding OLA}" RegParMin="0" RegParMax="1"/>
+                    <lcl:RegisterParam RegParExplained="Short detection status&#10;
+0: No short condition.&#10;
+1: Short condition.&#10;
+The short counter is incremented by each&#10;
+short circuit and the chopper cycle is&#10;
+suspended. The counter is decremented for&#10;
+each phase polarity change. The MOSFETs are&#10;
+shut off when the counter reaches 3 and&#10;
+remain shut off until the shutdown condition&#10;
+is cleared by disabling and re-enabling the&#10;
+driver. The shutdown condition becomes&#10;
+reset by de-asserting the ENN input or&#10;
+clearing the TOFF parameter." Margin="5,0,0,0"
+                                     RegParName="SHORTB" RegParValue="{Binding SHORTB}" RegParMin="0" RegParMax="1"/>
+                    <lcl:RegisterParam RegParExplained="Short detection status&#10;
+0: No short condition.&#10;
+1: Short condition.&#10;
+The short counter is incremented by each&#10;
+short circuit and the chopper cycle is&#10;
+suspended. The counter is decremented for&#10;
+each phase polarity change. The MOSFETs are&#10;
+shut off when the counter reaches 3 and&#10;
+remain shut off until the shutdown condition&#10;
+is cleared by disabling and re-enabling the&#10;
+driver. The shutdown condition becomes&#10;
+reset by de-asserting the ENN input or&#10;
+clearing the TOFF parameter." Margin="5,0,0,0"
+                                     RegParName="SHORTA" RegParValue="{Binding SHORTA}" RegParMin="0" RegParMax="1"/>
+                    <lcl:RegisterParam RegParExplained="Overtemperature warning&#10;
+0: No overtemperature warning condition.&#10;1: Warning threshold is active." Margin="5,0,0,0"
+                                     RegParName="OTPW" RegParValue="{Binding OTPW}" RegParMin="0" RegParMax="1"/>
+                    <lcl:RegisterParam RegParExplained="Overtemperature shutdown&#10;
+0: No overtemperature shutdown condition.&#10;1: Overtemperature shutdown has occurred." Margin="5,0,0,0"
+                                     RegParName="OT" RegParValue="{Binding OT}" RegParMin="0" RegParMax="1"/>
+                    <lcl:RegisterParam RegParExplained="StallGuard2 status&#10;
+0: No motor stall detected.&#10;
+1: StallGuard2 threshold has been reached,&#10;
+and the SG_TST output is driven high." Margin="5,0,0,0"
+                                     RegParName="SG" RegParValue="{Binding SG, Mode=TwoWay}" RegParMin="0" RegParMax="1"/>
+                </StackPanel>
+            </DockPanel>
+        </GroupBox>
+    </StackPanel>
+</UserControl>

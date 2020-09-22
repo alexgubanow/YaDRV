@@ -7,7 +7,9 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
-             d:DesignHeight="90" d:DesignWidth="960" x:Name="uc">
+             xmlns:viewmodels="clr-namespace:TMCRegisterControl.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:TMC2590SGCSCONFViewModel, IsDesignTimeCreatable=True}"
+             d:DesignHeight="90" d:DesignWidth="960">
     <StackPanel>
         <GroupBox Header="SGCSCONF">
             <DockPanel>
