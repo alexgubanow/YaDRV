@@ -73,7 +73,6 @@
     <ClCompile Include="Src\tim.c" />
     <ClCompile Include="Src\tmc2590.c" />
     <ClCompile Include="Src\usbd_conf.c" />
-    <ClCompile Include="Src\usbd_customhid.c" />
     <ClCompile Include="Src\usbd_custom_hid_if.c" />
     <ClCompile Include="Src\usbd_desc.c" />
     <ClCompile Include="Src\usb_device.c" />
@@ -89,7 +88,6 @@
     <ClInclude Include="Inc\tmc2590.h" />
     <ClInclude Include="Inc\tmc2590defs.h" />
     <ClInclude Include="Inc\usbd_conf.h" />
-    <ClInclude Include="Inc\usbd_customhid.h" />
     <ClInclude Include="Inc\usbd_custom_hid_if.h" />
     <ClInclude Include="Inc\usbd_desc.h" />
     <ClInclude Include="Inc\usb_device.h" />
@@ -179,9 +177,6 @@
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_usart_ex.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_wwdg.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_ll_usb.c" />
-    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_core.c" />
-    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c" />
-    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_adc.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_adc_ex.h" />
@@ -255,6 +250,11 @@
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Device\ST\STM32F0xx\Include\stm32f0xx.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\Device\ST\STM32F0xx\Include\system_stm32f0xx.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\RTOS\Template\cmsis_os.h" />
+    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Class\CustomHID\Src\usbd_customhid.c" />
+    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_core.c" />
+    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c" />
+    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c" />
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Class\CustomHID\Inc\usbd_customhid.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Inc\usbd_core.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Inc\usbd_def.h" />

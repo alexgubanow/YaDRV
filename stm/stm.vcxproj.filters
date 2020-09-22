@@ -34,14 +34,14 @@
     <Filter Include="Source files\Device-specific files\HAL">
       <UniqueIdentifier>{7b80756e-b415-4e2d-a7d5-524d35a11db1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Device-specific files\USB Device">
-      <UniqueIdentifier>{6b0e8019-b7dc-4eb0-a1f0-1a3019a6f996}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header files\Device-specific files\HAL">
       <UniqueIdentifier>{c653f5d6-552c-4056-9c87-dc9c0e87a995}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\Device-specific files\USB Device">
+      <UniqueIdentifier>{7bf82be9-1911-4f2e-ba4a-7e18e6bc0c85}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header files\Device-specific files\USB Device">
-      <UniqueIdentifier>{919d071a-4e50-4a2b-9ed0-d1efd3aa89d3}</UniqueIdentifier>
+      <UniqueIdentifier>{1a3ff6ae-7a45-4bd1-9830-d6bbda8d97f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -303,15 +303,6 @@
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Src\stm32f0xx_ll_usb.c">
       <Filter>Source files\Device-specific files\HAL</Filter>
     </ClCompile>
-    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_core.c">
-      <Filter>Source files\Device-specific files\USB Device</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c">
-      <Filter>Source files\Device-specific files\USB Device</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
-      <Filter>Source files\Device-specific files\USB Device</Filter>
-    </ClCompile>
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal.h">
       <Filter>Header files\Device-specific files\HAL</Filter>
     </ClInclude>
@@ -531,6 +522,21 @@
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\CMSIS_HAL\RTOS\Template\cmsis_os.h">
       <Filter>Header files\Device-specific files\HAL</Filter>
     </ClInclude>
+    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Class\CustomHID\Src\usbd_customhid.c">
+      <Filter>Source files\Device-specific files\USB Device</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_core.c">
+      <Filter>Source files\Device-specific files\USB Device</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c">
+      <Filter>Source files\Device-specific files\USB Device</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
+      <Filter>Source files\Device-specific files\USB Device</Filter>
+    </ClCompile>
+    <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Class\CustomHID\Inc\usbd_customhid.h">
+      <Filter>Header files\Device-specific files\USB Device</Filter>
+    </ClInclude>
     <ClInclude Include="$(BSP_ROOT)\STM32F0xxxx\STM32_USB_Device_Library\Core\Inc\usbd_core.h">
       <Filter>Header files\Device-specific files\USB Device</Filter>
     </ClInclude>
@@ -584,9 +590,6 @@
     <ClInclude Include="Inc\usbd_custom_hid_if.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\usbd_customhid.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\usbd_desc.h">
       <Filter>Header files</Filter>
     </ClInclude>
@@ -629,9 +632,6 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="Src\usbd_custom_hid_if.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\usbd_customhid.c">
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="Src\usbd_desc.c">
