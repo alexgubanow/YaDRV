@@ -1,4 +1,5 @@
 ﻿using Events;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
@@ -20,7 +21,13 @@ namespace TMCRegisterControl.ViewModels
                 SetProperty(ref _isConnected, value);
             }
         }
+        private DelegateCommand _WriteCMD;
+        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(ExecuteWriteCMD);
 
+        void ExecuteWriteCMD()
+        {
+            _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(new TmcRegData() { addr = 1, val = RegValue }); ;
+        }
         private void updRegValue()
         {
             _RegValue = tmc2590Converter.getSGCSCONF(CS, SGT, SFILT);

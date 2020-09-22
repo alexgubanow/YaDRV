@@ -13,7 +13,8 @@
     <StackPanel>
         <GroupBox Header="SGCSCONF">
             <DockPanel>
-                <Button DockPanel.Dock="Right" Content="Write SGCSCONF" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}"/>
+                <Button DockPanel.Dock="Right" Content="Write SGCSCONF" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}"
+                        Command="{Binding WriteCMD}"/>
                 <lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" RegTotValue="{Binding RegValue, Mode=TwoWay}"/>
                 <StackPanel Orientation="Horizontal">
                     <lcl:RegisterParam RegParExplained="Current scale (scales digital currents A and B)"

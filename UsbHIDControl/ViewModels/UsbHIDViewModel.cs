@@ -150,6 +150,36 @@ namespace UsbHIDControl.ViewModels
             IsConnected = false;
             Hidapiw = new hidapiw();
             DevList = new ObservableCollection<hidDeviceInfo>();
+            ea.GetEvent<WriteToDeviceEvent>().Subscribe((value) => WriteToDevice(value));
+        }
+
+        void WriteToDevice(TmcRegData reg)
+        {
+            try
+            {
+                if (IsConnected)
+                {
+                    byte[] data = new byte[5];
+                    data[0] = 3;
+                    data[1] = (byte)reg.addr;
+                    data[2] = (byte)(reg.val & 0xFF);
+                    data[3] = (byte)((reg.val >> 8) & 0xFF);
+                    data[4] = (byte)((reg.val >> 16) & 0xF);
+                    Hidapiw.SendFeatureReport(devIdx, data);
+                    //Hidapiw.GetFeatureReport(devIdx, ref data);
+                }
+            }
+            catch (SEHException e)
+            {
+                if (e.StackTrace is string s)
+                {
+                    Status = s;
+                }
+            }
+            catch (Exception ex)
+            {
+                Status = ex.Message;
+            }
         }
 
         public void Dispose()
