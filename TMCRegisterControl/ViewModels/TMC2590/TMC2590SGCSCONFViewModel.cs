@@ -14,10 +14,7 @@ namespace TMCRegisterControl.ViewModels
         private bool _isConnected;
         public bool IsConnected
         {
-            get
-            {
-                return _isConnected;
-            }
+            get { return _isConnected; }
             set
             {
                 SetProperty(ref _isConnected, value);
@@ -31,15 +28,7 @@ namespace TMCRegisterControl.ViewModels
         }
 
         private int _CS;
-        public int CS
-        {
-            get { return _CS; }
-            set
-            {
-                SetProperty(ref _CS, value);
-                updRegValue();
-            }
-        }
+        public int CS { get { return _CS; } set { SetProperty(ref _CS, value); updRegValue(); } }
         private int _SGT;
         public int SGT
         {
@@ -78,7 +67,7 @@ namespace TMCRegisterControl.ViewModels
         }
         public TMC2590SGCSCONFViewModel(IEventAggregator ea)
         {
-            RegValue = 0xfffff;
+            RegValue = 0xD0006;
             _eventAggregator = ea;
             ea.GetEvent<ConnectEvent>().Subscribe((value) => IsConnected = value);
         }

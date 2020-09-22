@@ -12,36 +12,36 @@
         <GroupBox Header="DRVCONF">
             <DockPanel>
                 <Button DockPanel.Dock="Right" Content="Write DRVCONF" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}"/>
-                <!--<lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" RegTotValue="{Binding RegValue}"/>-->
-                <!--<StackPanel Orientation="Horizontal">
+                <lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" RegTotValue="{Binding RegValue, Mode=TwoWay}"/>
+                <StackPanel Orientation="Horizontal">
                     <lcl:RegisterParam RegParExplained="Short to VS protection / CLK failsafe enable"
-                                     RegParName="EN_S2VS" RegParValue="{Binding Path=EN_S2VS}" RegParMin="0" RegParMax="1" />
+                                     RegParName="EN_S2VS" RegParValue="{Binding EN_S2VS, Mode=TwoWay}" RegParMin="0" RegParMax="1" />
                     <lcl:RegisterParam RegParExplained="Enable Passive fast decay / 5V undervoltage threshold"
-                                     RegParName="EN_PFD" RegParValue="{Binding Path=EN_PFD}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
+                                     RegParName="EN_PFD" RegParValue="{Binding EN_PFD, Mode=TwoWay}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Short to GND detection sensitivity"
-                                     RegParName="SHRTSENS" RegParValue="{Binding Path=SHRTSENS}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
+                                     RegParName="SHRTSENS" RegParValue="{Binding SHRTSENS, Mode=TwoWay}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Overtemperature sensitivity"
-                                     RegParName="OTSENS" RegParValue="{Binding Path=OTSENS}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
+                                     RegParName="OTSENS" RegParValue="{Binding OTSENS, Mode=TwoWay}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Select value for read out (RD bits)"
-                                     RegParName="RDSEL" RegParValue="{Binding Path=RDSEL}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
+                                     RegParName="RDSEL" RegParValue="{Binding RDSEL, Mode=TwoWay}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Sense resistor voltage-based current scaling"
-                                     RegParName="VSENSE" RegParValue="{Binding Path=VSENSE}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
+                                     RegParName="VSENSE" RegParValue="{Binding VSENSE, Mode=TwoWay}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="STEP/DIR interface disable"
-                                     RegParName="SDOFF" RegParValue="{Binding Path=SDOFF}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
+                                     RegParName="SDOFF" RegParValue="{Binding SDOFF, Mode=TwoWay}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Short detection delay for high-side and low-side FETs"
-                                     RegParName="TS2G" RegParValue="{Binding Path=TS2G}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
+                                     RegParName="TS2G" RegParValue="{Binding TS2G, Mode=TwoWay}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Short to GND protection disable"
-                                     RegParName="DIS_S2G" RegParValue="{Binding Path=DIS_S2G}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
+                                     RegParName="DIS_S2G" RegParValue="{Binding DIS_S2G, Mode=TwoWay}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Slope control MSB for high side and low side"
-                                     RegParName="SLP" RegParValue="{Binding Path=SLP}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
+                                     RegParName="SLP" RegParValue="{Binding SLP, Mode=TwoWay}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Slope control, low side"
-                                     RegParName="SLPL" RegParValue="{Binding Path=SLPL}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
+                                     RegParName="SLPL" RegParValue="{Binding SLPL, Mode=TwoWay}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Slope control, high side"
-                                     RegParName="SLPH" RegParValue="{Binding Path=SLPH}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
+                                     RegParName="SLPH" RegParValue="{Binding SLPH, Mode=TwoWay}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Reserved TEST mode. Must be cleared for normal operation. When set, the&#10;
 		SG_TST output exposes digital test values, and the TEST_ANA output exposes analog test values."
-                                     RegParName="TST" RegParValue="{Binding Path=TST}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
-                </StackPanel>-->
+                                     RegParName="TST" RegParValue="{Binding TST, Mode=TwoWay}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
+                </StackPanel>
             </DockPanel>
         </GroupBox>
     </StackPanel>

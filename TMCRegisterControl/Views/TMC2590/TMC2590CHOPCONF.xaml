@@ -12,14 +12,14 @@
         <GroupBox Header="CHOPCONF">
             <DockPanel>
                 <Button DockPanel.Dock="Right" Content="Write CHOPCONF" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}"/>
-                <!--<lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" RegTotValue="{Binding RegValue}"/>-->
-                <!--<StackPanel Orientation="Horizontal">
+                <lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" RegTotValue="{Binding RegValue, Mode=TwoWay}"/>
+                <StackPanel Orientation="Horizontal">
                     <lcl:RegisterParam RegParExplained="Off time / MOSFET disable"
-                                     RegParName="TOFF" RegParValue="{Binding Path=TOFF}" RegParMin="0" RegParMax="15" />
+                                     RegParName="TOFF" RegParValue="{Binding TOFF, Mode=TwoWay}" RegParMin="0" RegParMax="15" />
                     <lcl:RegisterParam RegParExplained="Hysteresis start value or Fast decay time setting"
-                                     RegParName="HSTRT" RegParValue="{Binding Path=HSTRT}" RegParMin="0" RegParMax="7" Margin="5,0,0,0" />
+                                     RegParName="HSTRT" RegParValue="{Binding HSTRT, Mode=TwoWay}" RegParMin="0" RegParMax="7" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Hysteresis end (low) value or Sine wave offset"
-                                     RegParName="HEND" RegParValue="{Binding Path=HEND}" RegParMin="0" RegParMax="15" Margin="5,0,0,0" />
+                                     RegParName="HEND" RegParValue="{Binding HEND, Mode=TwoWay}" RegParMin="0" RegParMax="15" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Hysteresis decrement interval or Fast decay mode&#10;
 		CHM=0 => Hysteresis decrement period setting, in system clock periods:&#10;
 		%00: 16&#10;
@@ -30,23 +30,23 @@
 		HDEC.1=0: current comparator can terminate the fast decay phase before timer expires.&#10;
 		HDEC.1=1: only the timer terminates the fast decay phase.&#10;
 		HDEC.0: MSB of fast decay time setting."
-                                     RegParName="HDEC" RegParValue="{Binding Path=HDEC}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
+                                     RegParName="HDEC" RegParValue="{Binding HDEC, Mode=TwoWay}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Random TOFF time. Enable randomizing the slow decay phase duration:&#10;
 		0: Chopper off time is fixed as set by bits tOFF&#10;
 		1: Random mode, tOFF is random modulated by dNCLK= -12 … +3 clocks"
-                                     RegParName="RNDTF" RegParValue="{Binding Path=RNDTF}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
+                                     RegParName="RNDTF" RegParValue="{Binding RNDTF, Mode=TwoWay}" RegParMin="0" RegParMax="1" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Chopper mode. This mode bit affects the interpretation of the HDEC, HEND, and HSTRT&#10;
 		parameters shown below. 0: Standard mode (SpreadCycle) 1: Constant tOFF with&#10;
 		current is reached. Fast decay is after on time."
-                                     RegParName="CHM" RegParValue="{Binding Path=CHM}" RegParMin="0" RegParMax="8" Margin="5,0,0,0" />
+                                     RegParName="CHM" RegParValue="{Binding CHM, Mode=TwoWay}" RegParMin="0" RegParMax="8" Margin="5,0,0,0" />
                     <lcl:RegisterParam RegParExplained="Blanking time. Blanking time interval, in system clock periods:&#10;
                                    %00: 16&#10;
                                    %01: 24&#10;
                                    %10: 36&#10;
                                    %11: 54"
                                    RegParName="TBL"
-                                   RegParValue="{Binding Path=TBL}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
-                </StackPanel>-->
+                                   RegParValue="{Binding TBL, Mode=TwoWay}" RegParMin="0" RegParMax="3" Margin="5,0,0,0" />
+                </StackPanel>
             </DockPanel>
         </GroupBox>
     </StackPanel>
