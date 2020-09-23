@@ -77,6 +77,24 @@ namespace TMCRegisterControl.ViewModels
             get { return _SG09; }
             set { SetProperty(ref _SG09, value); }
         }
+        /*need to implement propetie below and fille them from ResponseValue once its updated
+SG59
+SE04
+UV_7V
+ENN_in
+S2VSB
+S2GB
+S2VSA
+S2GA
+Temperature
+STST
+OLB
+OLA
+SHORTB
+SHORTA
+OTPW
+OT
+SG*/
         private int responseValue;
         public int ResponseValue
         {
