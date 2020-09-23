@@ -153,18 +153,17 @@ namespace UsbHIDControl.ViewModels
             ea.GetEvent<WriteToDeviceEvent>().Subscribe((value) => WriteToDevice(value));
         }
 
-        void WriteToDevice(TmcRegData reg)
+        void WriteToDevice(int val)
         {
             try
             {
                 if (IsConnected)
                 {
-                    byte[] data = new byte[5];
+                    byte[] data = new byte[4];
                     data[0] = 3;
-                    data[1] = (byte)reg.addr;
-                    data[2] = (byte)(reg.val & 0xFF);
-                    data[3] = (byte)((reg.val >> 8) & 0xFF);
-                    data[4] = (byte)((reg.val >> 16) & 0xF);
+                    data[1] = (byte)(val & 0xFF);
+                    data[2] = (byte)((val >> 8) & 0xFF);
+                    data[3] = (byte)((val >> 16) & 0xF);
                     Hidapiw.SendFeatureReport(devIdx, data);
                     //Hidapiw.GetFeatureReport(devIdx, ref data);
                 }
