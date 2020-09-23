@@ -53,7 +53,8 @@ setting can clear this bit!&#10;
 Hint: This bit is only a status indicator. The&#10;
 chip takes no other action when this bit is&#10;
 set. False indications may occur during fast&#10;
-motion and at standstill. Check this bit only&#10;during slow motion." Margin="5,0,0,0"
+motion and at standstill. Check this bit only&#10;
+during slow motion." Margin="5,0,0,0"
                                      RegParName="OLB" RegParValue="{Binding OLB}" RegParMin="0" RegParMax="1"/>
                     <lcl:RegisterParam RegParExplained="Open load indicator.&#10;
 0: No open load condition detected.&#10;
@@ -64,7 +65,8 @@ setting can clear this bit!&#10;
 Hint: This bit is only a status indicator. The&#10;
 chip takes no other action when this bit is&#10;
 set. False indications may occur during fast&#10;
-motion and at standstill. Check this bit only&#10;during slow motion." Margin="5,0,0,0"
+motion and at standstill. Check this bit only&#10;
+during slow motion." Margin="5,0,0,0"
                                      RegParName="OLA" RegParValue="{Binding OLA}" RegParMin="0" RegParMax="1"/>
                     <lcl:RegisterParam RegParExplained="Short detection status&#10;
 0: No short condition.&#10;
@@ -95,16 +97,19 @@ reset by de-asserting the ENN input or&#10;
 clearing the TOFF parameter." Margin="5,0,0,0"
                                      RegParName="SHORTA" RegParValue="{Binding SHORTA}" RegParMin="0" RegParMax="1"/>
                     <lcl:RegisterParam RegParExplained="Overtemperature warning&#10;
-0: No overtemperature warning condition.&#10;1: Warning threshold is active." Margin="5,0,0,0"
+0: No overtemperature warning condition.&#10;
+1: Warning threshold is active." Margin="5,0,0,0"
                                      RegParName="OTPW" RegParValue="{Binding OTPW}" RegParMin="0" RegParMax="1"/>
                     <lcl:RegisterParam RegParExplained="Overtemperature shutdown&#10;
-0: No overtemperature shutdown condition.&#10;1: Overtemperature shutdown has occurred." Margin="5,0,0,0"
+0: No overtemperature shutdown condition.&#10;
+1: Overtemperature shutdown has occurred." Margin="5,0,0,0"
                                      RegParName="OT" RegParValue="{Binding OT}" RegParMin="0" RegParMax="1"/>
                     <lcl:RegisterParam RegParExplained="StallGuard2 status&#10;
 0: No motor stall detected.&#10;
 1: StallGuard2 threshold has been reached,&#10;
 and the SG_TST output is driven high." Margin="5,0,0,0"
-                                     RegParName="SG" RegParValue="{Binding SG, Mode=TwoWay}" RegParMin="0" RegParMax="1"/>
+                                     RegParName="SG" RegParValue="{Binding SG}" RegParMin="0" RegParMax="1"/>
+                    <TextBox Text="{Binding ResponseValue}" Margin="5,0,0,0"/>
                 </StackPanel>
             </DockPanel>
         </GroupBox>

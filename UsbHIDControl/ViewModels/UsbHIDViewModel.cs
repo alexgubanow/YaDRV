@@ -159,13 +159,15 @@ namespace UsbHIDControl.ViewModels
             {
                 if (IsConnected)
                 {
-                    byte[] data = new byte[4];
+                    //you have to send +1 byte in end, for some reason
+                    byte[] data = new byte[5];
                     data[0] = 3;
                     data[1] = (byte)(val & 0xFF);
                     data[2] = (byte)((val >> 8) & 0xFF);
                     data[3] = (byte)((val >> 16) & 0xF);
                     Hidapiw.SendFeatureReport(devIdx, data);
-                    //Hidapiw.GetFeatureReport(devIdx, ref data);
+                    Hidapiw.GetFeatureReport(devIdx, ref data);
+                    _eventAggregator.GetEvent<ResponseFromDeviceEvent>().Publish(data[1] | data[2] << 8 | data[3] << 16);
                 }
             }
             catch (SEHException e)

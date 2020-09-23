@@ -65,6 +65,24 @@ namespace TMCRegisterControl.ViewModels
                     break;
             }
         }
+        private int _MSTEP09;
+        public int MSTEP09
+        {
+            get { return _MSTEP09; }
+            set { SetProperty(ref _MSTEP09, value); }
+        }
+        private int _SG09;
+        public int SG09
+        {
+            get { return _SG09; }
+            set { SetProperty(ref _SG09, value); }
+        }
+        private int responseValue;
+        public int ResponseValue
+        {
+            get { return responseValue; }
+            set { SetProperty(ref responseValue, value); }
+        }
         public TMC2590readResponseViewModel(IEventAggregator ea)
         {
             RD0 = Visibility.Collapsed;
@@ -73,6 +91,7 @@ namespace TMCRegisterControl.ViewModels
             RD3 = Visibility.Collapsed;
             _eventAggregator = ea;
             ea.GetEvent<RDChangedEvent>().Subscribe((value) => RDvalueParser(value));
+            ea.GetEvent<ResponseFromDeviceEvent>().Subscribe((value) => ResponseValue = value);
         }
         public TMC2590readResponseViewModel()
         {

@@ -120,6 +120,7 @@ namespace TMCRegisterControl.ViewModels
         }
         public TMC2590DRVCONFViewModel(IEventAggregator ea)
         {
+            RegValue = 0xEF013;
             _eventAggregator = ea;
             ea.GetEvent<ConnectEvent>().Subscribe((value) => IsConnected = value);
         }
