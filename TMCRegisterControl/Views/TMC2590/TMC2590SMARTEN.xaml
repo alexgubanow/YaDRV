@@ -10,7 +10,8 @@
              d:DesignHeight="90" d:DesignWidth="960">
     <GroupBox Header="SMARTEN">
         <DockPanel>
-            <Button DockPanel.Dock="Right" Content="Write SMARTEN" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}"/>
+            <Button DockPanel.Dock="Right" Content="Write SMARTEN" Margin="5,0,0,0" IsEnabled="{Binding IsConnected}"
+                        Command="{Binding WriteCMD}"/>
             <lcl:RegisterTotal DockPanel.Dock="Right" Margin="5,0,0,0" RegTotValue="{Binding RegValue, Mode=TwoWay}"/>
             <StackPanel Orientation="Horizontal">
                 <lcl:RegisterParam RegParExplained="Lower CoolStep threshold/CoolStep disable"

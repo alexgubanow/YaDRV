@@ -5,7 +5,7 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        Title="{Binding Title}" Height="620" Width="960" Loaded="Window_Loaded" >
+        Title="{Binding Title}" Height="640" Width="960" Loaded="Window_Loaded" >
     <DockPanel>
         <!--<ContentControl prism:RegionManager.RegionName="UsbHIDControlRegion" />-->
         <StatusBar DockPanel.Dock="Bottom" Height="34">

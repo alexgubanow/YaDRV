@@ -1,4 +1,5 @@
 ﻿using Events;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 
@@ -13,6 +14,13 @@ namespace TMCRegisterControl.ViewModels
         {
             get { return _isConnected; }
             set { SetProperty(ref _isConnected, value); }
+        }
+        private DelegateCommand _WriteCMD;
+        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(ExecuteWriteCMD);
+
+        void ExecuteWriteCMD()
+        {
+            _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(RegValue);
         }
         private void updRegValue()
         {
@@ -69,6 +77,7 @@ namespace TMCRegisterControl.ViewModels
         }
         public TMC2590SMARTENViewModel(IEventAggregator ea)
         {
+            RegValue = 0xA0222;
             _eventAggregator = ea;
             ea.GetEvent<ConnectEvent>().Subscribe((value) => IsConnected = value);
         }

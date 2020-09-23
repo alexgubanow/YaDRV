@@ -1,4 +1,5 @@
 ﻿using Events;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 
@@ -13,6 +14,13 @@ namespace TMCRegisterControl.ViewModels
         {
             get { return _isConnected; }
             set { SetProperty(ref _isConnected, value); }
+        }
+        private DelegateCommand _WriteCMD;
+        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(ExecuteWriteCMD);
+
+        void ExecuteWriteCMD()
+        {
+            _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(RegValue);
         }
         private void updRegValue()
         {

@@ -26,7 +26,7 @@ namespace TMCRegisterControl.ViewModels
 
         void ExecuteWriteCMD()
         {
-            _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(RegValue); ;
+            _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(RegValue);
         }
         private void updRegValue()
         {
