@@ -202,7 +202,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	switch ((usbReports)event_idx)
 	{
 	case  tmcRegisterCtl:
-		TMC2590_writeReg(hhid->Report_buf[1], hhid->Report_buf[2] | hhid->Report_buf[3] << 8 | hhid->Report_buf[4] << 16);
+		TMC2590_SPI_write(hhid->Report_buf[1] | hhid->Report_buf[2] << 8 | hhid->Report_buf[3] << 16);
 		break;
 	case  IOctl:
 		setIO_Handler(hhid->Report_buf[1]);
@@ -302,7 +302,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	switch ((usbReports)event_idx)
 	{
 	case  tmcRegisterCtl:
-		TMC2590_writeReg(tmc2590_SGCSCONF, hhid->Report_buf[1]);
+		TMC2590_writeReg(hhid->Report_buf[1], hhid->Report_buf[2] | hhid->Report_buf[3] << 8 | hhid->Report_buf[4] << 16);
 		break;
 	case  IOctl:
 		setIO_Handler(hhid->Report_buf[1]);
