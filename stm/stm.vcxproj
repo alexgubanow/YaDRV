@@ -55,7 +55,15 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <ClCompile>
       <CPPLanguageStandard>CPP1Z</CPPLanguageStandard>
+      <AdditionalIncludeDirectories>Inc;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG=1;RELEASE=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
+      <LibrarySearchDirectories>;%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
+      <AdditionalLibraryNames>;%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
+      <LinkerScript />
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
   </ItemGroup>
@@ -66,6 +74,7 @@
     <ClCompile Include="Src\adc.c" />
     <ClCompile Include="Src\gpio.c" />
     <ClCompile Include="Src\main.c" />
+    <ClCompile Include="Src\nvm.c" />
     <ClCompile Include="Src\spi.c" />
     <ClCompile Include="Src\stm32f0xx_hal_msp.c" />
     <ClCompile Include="Src\stm32f0xx_it.c" />
@@ -80,6 +89,7 @@
     <ClInclude Include="Inc\gpio.h" />
     <ClInclude Include="Inc\hid_macros.h" />
     <ClInclude Include="Inc\main.h" />
+    <ClInclude Include="Inc\nvm.h" />
     <ClInclude Include="Inc\spi.h" />
     <ClInclude Include="Inc\stm32f0xx_hal_conf.h" />
     <ClInclude Include="Inc\stm32f0xx_it.h" />

@@ -57,8 +57,7 @@ typedef enum {
 	tmc2590_CHOPCONF = 0b100,
 	tmc2590_SMARTEN = 0b101,
 	tmc2590_SGCSCONF = 0b110,
-	tmc2590_DRVCONF = 0b111,
-	tmc2590regsLength = 5
+	tmc2590_DRVCONF = 0b111
 }tmc2590;
 
 typedef union DRVCTRL_SDOFF_1_t {

@@ -1,21 +1,53 @@
 #include "tmc2590.h"
 #include "spi.h"
+#include "nvm.h"
 
-DRVCTRL_SDOFF_0_t DRVCTRL_r;
-CHOPCONF_t CHOPCONF_r;
-SMARTEN_t SMARTEN_r;
-SGCSCONF_t SGCSCONF_r;
-DRVCONF_t DRVCONF_r;
+//DRVCTRL_SDOFF_0_t DRVCTRL_r;
+//CHOPCONF_t CHOPCONF_r;
+//SMARTEN_t SMARTEN_r;
+//SGCSCONF_t SGCSCONF_r;
+//DRVCONF_t DRVCONF_r;
 unsigned int motorVel;
 unsigned int TMC2590readResponse;
 
 void TMC2590_dispatcRXbuff(unsigned int val);
 
+void TMC2590_WriteConfig()
+{
+	TMC2590_writeReg(tmc2590_CHOPCONF, Params[tmc2590_CHOPCONF]);
+	TMC2590_writeReg(tmc2590_SGCSCONF, Params[tmc2590_SGCSCONF]);
+	TMC2590_writeReg(tmc2590_DRVCONF, Params[tmc2590_DRVCONF]);
+	TMC2590_writeReg(tmc2590_DRVCTRL, Params[tmc2590_DRVCTRL]);
+	TMC2590_writeReg(tmc2590_SMARTEN, Params[tmc2590_SMARTEN]);
+	/*//tmc2590_CHOPCONF
+	TMC2590_SPI_write(0x94557);
+	SGCSCONF_r.b.CS = 0xf;
+	SGCSCONF_r.b.SGT = 15;
+	SGCSCONF_r.b.SFILT = 1;
+	TMC2590_writeReg(tmc2590_SGCSCONF, SGCSCONF_r.w);
+	//TMC2590_SPI_write(0xD0006);
+	DRVCONF_r.b.SLPH = 0b11;
+	DRVCONF_r.b.SLPL = 0b11;
+	DRVCONF_r.b.RDSEL = 0b01;
+	DRVCONF_r.b.EN_PFD = 1;
+	DRVCONF_r.b.EN_S2VS = 1;
+	TMC2590_writeReg(tmc2590_DRVCONF, DRVCONF_r.w);
+	//TMC2590_SPI_write(0xEF013);
+	DRVCTRL_r.b.INTPOL = 0;
+	DRVCTRL_r.b.DEDGE = 0;
+	DRVCTRL_r.b.MRES = 0b1000;
+	TMC2590_writeReg(tmc2590_DRVCTRL, DRVCTRL_r.w);
+	//TMC2590_SPI_write(0x183);
+	SMARTEN_r.b.SEMIN = 2;
+	SMARTEN_r.b.SEUP = 1;
+	SMARTEN_r.b.SEMAX = 2;
+	TMC2590_writeReg(tmc2590_SMARTEN, SMARTEN_r.w);
+	//TMC2590_SPI_write(0xA0222);*/
+}
+
+
 void TMC2590_writeReg(tmc2590 addr, unsigned int val)
 {
-	/*tmc2590_txBuff_t txData;
-	txData.b.addr = addr;
-	txData.b.data = val;*/
 	TMC2590_SPI_write(addr << 17 | val);
 }
 void TMC2590_SPI_write(unsigned int val)

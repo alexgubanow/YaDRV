@@ -596,6 +596,9 @@
     <ClInclude Include="Inc\hid_macros.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\nvm.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\adc.c">
@@ -635,6 +638,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="Src\usbd_desc.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\nvm.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>

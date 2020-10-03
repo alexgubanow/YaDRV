@@ -17,9 +17,9 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
+  /* USER CODE END Header */
 
-/* Includes ------------------------------------------------------------------*/
+  /* Includes ------------------------------------------------------------------*/
 #include "usbd_custom_hid_if.h"
 
 /* USER CODE BEGIN INCLUDE */
@@ -27,6 +27,7 @@
 #include "tim.h"
 #include "main.h"
 #include "hid_macros.h"
+#include "nvm.h"
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,23 +44,25 @@
   * @{
   */
 
-/** @addtogroup USBD_CUSTOM_HID
-  * @{
-  */
+  /** @addtogroup USBD_CUSTOM_HID
+	* @{
+	*/
 
-/** @defgroup USBD_CUSTOM_HID_Private_TypesDefinitions USBD_CUSTOM_HID_Private_TypesDefinitions
-  * @brief Private types.
-  * @{
-  */
+	/** @defgroup USBD_CUSTOM_HID_Private_TypesDefinitions USBD_CUSTOM_HID_Private_TypesDefinitions
+	  * @brief Private types.
+	  * @{
+	  */
 
-/* USER CODE BEGIN PRIVATE_TYPES */
+	  /* USER CODE BEGIN PRIVATE_TYPES */
 typedef enum usbReports_t
 {
 	getVer = 1,
 	IOctl,
 	tmcRegisterCtl,
 	velocity,
-	ReportMCUtemp
+	ReportMCUtemp,
+	loadDefaults,
+	saveToFLASH
 }usbReports;
 /* USER CODE END PRIVATE_TYPES */
 
@@ -67,12 +70,12 @@ typedef enum usbReports_t
   * @}
   */
 
-/** @defgroup USBD_CUSTOM_HID_Private_Defines USBD_CUSTOM_HID_Private_Defines
-  * @brief Private defines.
-  * @{
-  */
+  /** @defgroup USBD_CUSTOM_HID_Private_Defines USBD_CUSTOM_HID_Private_Defines
+	* @brief Private defines.
+	* @{
+	*/
 
-/* USER CODE BEGIN PRIVATE_DEFINES */
+	/* USER CODE BEGIN PRIVATE_DEFINES */
 void setIO_Handler(uint8_t setIOcomm);
 /* USER CODE END PRIVATE_DEFINES */
 
@@ -80,62 +83,72 @@ void setIO_Handler(uint8_t setIOcomm);
   * @}
   */
 
-/** @defgroup USBD_CUSTOM_HID_Private_Macros USBD_CUSTOM_HID_Private_Macros
-  * @brief Private macros.
-  * @{
-  */
+  /** @defgroup USBD_CUSTOM_HID_Private_Macros USBD_CUSTOM_HID_Private_Macros
+	* @brief Private macros.
+	* @{
+	*/
 
-/* USER CODE BEGIN PRIVATE_MACRO */
+	/* USER CODE BEGIN PRIVATE_MACRO */
 
-/* USER CODE END PRIVATE_MACRO */
+	/* USER CODE END PRIVATE_MACRO */
 
-/**
-  * @}
-  */
+	/**
+	  * @}
+	  */
 
-/** @defgroup USBD_CUSTOM_HID_Private_Variables USBD_CUSTOM_HID_Private_Variables
-  * @brief Private variables.
-  * @{
-  */
+	  /** @defgroup USBD_CUSTOM_HID_Private_Variables USBD_CUSTOM_HID_Private_Variables
+		* @brief Private variables.
+		* @{
+		*/
 
-/** Usb HID report descriptor. */
+		/** Usb HID report descriptor. */
 __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DESC_SIZE] __ALIGN_END =
 {
-  /* USER CODE BEGIN 0 */
-  HID_UsagePage(HID_USAGE_PAGE_GENERIC),
-	HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
-	HID_Collection(HID_Application),
-		HID_LogicalMin(0),
-		HID_LogicalMax(0xFF),
+	/* USER CODE BEGIN 0 */
+	HID_UsagePage(HID_USAGE_PAGE_GENERIC),
+	  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+	  HID_Collection(HID_Application),
+		  HID_LogicalMin(0),
+		  HID_LogicalMax(0xFF),
 
-		HID_ReportSize(8),	// 8 bits
+		  HID_ReportSize(8),	// 8 bits
 
-		HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
-		HID_ReportID(getVer),
-		HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
-		HID_Input(HID_Data | HID_Variable | HID_Absolute),
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(getVer),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Input(HID_Data | HID_Variable | HID_Absolute),
 
-		HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
-		HID_ReportID(velocity),
-		HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
-		HID_Output(HID_Data | HID_Variable | HID_Absolute),
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(velocity),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Output(HID_Data | HID_Variable | HID_Absolute),
 
-		HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
-		HID_ReportID(IOctl),
-		HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
-		HID_Feature(HID_Data | HID_Variable | HID_Absolute),
-		//ReportMCUtemp
-		HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
-		HID_ReportID(ReportMCUtemp),
-		HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
-		HID_Input(HID_Data | HID_Variable | HID_Absolute),
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(loadDefaults),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Output(HID_Data | HID_Variable | HID_Absolute),
 
-		HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
-		HID_ReportID(tmcRegisterCtl),
-		HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
-		HID_Feature(HID_Data | HID_Variable | HID_Absolute),
-  /* USER CODE END 0 */
-  0xC0    /*     END_COLLECTION	             */
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(saveToFLASH),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Output(HID_Data | HID_Variable | HID_Absolute),
+
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(IOctl),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Feature(HID_Data | HID_Variable | HID_Absolute),
+		  //ReportMCUtemp
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(ReportMCUtemp),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Input(HID_Data | HID_Variable | HID_Absolute),
+
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(tmcRegisterCtl),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Feature(HID_Data | HID_Variable | HID_Absolute),
+		  /* USER CODE END 0 */
+		  0xC0    /*     END_COLLECTION	             */
 };
 
 /* USER CODE BEGIN PRIVATE_VARIABLES */
@@ -159,10 +172,10 @@ USBD_CUSTOM_HID_ItfTypeDef USBD_CustomHID_fops_FS =
   * @}
   */
 
-/** @defgroup USBD_CUSTOM_HID_Exported_Variables USBD_CUSTOM_HID_Exported_Variables
-  * @brief Public variables.
-  * @{
-  */
+  /** @defgroup USBD_CUSTOM_HID_Exported_Variables USBD_CUSTOM_HID_Exported_Variables
+	* @brief Public variables.
+	* @{
+	*/
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
@@ -202,8 +215,12 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	switch ((usbReports)event_idx)
 	{
 	case  tmcRegisterCtl:
-		TMC2590_SPI_write(hhid->Report_buf[1] | hhid->Report_buf[2] << 8 | hhid->Report_buf[3] << 16);
+	{
+		uint32_t val = hhid->Report_buf[1] | hhid->Report_buf[2] << 8 | hhid->Report_buf[3] << 16;
+		Params[val >> 17] = (uint16_t)val;
+		TMC2590_SPI_write(val);
 		break;
+	}
 	case  IOctl:
 		setIO_Handler(hhid->Report_buf[1]);
 		break;
@@ -227,6 +244,17 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			}
 		}
 		break;
+	case loadDefaults:
+	{
+		loadDefaultParams();
+		TMC2590_WriteConfig();
+		break;
+	}
+	case saveToFLASH:
+	{
+		saveParams();
+		break;
+	}
 	}
 	return (USBD_OK);
 	/* USER CODE END 6 */
@@ -239,10 +267,10 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
   * @}
   */
 
-/** @defgroup USBD_CUSTOM_HID_Private_FunctionPrototypes USBD_CUSTOM_HID_Private_FunctionPrototypes
-  * @brief Private functions declaration.
-  * @{
-  */
+  /** @defgroup USBD_CUSTOM_HID_Private_FunctionPrototypes USBD_CUSTOM_HID_Private_FunctionPrototypes
+	* @brief Private functions declaration.
+	* @{
+	*/
 
 static int8_t CUSTOM_HID_Init_FS(void);
 static int8_t CUSTOM_HID_DeInit_FS(void);
@@ -265,17 +293,17 @@ USBD_CUSTOM_HID_ItfTypeDef USBD_CustomHID_fops_FS =
   * @{
   */
 
-/* Private functions ---------------------------------------------------------*/
+  /* Private functions ---------------------------------------------------------*/
 
-/**
-  * @brief  Initializes the CUSTOM HID media low layer
-  * @retval USBD_OK if all operations are OK else USBD_FAIL
-  */
+  /**
+	* @brief  Initializes the CUSTOM HID media low layer
+	* @retval USBD_OK if all operations are OK else USBD_FAIL
+	*/
 static int8_t CUSTOM_HID_Init_FS(void)
 {
-  /* USER CODE BEGIN 4 */
+	/* USER CODE BEGIN 4 */
 	return (USBD_OK);
-  /* USER CODE END 4 */
+	/* USER CODE END 4 */
 }
 
 /**
@@ -284,9 +312,9 @@ static int8_t CUSTOM_HID_Init_FS(void)
   */
 static int8_t CUSTOM_HID_DeInit_FS(void)
 {
-  /* USER CODE BEGIN 5 */
+	/* USER CODE BEGIN 5 */
 	return (USBD_OK);
-  /* USER CODE END 5 */
+	/* USER CODE END 5 */
 }
 
 /**
@@ -297,7 +325,7 @@ static int8_t CUSTOM_HID_DeInit_FS(void)
   */
 static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 {
-  /* USER CODE BEGIN 6 */
+	/* USER CODE BEGIN 6 */
 	USBD_CUSTOM_HID_HandleTypeDef* hhid = (USBD_CUSTOM_HID_HandleTypeDef*)hUsbDeviceFS.pClassData;
 	switch ((usbReports)event_idx)
 	{
@@ -329,7 +357,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 		break;
 	}
 	return (USBD_OK);
-  /* USER CODE END 6 */
+	/* USER CODE END 6 */
 }
 
 /* USER CODE BEGIN 7 */
@@ -401,13 +429,13 @@ void setIO_Handler(uint8_t setIOcomm)
   * @}
   */
 
-/**
-  * @}
-  */
+  /**
+	* @}
+	*/
 
-/**
-  * @}
-  */
+	/**
+	  * @}
+	  */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+	  /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

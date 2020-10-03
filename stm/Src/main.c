@@ -29,7 +29,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "tmc2590.h"
-
+#include "nvm.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -73,7 +73,7 @@ void adc1_tim1Start(void)
 	LL_TIM_EnableCounter(TIM1);
 }
 /* USER CODE END 0 */
-
+extern uint16_t Params[];
 /**
   * @brief  The application entry point.
   * @retval int
@@ -110,30 +110,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
   adc1_tim1Start();
   LL_GPIO_SetOutputPin(DRV_EN_GPIO_Port, DRV_EN_Pin);
-
-  TMC2590_SPI_write(0x94557);
-  SGCSCONF_r.b.CS = 0xf;
-  SGCSCONF_r.b.SGT = 15;
-  SGCSCONF_r.b.SFILT = 1;
-  TMC2590_writeReg(tmc2590_SGCSCONF, SGCSCONF_r.w);
-  //TMC2590_SPI_write(0xD0006);
-  DRVCONF_r.b.SLPH = 0b11;
-  DRVCONF_r.b.SLPL = 0b11;
-  DRVCONF_r.b.RDSEL = 0b01;
-  DRVCONF_r.b.EN_PFD = 1;
-  DRVCONF_r.b.EN_S2VS = 1;
-  TMC2590_writeReg(tmc2590_DRVCONF, DRVCONF_r.w);
-  //TMC2590_SPI_write(0xEF013);
-  DRVCTRL_r.b.INTPOL = 0;
-  DRVCTRL_r.b.DEDGE = 0;
-  DRVCTRL_r.b.MRES = 0b1000;
-  TMC2590_writeReg(tmc2590_DRVCTRL, DRVCTRL_r.w);
-  //TMC2590_SPI_write(0x183);
-  SMARTEN_r.b.SEMIN = 2;
-  SMARTEN_r.b.SEUP = 1;
-  SMARTEN_r.b.SEMAX = 2;
-  TMC2590_writeReg(tmc2590_SMARTEN, SMARTEN_r.w);
-  //TMC2590_SPI_write(0xA0222);
+  
+  loadParams(1);
+  TMC2590_WriteConfig();
 
   LL_GPIO_ResetOutputPin(DRV_EN_GPIO_Port, DRV_EN_Pin);
 
