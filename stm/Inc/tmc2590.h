@@ -12,5 +12,4 @@ extern unsigned int TMC2590readResponse;
 extern unsigned int motorVel;
 
 void TMC2590_WriteConfig();
-void TMC2590_writeReg(tmc2590 reg, unsigned int val);
-void TMC2590_SPI_write(unsigned int val);
+void TMC2590_writeReg(tmc2590regs_enum reg, unsigned int val);

@@ -46,7 +46,7 @@ void TMC2590_WriteConfig()
 }
 
 
-void TMC2590_writeReg(tmc2590 addr, unsigned int val)
+void TMC2590_writeReg(tmc2590regs_enum addr, unsigned int val)
 {
 	TMC2590_SPI_write(addr << 17 | val);
 }

@@ -217,8 +217,9 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	case  tmcRegisterCtl:
 	{
 		uint32_t val = hhid->Report_buf[1] | hhid->Report_buf[2] << 8 | hhid->Report_buf[3] << 16;
-		Params[val >> 17] = (uint16_t)val;
-		TMC2590_SPI_write(val);
+		tmc2590regs_enum reg = val >> 16;
+		Params[reg] = (uint16_t)val;
+		TMC2590_writeReg(reg, Params[reg]);
 		break;
 	}
 	case  IOctl:

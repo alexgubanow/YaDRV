@@ -49,16 +49,18 @@ typedef union
 }tmc2590_rxBuff_t;
 
 #ifdef __cplusplus_cli
-typedef enum class tmc2590 {
+typedef enum class tmc2590regs_enum
+{
 #else
-typedef enum {
+typedef enum tmc2590regs_enum 
+{
 #endif // __cplusplus_cli
 	tmc2590_DRVCTRL = 0b000,
 	tmc2590_CHOPCONF = 0b100,
 	tmc2590_SMARTEN = 0b101,
 	tmc2590_SGCSCONF = 0b110,
 	tmc2590_DRVCONF = 0b111
-}tmc2590;
+}tmc2590regs_enum;
 
 typedef union DRVCTRL_SDOFF_1_t {
 	struct
