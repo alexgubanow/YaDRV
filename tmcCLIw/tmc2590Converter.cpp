@@ -17,7 +17,7 @@ int tmc2590Converter::getDRVCTRL_SDOFF_0(int MRES, int DEDGE, int INTPOL)
 	tmp.b.MRES = MRES;
 	tmp.b.DEDGE = DEDGE;
 	tmp.b.INTPOL = INTPOL;
-	return tmp.w | (int)tmc2590::tmc2590_DRVCTRL << 17;
+	return tmp.w | (int)tmc2590regs_enum::tmc2590_DRVCTRL << 17;
 }
 
 void tmc2590Converter::getDRVCTRL_SDOFF_1bits(int regValue, int% CB, int% PHB, int% CA, int% PHA)
@@ -37,7 +37,7 @@ int tmc2590Converter::getDRVCTRL_SDOFF_1(int CB, int PHB, int CA, int PHA)
 	tmp.b.PHB = PHB;
 	tmp.b.CA = CA;
 	tmp.b.PHA = PHA;
-	return tmp.w | (int)tmc2590::tmc2590_DRVCTRL << 17;
+	return tmp.w | (int)tmc2590regs_enum::tmc2590_DRVCTRL << 17;
 }
 
 void tmc2590Converter::getCHOPCONFbits(int regValue, int% TOFF, int% HSTRT, int% HEND, int% HDEC, int% RNDTF, int% CHM, int% TBL)
@@ -63,7 +63,7 @@ int tmc2590Converter::getCHOPCONF(int TOFF, int HSTRT, int HEND, int HDEC, int R
 	tmp.b.RNDTF = RNDTF;
 	tmp.b.CHM = CHM;
 	tmp.b.TBL = TBL;
-	return tmp.w | (int)tmc2590::tmc2590_CHOPCONF << 17;
+	return tmp.w | (int)tmc2590regs_enum::tmc2590_CHOPCONF << 17;
 }
 
 void tmc2590Converter::getSMARTENbits(int regValue, int% SEMIN, int% SEUP, int% SEMAX, int% SEDN, int% SEIMIN)
@@ -85,7 +85,7 @@ int tmc2590Converter::getSMARTEN(int SEMIN, int SEUP, int SEMAX, int SEDN, int S
 	tmp.b.SEMAX = SEMAX;
 	tmp.b.SEDN = SEDN;
 	tmp.b.SEIMIN = SEIMIN;
-	return tmp.w | (int)tmc2590::tmc2590_SMARTEN << 17;
+	return tmp.w | (int)tmc2590regs_enum::tmc2590_SMARTEN << 17;
 }
 
 void tmc2590Converter::getSGCSCONFbits(int regValue, int% CS, int% SGT, int% SFILT)
@@ -103,7 +103,7 @@ int tmc2590Converter::getSGCSCONF(int CS, int SGT, int SFILT)
 	tmp.b.CS = CS;
 	tmp.b.SGT = SGT;
 	tmp.b.SFILT = SFILT;
-	return tmp.w | (int)tmc2590::tmc2590_SGCSCONF << 17;
+	return tmp.w | (int)tmc2590regs_enum::tmc2590_SGCSCONF << 17;
 }
 
 void tmc2590Converter::getDRVCONFbits(int regValue, int% EN_S2VS, int% EN_PFD, int% SHRTSENS, int% OTSENS, int% RDSEL, int% VSENSE, int% SDOFF, int% TS2G, int% DIS_S2G, int% SLP, int% SLPL, int% SLPH, int% TST)
@@ -141,5 +141,5 @@ int tmc2590Converter::getDRVCONF(int EN_S2VS, int EN_PFD, int SHRTSENS, int OTSE
 	tmp.b.SLPL = SLPL;
 	tmp.b.SLPH = SLPH;
 	tmp.b.TST = TST;
-	return tmp.w | (int)tmc2590::tmc2590_DRVCONF << 17;
+	return tmp.w | (int)tmc2590regs_enum::tmc2590_DRVCONF << 17;
 }
