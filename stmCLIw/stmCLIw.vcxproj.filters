@@ -21,6 +21,9 @@
     <ClInclude Include="tmc2590Converter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\stm\Inc\usbReports_t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tmc2590Converter.cpp">

@@ -1,5 +1,5 @@
 #pragma once
-#include "..\stm\Inc\tmc2590defs.h"
+#include "..\stm\Inc\usbReports_t.h"
 
 public ref class tmc2590Converter
 {
