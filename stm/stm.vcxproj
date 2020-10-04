@@ -100,6 +100,7 @@
     <ClInclude Include="Inc\usbd_conf.h" />
     <ClInclude Include="Inc\usbd_custom_hid_if.h" />
     <ClInclude Include="Inc\usbd_desc.h" />
+    <ClInclude Include="Inc\usbReports_t.h" />
     <ClInclude Include="Inc\usb_device.h" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\StartupFiles\startup_stm32f070x6.c" />

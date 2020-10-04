@@ -1,17 +1,15 @@
 #pragma once
 #include "tmc2590defs.h"
 
-typedef enum Params_enum 
+struct Params_t
 {
-	DRVCTRLp = tmc2590_DRVCTRL,
-	validParams,
-	CHOPCONFp = tmc2590_CHOPCONF,
-	SMARTENp = tmc2590_SMARTEN,
-	SGCSCONFp = tmc2590_SGCSCONF,
-	DRVCONFp = tmc2590_DRVCONF,
-}Params_enum;
-
-extern uint16_t Params[];
+	unsigned short isParamsValid;
+	DRVCTRL_SDOFF_0_t DRVCTRL_r;
+	CHOPCONF_t CHOPCONF_r;
+	SMARTEN_t SMARTEN_r;
+	SGCSCONF_t SGCSCONF_r;
+	DRVCONF_t DRVCONF_r;
+}Params;
 
 void saveParams();
 void loadParams(int writeDefault);

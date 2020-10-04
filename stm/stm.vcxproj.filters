@@ -599,6 +599,9 @@
     <ClInclude Include="Inc\nvm.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\usbReports_t.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\adc.c">

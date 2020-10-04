@@ -14,11 +14,11 @@ void TMC2590_dispatcRXbuff(unsigned int val);
 
 void TMC2590_WriteConfig()
 {
-	TMC2590_writeReg(tmc2590_CHOPCONF, Params[tmc2590_CHOPCONF]);
-	TMC2590_writeReg(tmc2590_SGCSCONF, Params[tmc2590_SGCSCONF]);
-	TMC2590_writeReg(tmc2590_DRVCONF, Params[tmc2590_DRVCONF]);
-	TMC2590_writeReg(tmc2590_DRVCTRL, Params[tmc2590_DRVCTRL]);
-	TMC2590_writeReg(tmc2590_SMARTEN, Params[tmc2590_SMARTEN]);
+	TMC2590_writeReg(tmc2590_CHOPCONF, Params.CHOPCONF_r.w);
+	TMC2590_writeReg(tmc2590_SGCSCONF, Params.SGCSCONF_r.w);
+	TMC2590_writeReg(tmc2590_DRVCONF, Params.DRVCONF_r.w);
+	TMC2590_writeReg(tmc2590_DRVCTRL, Params.DRVCTRL_r.w);
+	TMC2590_writeReg(tmc2590_SMARTEN, Params.SMARTEN_r.w);
 	/*//tmc2590_CHOPCONF
 	TMC2590_SPI_write(0x94557);
 	SGCSCONF_r.b.CS = 0xf;
@@ -45,11 +45,6 @@ void TMC2590_WriteConfig()
 	//TMC2590_SPI_write(0xA0222);*/
 }
 
-
-void TMC2590_writeReg(tmc2590regs_enum addr, unsigned int val)
-{
-	TMC2590_SPI_write(addr << 17 | val);
-}
 void TMC2590_SPI_write(unsigned int val)
 {
 	unsigned int dataToSend = __RBIT(val & 0xFFFFF);
@@ -66,7 +61,12 @@ void TMC2590_SPI_write(unsigned int val)
 	TMC2590_dispatcRXbuff((__RBIT(rx1) >> 22) << 10 | __RBIT(rx2) >> 22);
 }
 
-int counter = 0;
+
+void TMC2590_writeReg(tmc2590regs_enum addr, unsigned int val)
+{
+	TMC2590_SPI_write(addr << 17 | val);
+}
+
 void TMC2590_dispatcRXbuff(unsigned int val)
 {
 	TMC2590readResponse = val;

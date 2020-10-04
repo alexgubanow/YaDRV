@@ -73,7 +73,6 @@ void adc1_tim1Start(void)
 	LL_TIM_EnableCounter(TIM1);
 }
 /* USER CODE END 0 */
-extern uint16_t Params[];
 /**
   * @brief  The application entry point.
   * @retval int

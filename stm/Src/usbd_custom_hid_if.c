@@ -28,6 +28,7 @@
 #include "main.h"
 #include "hid_macros.h"
 #include "nvm.h"
+#include "usbReports_t.h"
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,16 +55,7 @@
 	  */
 
 	  /* USER CODE BEGIN PRIVATE_TYPES */
-typedef enum usbReports_t
-{
-	getVer = 1,
-	IOctl,
-	tmcRegisterCtl,
-	velocity,
-	ReportMCUtemp,
-	loadDefaults,
-	saveToFLASH
-}usbReports;
+
 /* USER CODE END PRIVATE_TYPES */
 
 /**
@@ -116,7 +108,32 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
 		  HID_ReportID(getVer),
 		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
-		  HID_Input(HID_Data | HID_Variable | HID_Absolute),
+		  HID_Feature(HID_Data | HID_Variable | HID_Absolute),
+
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(DRVCTRLreport),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Feature(HID_Data | HID_Variable | HID_Absolute),
+
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(CHOPCONFreport),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Feature(HID_Data | HID_Variable | HID_Absolute),
+
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(SMARTENreport),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Feature(HID_Data | HID_Variable | HID_Absolute),
+
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(SGCSCONFreport),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Feature(HID_Data | HID_Variable | HID_Absolute),
+
+		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
+		  HID_ReportID(DRVCONFreport),
+		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
+		  HID_Feature(HID_Data | HID_Variable | HID_Absolute),
 
 		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
 		  HID_ReportID(velocity),
@@ -137,14 +154,14 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 		  HID_ReportID(IOctl),
 		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
 		  HID_Feature(HID_Data | HID_Variable | HID_Absolute),
-		  //ReportMCUtemp
+
 		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
 		  HID_ReportID(ReportMCUtemp),
 		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
-		  HID_Input(HID_Data | HID_Variable | HID_Absolute),
+		  HID_Feature(HID_Data | HID_Variable | HID_Absolute),
 
 		  HID_ReportCount(USBD_CUSTOMHID_OUTREPORT_BUF_SIZE),
-		  HID_ReportID(tmcRegisterCtl),
+		  HID_ReportID(TMCstatus),
 		  HID_Usage(HID_USAGE_GENERIC_UNDEFINED),
 		  HID_Feature(HID_Data | HID_Variable | HID_Absolute),
 		  /* USER CODE END 0 */
@@ -212,16 +229,28 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 {
 	/* USER CODE BEGIN 6 */
 	USBD_CUSTOM_HID_HandleTypeDef* hhid = (USBD_CUSTOM_HID_HandleTypeDef*)hUsbDeviceFS.pClassData;
-	switch ((usbReports)event_idx)
+	switch ((usbReports_t)event_idx)
 	{
-	case  tmcRegisterCtl:
-	{
-		uint32_t val = hhid->Report_buf[1] | hhid->Report_buf[2] << 8 | hhid->Report_buf[3] << 16;
-		tmc2590regs_enum reg = val >> 16;
-		Params[reg] = (uint16_t)val;
-		TMC2590_writeReg(reg, Params[reg]);
+	case DRVCTRLreport:
+		Params.DRVCTRL_r.w = hhid->Report_buf[1] | hhid->Report_buf[2] << 8 | hhid->Report_buf[3] << 16;
+		TMC2590_writeReg(tmc2590_DRVCTRL, Params.DRVCTRL_r.w);
 		break;
-	}
+	case CHOPCONFreport:
+		Params.CHOPCONF_r.w = hhid->Report_buf[1] | hhid->Report_buf[2] << 8 | hhid->Report_buf[3] << 16;
+		TMC2590_writeReg(tmc2590_CHOPCONF, Params.CHOPCONF_r.w);
+		break;
+	case SMARTENreport:
+		Params.SMARTEN_r.w = hhid->Report_buf[1] | hhid->Report_buf[2] << 8 | hhid->Report_buf[3] << 16;
+		TMC2590_writeReg(tmc2590_SMARTEN, Params.SMARTEN_r.w);
+		break;
+	case SGCSCONFreport:
+		Params.SGCSCONF_r.w = hhid->Report_buf[1] | hhid->Report_buf[2] << 8 | hhid->Report_buf[3] << 16;
+		TMC2590_writeReg(tmc2590_SGCSCONF, Params.SGCSCONF_r.w);
+		break;
+	case DRVCONFreport:
+		Params.DRVCONF_r.w = hhid->Report_buf[1] | hhid->Report_buf[2] << 8 | hhid->Report_buf[3] << 16;
+		TMC2590_writeReg(tmc2590_DRVCONF, Params.DRVCONF_r.w);
+		break;
 	case  IOctl:
 		setIO_Handler(hhid->Report_buf[1]);
 		break;
@@ -373,17 +402,43 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 static int8_t CUSTOM_HID_InEvent_FS(uint8_t event_idx, uint8_t* buffer, uint16_t* length)
 {
 	memset(buffer, 0x00, *length);
-	switch ((usbReports)event_idx)
+	switch ((usbReports_t)event_idx)
 	{
-	case tmcRegisterCtl:
+	case TMCstatus:
 		buffer[0] = TMC2590readResponse & 0xFF;
 		buffer[1] = (TMC2590readResponse >> 8) & 0xFF;
 		buffer[2] = (TMC2590readResponse >> 16) & 0xF;
 		break;
 	case  getVer:
+		//TODO implement auto generated version file based on git describe --tags
 		buffer[0] = 13;
 		buffer[1] = 0;
 		buffer[2] = 0;
+		break;
+	case DRVCTRLreport:
+		buffer[0] = Params.DRVCTRL_r.w & 0xFF;
+		buffer[1] = (Params.DRVCTRL_r.w >> 8) & 0xFF;
+		buffer[2] = (Params.DRVCTRL_r.w >> 16) & 0xF;
+		break;
+	case CHOPCONFreport:
+		buffer[0] = Params.CHOPCONF_r.w & 0xFF;
+		buffer[1] = (Params.CHOPCONF_r.w >> 8) & 0xFF;
+		buffer[2] = (Params.CHOPCONF_r.w >> 16) & 0xF;
+		break;
+	case SMARTENreport:
+		buffer[0] = Params.SMARTEN_r.w & 0xFF;
+		buffer[1] = (Params.SMARTEN_r.w >> 8) & 0xFF;
+		buffer[2] = (Params.SMARTEN_r.w >> 16) & 0xF;
+		break;
+	case SGCSCONFreport:
+		buffer[0] = Params.SGCSCONF_r.w & 0xFF;
+		buffer[1] = (Params.SGCSCONF_r.w >> 8) & 0xFF;
+		buffer[2] = (Params.SGCSCONF_r.w >> 16) & 0xF;
+		break;
+	case DRVCONFreport:
+		buffer[0] = Params.DRVCONF_r.w & 0xFF;
+		buffer[1] = (Params.DRVCONF_r.w >> 8) & 0xFF;
+		buffer[2] = (Params.DRVCONF_r.w >> 16) & 0xF;
 		break;
 	case ReportMCUtemp:
 		buffer[0] = MCUtemp;

@@ -49,7 +49,7 @@ typedef union
 }tmc2590_rxBuff_t;
 
 #ifdef __cplusplus_cli
-typedef enum class tmc2590regs_enum
+public enum class tmc2590regs_enum
 {
 #else
 typedef enum tmc2590regs_enum 
