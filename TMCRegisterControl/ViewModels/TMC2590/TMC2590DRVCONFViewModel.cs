@@ -16,12 +16,9 @@ namespace TMCRegisterControl.ViewModels
             set { SetProperty(ref _isConnected, value); }
         }
         private DelegateCommand _WriteCMD;
-        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(ExecuteWriteCMD);
+        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(() =>
+        _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(new usbParcel() { report = usbReports_t.DRVCONFreport, value = RegValue }));
 
-        void ExecuteWriteCMD()
-        {
-            _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(RegValue);
-        }
         private void updRegValue()
         {
             _RegValue = tmc2590Converter.getDRVCONF(EN_S2VS, EN_PFD, SHRTSENS, OTSENS, RDSEL, VSENSE, SDOFF, TS2G, DIS_S2G, SLP, SLPL, SLPH, TST);
@@ -128,9 +125,12 @@ namespace TMCRegisterControl.ViewModels
         }
         public TMC2590DRVCONFViewModel(IEventAggregator ea)
         {
-            RegValue = 0xEF013;
             _eventAggregator = ea;
             ea.GetEvent<ConnectEvent>().Subscribe((value) => IsConnected = value);
+            ea.GetEvent<SaveToFlashEvent>().Subscribe(() => _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(
+                new usbParcel() { report = usbReports_t.DRVCONFreport, value = RegValue }));
+            ea.GetEvent<ReadAllEvent>().Subscribe(() => _eventAggregator.GetEvent<ReadFromDeviceEvent>().Publish(usbReports_t.DRVCONFreport));
+            ea.GetEvent<getDRVCONFResponseEvent>().Subscribe((value) => RegValue = value);
         }
     }
 }

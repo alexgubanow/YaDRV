@@ -22,12 +22,8 @@ namespace TMCRegisterControl.ViewModels
             }
         }
         private DelegateCommand _WriteCMD;
-        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(ExecuteWriteCMD);
-
-        void ExecuteWriteCMD()
-        {
-            _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(RegValue);
-        }
+        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(() =>
+        _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(new usbParcel() { report = usbReports_t.SGCSCONFreport, value = RegValue }));
         private void updRegValue()
         {
             _RegValue = tmc2590Converter.getSGCSCONF(CS, SGT, SFILT);
@@ -74,9 +70,12 @@ namespace TMCRegisterControl.ViewModels
         }
         public TMC2590SGCSCONFViewModel(IEventAggregator ea)
         {
-            RegValue = 0xD0006;
             _eventAggregator = ea;
             ea.GetEvent<ConnectEvent>().Subscribe((value) => IsConnected = value);
+            ea.GetEvent<SaveToFlashEvent>().Subscribe(() => _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(
+                new usbParcel() { report = usbReports_t.SGCSCONFreport, value = RegValue }));
+            ea.GetEvent<ReadAllEvent>().Subscribe(() => _eventAggregator.GetEvent<ReadFromDeviceEvent>().Publish(usbReports_t.SGCSCONFreport));
+            ea.GetEvent<getSGCSCONFResponseEvent>().Subscribe((value) => RegValue = value);
         }
         public TMC2590SGCSCONFViewModel()
         {

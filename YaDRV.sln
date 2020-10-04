@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsbHIDControl", "UsbHIDCont
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Events", "Events\Events.csproj", "{D2470562-0750-4F9F-92EF-92F0B02023DB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tmcCLIw", "tmcCLIw\tmcCLIw.vcxproj", "{91549300-B30A-4904-9297-9B294A3BF9F2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stmCLIw", "stmCLIw\stmCLIw.vcxproj", "{91549300-B30A-4904-9297-9B294A3BF9F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,7 +87,7 @@ Global
 		{9D8ADAD7-31EE-4647-9633-FCB4AEEBA3CB}.Release|x64.Build.0 = Release|x64
 		{9D8ADAD7-31EE-4647-9633-FCB4AEEBA3CB}.Release|x86.ActiveCfg = Release|x86
 		{9D8ADAD7-31EE-4647-9633-FCB4AEEBA3CB}.Release|x86.Build.0 = Release|x86
-		{D2470562-0750-4F9F-92EF-92F0B02023DB}.Debug|VisualGDB.ActiveCfg = Debug|Any CPU
+		{D2470562-0750-4F9F-92EF-92F0B02023DB}.Debug|VisualGDB.ActiveCfg = Debug|x86
 		{D2470562-0750-4F9F-92EF-92F0B02023DB}.Debug|x64.ActiveCfg = Debug|x64
 		{D2470562-0750-4F9F-92EF-92F0B02023DB}.Debug|x64.Build.0 = Debug|x64
 		{D2470562-0750-4F9F-92EF-92F0B02023DB}.Debug|x86.ActiveCfg = Debug|x86

@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Events\Events.csproj" />
     <ProjectReference Include="..\hidapiw\hidapiw\hidapiw.vcxproj" />
+    <ProjectReference Include="..\stmCLIw\stmCLIw.vcxproj" />
   </ItemGroup>
 
 </Project>

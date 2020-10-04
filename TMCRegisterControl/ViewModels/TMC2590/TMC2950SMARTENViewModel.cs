@@ -16,12 +16,8 @@ namespace TMCRegisterControl.ViewModels
             set { SetProperty(ref _isConnected, value); }
         }
         private DelegateCommand _WriteCMD;
-        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(ExecuteWriteCMD);
-
-        void ExecuteWriteCMD()
-        {
-            _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(RegValue);
-        }
+        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(() =>
+        _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(new usbParcel() { report = usbReports_t.SMARTENreport, value = RegValue }));
         private void updRegValue()
         {
             _RegValue = tmc2590Converter.getSMARTEN(SEMIN, SEUP, SEMAX, SEDN, SEIMIN);
@@ -77,9 +73,12 @@ namespace TMCRegisterControl.ViewModels
         }
         public TMC2590SMARTENViewModel(IEventAggregator ea)
         {
-            RegValue = 0xA0222;
             _eventAggregator = ea;
             ea.GetEvent<ConnectEvent>().Subscribe((value) => IsConnected = value);
+            ea.GetEvent<SaveToFlashEvent>().Subscribe(() => _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(
+                new usbParcel() { report = usbReports_t.SMARTENreport, value = RegValue }));
+            ea.GetEvent<ReadAllEvent>().Subscribe(() => _eventAggregator.GetEvent<ReadFromDeviceEvent>().Publish(usbReports_t.SMARTENreport));
+            ea.GetEvent<getSMARTENResponseEvent>().Subscribe((value) => RegValue = value);
         }
     }
 }

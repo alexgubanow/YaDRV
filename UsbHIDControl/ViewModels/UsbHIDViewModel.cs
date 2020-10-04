@@ -151,9 +151,11 @@ namespace UsbHIDControl.ViewModels
             Hidapiw = new hidapiw();
             DevList = new ObservableCollection<hidDeviceInfo>();
             ea.GetEvent<WriteToDeviceEvent>().Subscribe((value) => WriteToDevice(value));
+            ea.GetEvent<SaveToFlashEvent>().Subscribe(() => SaveToFlash());
+            ea.GetEvent<ReadFromDeviceEvent>().Subscribe((value) => ReadFromDevice(value));
         }
 
-        void WriteToDevice(int val)
+        void WriteToDevice(usbParcel parcel)
         {
             try
             {
@@ -161,13 +163,85 @@ namespace UsbHIDControl.ViewModels
                 {
                     //you have to send +1 byte in end, for some reason
                     byte[] data = new byte[5];
-                    data[0] = 3;
-                    data[1] = (byte)(val & 0xFF);
-                    data[2] = (byte)((val >> 8) & 0xFF);
-                    data[3] = (byte)((val >> 16) & 0xF);
+                    data[0] = (byte)parcel.report;
+                    data[1] = (byte)(parcel.value & 0xFF);
+                    data[2] = (byte)((parcel.value >> 8) & 0xFF);
+                    data[3] = (byte)((parcel.value >> 16) & 0xF);
                     Hidapiw.SendFeatureReport(devIdx, data);
+                    data = new byte[5];
+                    data[0] = (byte)usbReports_t.TMCstatus;
                     Hidapiw.GetFeatureReport(devIdx, ref data);
                     _eventAggregator.GetEvent<ResponseFromDeviceEvent>().Publish(data[1] | data[2] << 8 | data[3] << 16);
+                }
+            }
+            catch (SEHException e)
+            {
+                if (e.StackTrace is string s)
+                {
+                    Status = s;
+                }
+            }
+            catch (Exception ex)
+            {
+                Status = ex.Message;
+            }
+        }
+        void ReadFromDevice(usbReports_t register)
+        {
+            try
+            {
+                if (IsConnected)
+                {
+                    //you have to send +1 byte in end, for some reason
+                    byte[] data = new byte[5];
+                    data[0] = (byte)register;
+                    Hidapiw.GetFeatureReport(devIdx, ref data);
+                    switch (register)
+                    {
+                        case usbReports_t.DRVCTRLreport:
+                            _eventAggregator.GetEvent<getDRVCTRLResponseEvent>().Publish(
+                                data[1] | data[2] << 8 | data[3] << 16 | (int)tmc2590regs_enum.tmc2590_DRVCTRL << 17);
+                            break;
+                        case usbReports_t.CHOPCONFreport:
+                            _eventAggregator.GetEvent<getCHOPCONFResponseEvent>().Publish(
+                                data[1] | data[2] << 8 | data[3] << 16 | (int)tmc2590regs_enum.tmc2590_CHOPCONF << 17);
+                            break;
+                        case usbReports_t.SMARTENreport:
+                            _eventAggregator.GetEvent<getSMARTENResponseEvent>().Publish(
+                                data[1] | data[2] << 8 | data[3] << 16 | (int)tmc2590regs_enum.tmc2590_SMARTEN << 17);
+                            break;
+                        case usbReports_t.SGCSCONFreport:
+                            _eventAggregator.GetEvent<getSGCSCONFResponseEvent>().Publish(
+                                data[1] | data[2] << 8 | data[3] << 16 | (int)tmc2590regs_enum.tmc2590_SGCSCONF << 17);
+                            break;
+                        case usbReports_t.DRVCONFreport:
+                            _eventAggregator.GetEvent<getDRVCONFResponseEvent>().Publish(
+                                data[1] | data[2] << 8 | data[3] << 16 | (int)tmc2590regs_enum.tmc2590_DRVCONF << 17);
+                            break;
+                    }
+                }
+            }
+            catch (SEHException e)
+            {
+                if (e.StackTrace is string s)
+                {
+                    Status = s;
+                }
+            }
+            catch (Exception ex)
+            {
+                Status = ex.Message;
+            }
+        }
+        void SaveToFlash()
+        {
+            try
+            {
+                if (IsConnected)
+                {
+                    byte[] data = new byte[5];
+                    data[0] = (byte)usbReports_t.saveToFLASH;
+                    Hidapiw.Write(devIdx, data);
                 }
             }
             catch (SEHException e)

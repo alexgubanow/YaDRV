@@ -23,4 +23,8 @@
     <PackageReference Include="Prism.Core" Version="7.2.0.1422" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\stmCLIw\stmCLIw.vcxproj" />
+  </ItemGroup>
+
 </Project>

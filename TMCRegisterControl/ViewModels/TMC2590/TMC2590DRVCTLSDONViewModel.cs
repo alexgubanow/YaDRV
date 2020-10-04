@@ -16,12 +16,8 @@ namespace TMCRegisterControl.ViewModels
             set { SetProperty(ref _isConnected, value); }
         }
         private DelegateCommand _WriteCMD;
-        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(ExecuteWriteCMD);
-
-        void ExecuteWriteCMD()
-        {
-            _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(RegValue);
-        }
+        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(() =>
+        _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(new usbParcel() { report = usbReports_t.DRVCTRLreport, value = RegValue }));
         private void updRegValue()
         {
             _RegValue = tmc2590Converter.getDRVCTRL_SDOFF_0(MRES, DEDGE, INTPOL);
@@ -58,9 +54,12 @@ namespace TMCRegisterControl.ViewModels
         }
         public TMC2590DRVCTLSDONViewModel(IEventAggregator ea)
         {
-            RegValue = 0x183;
             _eventAggregator = ea;
             ea.GetEvent<ConnectEvent>().Subscribe((value) => IsConnected = value);
+            ea.GetEvent<SaveToFlashEvent>().Subscribe(() => _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(
+                new usbParcel() { report = usbReports_t.DRVCTRLreport, value = RegValue }));
+            ea.GetEvent<ReadAllEvent>().Subscribe(() => _eventAggregator.GetEvent<ReadFromDeviceEvent>().Publish(usbReports_t.DRVCTRLreport));
+            ea.GetEvent<getDRVCTRLResponseEvent>().Subscribe((value) => RegValue = value);
         }
     }
 }

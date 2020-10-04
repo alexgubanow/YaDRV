@@ -16,12 +16,9 @@ namespace TMCRegisterControl.ViewModels
             set { SetProperty(ref _isConnected, value); }
         }
         private DelegateCommand _WriteCMD;
-        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(ExecuteWriteCMD);
+        public DelegateCommand WriteCMD => _WriteCMD ??= new DelegateCommand(() =>
+        _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(new usbParcel() { report = usbReports_t.CHOPCONFreport, value = RegValue }));
 
-        void ExecuteWriteCMD()
-        {
-            _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(RegValue);
-        }
         private void updRegValue()
         {
             _RegValue = tmc2590Converter.getCHOPCONF(TOFF, HSTRT, HEND, HDEC, RNDTF, CHM, TBL);
@@ -73,7 +70,9 @@ namespace TMCRegisterControl.ViewModels
         public int RegValue
         {
             get { return _RegValue; }
-            set { SetProperty(ref _RegValue, value);
+            set
+            {
+                SetProperty(ref _RegValue, value);
                 tmc2590Converter.getCHOPCONFbits(value, ref _TOFF, ref _HSTRT, ref _HEND, ref _HDEC, ref _RNDTF, ref _CHM, ref _TBL);
                 RaisePropertyChanged("TOFF");
                 RaisePropertyChanged("HSTRT");
@@ -86,9 +85,12 @@ namespace TMCRegisterControl.ViewModels
         }
         public TMC2590CHOPCONFViewModel(IEventAggregator ea)
         {
-            RegValue = 0x94557;
             _eventAggregator = ea;
             ea.GetEvent<ConnectEvent>().Subscribe((value) => IsConnected = value);
+            ea.GetEvent<SaveToFlashEvent>().Subscribe(() => _eventAggregator.GetEvent<WriteToDeviceEvent>().Publish(
+                new usbParcel() { report = usbReports_t.CHOPCONFreport, value = RegValue }));
+            ea.GetEvent<ReadAllEvent>().Subscribe(() => _eventAggregator.GetEvent<ReadFromDeviceEvent>().Publish(usbReports_t.CHOPCONFreport));
+            ea.GetEvent<getCHOPCONFResponseEvent>().Subscribe((value) => RegValue = value);
         }
     }
 }

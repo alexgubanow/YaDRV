@@ -1,4 +1,5 @@
 ﻿using Events;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 
@@ -22,5 +23,13 @@ namespace TMCRegisterControl.ViewModels
         public TMC2590regsViewModel()
         {
         }
+
+        private DelegateCommand _SaveToFlashCMD;
+        public DelegateCommand SaveToFlashCMD => _SaveToFlashCMD ??= new DelegateCommand(() =>
+        _eventAggregator.GetEvent<SaveToFlashEvent>().Publish());
+
+        private DelegateCommand _ReadAllCMD;
+        public DelegateCommand ReadAllCMD => _ReadAllCMD ??= new DelegateCommand(() =>
+        _eventAggregator.GetEvent<ReadAllEvent>().Publish());
     }
 }

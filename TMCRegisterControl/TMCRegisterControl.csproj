@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Events\Events.csproj" />
-    <ProjectReference Include="..\tmcCLIw\tmcCLIw.vcxproj" />
+    <ProjectReference Include="..\stmCLIw\stmCLIw.vcxproj" />
   </ItemGroup>
 
   <ItemGroup>

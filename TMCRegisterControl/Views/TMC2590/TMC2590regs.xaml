@@ -18,6 +18,7 @@
         <ContentControl prism:RegionManager.RegionName="TMC2590SMARTENRegion"/>
         <ContentControl prism:RegionManager.RegionName="TMC2590SGCSCONFRegion"/>
         <ContentControl prism:RegionManager.RegionName="TMC2590DRVCONFRegion"/>
-        <Button DockPanel.Dock="Right" Content="Write All" Margin="0,5,0,0" IsEnabled="{Binding IsConnected}"/>
+        <Button DockPanel.Dock="Right" Content="Save to FLASH" Command="{Binding SaveToFlashCMD}" Margin="0,5,0,0" IsEnabled="{Binding IsConnected}"/>
+        <Button DockPanel.Dock="Right" Content="Read All" Command="{Binding ReadAllCMD}" Margin="0,5,0,0" IsEnabled="{Binding IsConnected}"/>
     </StackPanel>
 </UserControl>
